@@ -9,12 +9,15 @@ import reportWebVitals from './reportWebVitals';
 import Login from "./pages/login";
 import Numbers from "./pages/numbers";
 import Home from "./pages/home";
+import Chat from "./pages/chat";
+
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/chat" element={<Chat />} />
         <Route path="/numbers" element={<Numbers />} />
       </Routes>
     </BrowserRouter>
