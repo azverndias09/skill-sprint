@@ -6,11 +6,29 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    const handleLogin = () => {
-        // Simulate login logic (replace with your actual login logic)
-        if (username === 'user' && password === 'password') {
-            setIsLoggedIn(true);
+    const handleLogin = async () => {
+
+        // if (username === 'user' && password === 'password') {
+        //     setIsLoggedIn(true);
+        // }
+
+        const response = await fetch('http://localhost:3001/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password }),
+
+        });
+        console.log(response);
+        if (response.ok) {
+            console.log("login done brother");
+
         }
+        else {
+            console.error("no bro check code");
+        }
+        console.log(response);
     };
 
     return (
@@ -37,13 +55,7 @@ const Login = () => {
                 </label>
             </div>
             <button onClick={handleLogin}>Login</button>
-            <nav>
-                <ul>
-                    <li>
-                        <Link to="/numbers">Numbers</Link>
-                    </li>
-                </ul>
-            </nav>
+
             {isLoggedIn && <p>You are logged in!</p>}
         </>
     );
