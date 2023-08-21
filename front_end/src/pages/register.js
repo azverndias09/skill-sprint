@@ -21,7 +21,24 @@ const Register = () => {
 
 
     const handleRegister = async () => {
-        // Your registration logic here
+        const response = await fetch('http://localhost:3001/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name,email, password }),
+
+        });
+
+        console.log(response);
+        if (response.ok) {
+            console.log("registration done brother");
+
+        }
+        else {
+            console.error("no bro check code");
+        }
+        console.log(response);
     };
 
     const form = useRef();

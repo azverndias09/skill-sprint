@@ -1,20 +1,26 @@
 const express = require('express');
-const app = express();
 const http = require('http');
 const cors = require('cors');
 const setupChat = require('./chat');
+
+const userRoute = require('./routes/user');
+const loginRoute = require('./routes/login');
+const registerRoute = require('./routes/register');
+
+const app = express();
+const server = http.createServer(app);
+
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded());
 
-const userRoute = require('./routes/user');
-const loginRoute = require('./routes/login');
+
 
 app.use("/user", userRoute);
 app.use("/login", loginRoute);
+app.use("/register", registerRoute);
 
-const server = http.createServer();
 setupChat(server);
 
 server.listen(3001, () => {
