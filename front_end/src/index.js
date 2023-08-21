@@ -12,6 +12,7 @@ import Register from "./pages/register";
 import Numbers from "./pages/numbers";
 import Home from "./pages/home";
 import Chat from "./pages/chat";
+import Email from "./pages/email";
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<Home />} />
         <Route path="/chat" element={<Chat />} />
+        <Route path="/email" element={<Email />} />
         <Route path="/numbers" element={<Numbers />} />
       </Routes>
     </BrowserRouter>
