@@ -1,28 +1,28 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const Login = () => {
-    const [username, setUsername] = useState('');
+const Register = () => {
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isRegistered, setIsRegistered] = useState(false);
 
-    const handleLogin = async () => {
-
+    const handleRegister = async () => {
+              
         // if (username === 'user' && password === 'password') {
-        //     setIsLoggedIn(true);
+        //     setIsRegistered(true);
         // }
 
-        const response = await fetch('http://localhost:3001/login', {
+        const response = await fetch('http://localhost:3001/Register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ username, password }),
+            body: JSON.stringify({ email, password }),
 
         });
         console.log(response);
         if (response.ok) {
-            console.log("login done brother");
+            console.log("Register done brother");
 
         }
         else {
@@ -31,20 +31,16 @@ const Login = () => {
         console.log(response);
     };
 
-    const goToRegister = async () => {
-
-
-    }
     return (
         <>
-            <h1>Login</h1>
+            <h1>Register</h1>
             <div>
                 <label>
-                    Username:
+                    Email:
                     <input
                         type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                 </label>
             </div>
@@ -58,18 +54,18 @@ const Login = () => {
                     />
                 </label>
             </div>
-            <button onClick={handleLogin}>Login</button>
-            <h1>Not a user? </h1>
+            <button onClick={handleRegister}>Register</button>
+            <h1>Already Registered? </h1>
             <nav>
                 <ul>
                     <li>
-                        <Link to="/register">Register here</Link>
+                        <Link to="/login">Login here</Link>
                     </li>
                 </ul>
             </nav>
-            {isLoggedIn && <p>You are logged in!</p>}
+            {isRegistered && <p>You are logged in!</p>}
         </>
     );
 };
 
-export default Login;
+export default Register;

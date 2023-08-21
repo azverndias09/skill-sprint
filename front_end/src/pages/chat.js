@@ -18,6 +18,8 @@ const Chat = () => {
             setMessageReceived(data.message);
         })
     }, [socket])
+
+    
     return (<div className="chatpage">
 
         <input placeholder="message" onChange={(event) => {
