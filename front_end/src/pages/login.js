@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import Alert from '@mui/material/Alert';
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -30,50 +31,113 @@ function Copyright(props) {
 
 const customTheme = createTheme({
     typography: {
-        fontFamily: 'Roboto, sans-serif', 
+        fontFamily: 'Roboto, sans-serif',
     },
 });
 
 
 
 const Login = () => {
+    const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [user, setUser] = useState();
+    const [loginError, setLoginError] = useState(null);
 
-    const handleLogin = async () => {
-
-        // if (username === 'user' && password === 'password') {
-        //     setIsLoggedIn(true);
-        // }
-
-        const response = await fetch('http://localhost:3001/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ username, password }),
-
-        });
-
-        console.log(response);
-        if (response.ok) {
-            console.log("login done brother");
-
+    useEffect(() => {
+        const loggedInUser = localStorage.getItem('user');
+        console.log('hello');
+        if (loggedInUser) {
+            const foundUser = JSON.parse(loggedInUser);
+            setUser(foundUser);
+            console.log(loggedInUser);
+            setUser({});
+            setUsername("");
+            setPassword("");
+            navigate("/home");
         }
-        else {
-            console.error("no bro check code");
+    }, []);
+
+
+    // const handleLogin = async () => {
+
+    //     // if (username === 'user' && password === 'password') {
+    //     //     setIsLoggedIn(true);
+    //     // }
+
+    //     // const response = await fetch('http://localhost:3001/login', {
+    //     //     method: 'POST',
+    //     //     headers: {
+    //     //         'Content-Type': 'application/json',
+    //     //     },
+    //     //     body: JSON.stringify({ username, password }),
+
+    //     // });
+
+    //     //console.log(response);
+    //     //  if (response.ok) {
+    //     if (true) {
+    //         console.log("login done brother");
+    //         setIsLoggedIn(true);
+    //         let userData = { username, password };
+    //         setUser(userData);
+
+    //         localStorage.setItem('user', JSON.stringify(userData));
+    //         //console.log(userData);
+    //     }
+    //     else {
+    //         console.error("no bro check code");
+    //     }
+    //     // console.log(response);
+    // };
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+
+        // const response = await fetch('http://localhost:3001/login', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({ username, password }),
+        // });
+
+
+        const simulatedResponses = {
+            success: { status: 200 },
+            passwordIncorrect: { status: 302 },
+            userNotFound: { status: 301 },
+            error: { status: 500 },
+        };
+
+        const response = simulatedResponses.success;
+        if (!loginError) {
+            if (response.status === 200) {
+                console.log("Logged in successfully");
+                setIsLoggedIn(true);
+                let userData = { username, password };
+                setUser(userData);
+                localStorage.setItem('user', JSON.stringify(userData));
+                navigate("/home");
+            } else if (response.status === 302) {
+
+                console.error("Password is incorrect");
+                setLoginError("Password is incorrect");
+            } else if (response.status === 301) {
+                console.error("User doesn't exist");
+                setLoginError("User doesn't exist");
+            } else {
+                console.error("Error during login");
+                setLoginError("Error during login");
+            }
         }
-        console.log(response);
     };
 
-    const goToRegister = async () => {
-
-
-    }
 
     return (
         <ThemeProvider theme={customTheme}>
+
             <Grid container component="main" sx={{ height: '100vh' }}>
                 <CssBaseline />
                 <Grid
@@ -103,9 +167,9 @@ const Login = () => {
                         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                             <LockOutlinedIcon />
                         </Avatar>
-                    
-            <Typography component="h1" variant="h5">Login</Typography>
-            <Box component="form" noValidate sx={{ mt: 1 }}>
+
+                        <Typography component="h1" variant="h5">Login</Typography>
+                        <Box component="form" noValidate sx={{ mt: 1 }}>
                             <TextField
                                 margin="normal"
                                 required
@@ -114,8 +178,8 @@ const Login = () => {
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                             />
-                         
-                 
+
+
                             <TextField
                                 margin="normal"
                                 required
@@ -125,32 +189,34 @@ const Login = () => {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
-           
-                            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={handleLogin}>
-                                 Login
+
+
+                            {loginError && <Alert severity="error" sx={{ mb: 2 }}>{loginError}</Alert>}
+                            <Button type="button" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={handleLogin}>
+                                Login
                             </Button>
-           
+
                             <Grid container>
                                 <Grid item xs>
-                                    <Link to="/forgotPassword"  variant="body2">
+                                    <Link to="/reset" variant="body2">
                                         Forgot password?
                                     </Link>
                                 </Grid>
                                 <Grid item>
-                                    <Link  to="/register" variant="body2">
+                                    <Link to="/register" variant="body2">
                                         {"Don't have an account? Sign Up"}
                                     </Link>
                                 </Grid>
                             </Grid>
                             <Copyright sx={{ mt: 5 }} />
-                            {isLoggedIn && <p>You are logged in!</p>}
+
+                        </Box>
                     </Box>
-                </Box>
+                </Grid>
             </Grid>
-            </Grid>
-            </ThemeProvider>
-            
-        
+        </ThemeProvider>
+
+
     );
 };
 

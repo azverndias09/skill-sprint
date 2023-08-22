@@ -13,6 +13,8 @@ import Numbers from "./pages/numbers";
 import Home from "./pages/home";
 import Chat from "./pages/chat";
 import Email from "./pages/email";
+import Reset from "./pages/reset";
+
 
 export default function App() {
   return (
@@ -20,6 +22,8 @@ export default function App() {
       <Routes>
         <Route path="/*" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/reset" element={<Reset />} />
         <Route path="/home" element={<Home />} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/email" element={<Email />} />

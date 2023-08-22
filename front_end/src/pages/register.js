@@ -1,5 +1,5 @@
-import React, { useState, useRef,useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Avatar from '@mui/material/Avatar';
 import TextField from '@mui/material/TextField';
@@ -13,9 +13,8 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import './AnimatedBackground.css';
 import emailjs from '@emailjs/browser';
-<<<<<<< HEAD
 
 function Copyright(props) {
     return (
@@ -37,9 +36,6 @@ const customTheme = createTheme({
 
 
 
-=======
-import { useNavigate } from "react-router-dom";
->>>>>>> 1f0f9af1cc170ed6ea8703bd26dab2273c5ec7de
 const Register = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
@@ -49,19 +45,21 @@ const Register = () => {
     const [generatedOtp, setGeneratedOtp] = useState(null);
     const [testOtp, setTestOtp] = useState('');
     const [isRegistered, setIsRegistered] = useState(false);
+    const [isPasswordValid, setIsPasswordValid] = useState(null);
+    const [focused, setFocused] = useState(false);
+    const [hasTypedPassword, setHasTypedPassword] = useState(false);
     const [showOTPInput, setShowOTPInput] = useState(false);
+    const [otpVerified, setOtpVerified] = useState(false);
+    const [otpVerificationAttempted, setOtpVerificationAttempted] = useState(false);
 
     const [user, setUser] = useState();
 
 
-    useEffect(() => {
-        const loggedInUser = localStorage.getItem("user");
-        if (loggedInUser) {
-          const foundUser = JSON.parse(loggedInUser);
-          setUser(foundUser);
-          navigate("/dashboard");
-        }
-      }, []);
+    const handlePasswordChange = (value) => {
+        setPassword(value);
+        setHasTypedPassword(true);
+        setIsPasswordValid(value.length >= 6);
+    };
 
     const handleEmailChange = (value) => {
         setEmail(value);
@@ -84,16 +82,8 @@ const Register = () => {
         //   if (response.ok) {
         if (true) {
             console.log("registration done brother");
-            let userTemp = {
-                name,
-                email
-            };
-            setUser(userTemp);
-            localStorage.setItem('user', JSON.stringify(userTemp));
-            console.log(userTemp);
-            const data = JSON.parse(localStorage.getItem('user'));
-            console.log(data);
 
+            navigate('/login');
 
         }
         else {
@@ -102,31 +92,34 @@ const Register = () => {
         //     console.log(response);
     };
 
-    const form = useRef();
+    // const form = useRef();
 
-    const sendOTP = (e) => {
+    const sendOTPTest = (e) => {
         const newGeneratedOtp = Math.floor(1000 + Math.random() * 9000);
         setGeneratedOtp(newGeneratedOtp);
+        console.log("hello");
         console.log(newGeneratedOtp);
-        e.preventDefault();
-
+        //e.preventDefault();
+        console.log("hello");
         const templateParams = {
             user_name: name,
             user_email: email,
             message: newGeneratedOtp,
         };
 
-        // emailjs
-        //     .send('service_5dqwn3h', 'template_309hj8f', templateParams, 'fg0vs7jHRI7Fm0CsK')
-        //     .then(
-        //         (result) => {
 
-        //             setShowOTPInput(true);
-        //         },
-        //         (error) => {
-        //             //error stuff here
-        //         }
-        //     );
+
+        emailjs
+            .send('service_5dqwn3h', 'template_309hj8f', templateParams, 'fg0vs7jHRI7Fm0CsK')
+            .then(
+                (result) => {
+
+                    setShowOTPInput(true);
+                },
+                (error) => {
+                    //error stuff here
+                }
+            );
         setShowOTPInput(true);
 
     };
@@ -135,16 +128,15 @@ const Register = () => {
         if (testOtp == generatedOtp) {
             console.log("OTP is correct!");
             setIsRegistered(true);
-            handleRegister();
+            setOtpVerified(true); // Set OTP verification success
         } else {
             console.log("OTP is incorrect!");
-            console.log(generatedOtp);
-            console.log(testOtp);
-
+            setOtpVerified(false); // Set OTP verification failure
         }
+        setOtpVerificationAttempted(true); // Indicate that OTP verification was attempted
     };
 
-<<<<<<< HEAD
+
     return (
         <ThemeProvider theme={customTheme}>
             <Grid container component="main" sx={{ height: '100vh' }}>
@@ -158,7 +150,7 @@ const Register = () => {
                         backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
                         backgroundRepeat: 'no-repeat',
                         backgroundColor: (t) =>
-                        t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+                            t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                     }}
@@ -180,98 +172,114 @@ const Register = () => {
                             Register
                         </Typography>
 
-            
-            <Box component="form" noValidate sx={{ mt: 1 }} onSubmit={sendOTP}>
-                
-=======
-    return user ? <div>{user.name} is loggged in</div> : (
-        <>
-            <h1>Register</h1>
-            <form ref={form} onSubmit={sendOTP}>
-                <div>
->>>>>>> 1f0f9af1cc170ed6ea8703bd26dab2273c5ec7de
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        label="Name"
-                        type="text"
-                        name="user_name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        //variant="outlined"
-                    />
-                
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        label="Email"
-                        type="text"
-                        name="user_email"
-                        value={email}
-                        onChange={(e) => handleEmailChange(e.target.value)}
-                        //variant="outlined"
-                        error={emailError} // Use the emailError state to control error display
-                        helperText={emailError ? 'Invalid email address' : ''}
 
-                    />
-                
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        label="Password"
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        //variant="outlined"
-                        disabled={!isRegistered}
-                    />
-                
-                {!showOTPInput && (
-                    <Button variant="contained" color="primary" disabled={emailError} onClick={sendOTP}>
-                        Send OTP
-                    </Button>
-                )}
-            
+                        <Box component="form" noValidate sx={{ mt: 1 }}>
 
+                            <TextField
+                                margin="normal"
+                                required
+                                fullWidth
+                                label="Name"
+                                type="text"
+                                name="user_name"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                            //variant="outlined"
+                            />
 
-            {showOTPInput && (
-                <div>
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        label="Enter OTP"
-                        variant="outlined"
-                        value={testOtp}
-                        onChange={(e) => setTestOtp(e.target.value)}
-                    />
-                    <Button variant="contained" color="primary" onClick={handleVerifyOTP}>
-                        Verify
-                    </Button>
-                </div>
-            )}
-            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={handleRegister} disabled={!isRegistered}>
-                Register
-            </Button>
+                            <TextField
+                                margin="normal"
+                                required
+                                fullWidth
+                                label="Email"
+                                type="text"
+                                name="user_email"
+                                value={email}
+                                onChange={(e) => handleEmailChange(e.target.value)}
+                                //variant="outlined"
+                                error={emailError} // Use the emailError state to control error display
+                                helperText={emailError ? 'Invalid email address' : ''}
+
+                            />
+
+                            <TextField
+                                margin="normal"
+                                required
+                                fullWidth
+                                label="Password"
+                                type="password"
+                                value={password}
+                                onChange={(e) => handlePasswordChange(e.target.value)}
+                                onFocus={() => setFocused(true)}
+                                onBlur={() => setHasTypedPassword(true)}
+                                error={emailError || (focused && !isPasswordValid)}
+                                helperText={
+                                    emailError
+                                        ? 'Invalid email address'
+                                        : focused && !isPasswordValid
+                                            ? 'Password should be at least 6 characters long'
+                                            : ''
+                                } // Display error message for password after focus
+                                disabled={!isRegistered}
+                            />
+                            {!showOTPInput && (
+                                <Button variant="contained" color="primary" disabled={emailError} onClick={sendOTPTest}>
+                                    Send OTP
+                                </Button>
+                            )}
 
 
-            <Grid container>
-            <Grid item>
-            
-                        <Link to="/login" variant='body2'>Already Registered? Login here</Link>
+
+                            {showOTPInput && (
+                                <div>
+                                    <TextField
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        label="Enter OTP"
+                                        variant="outlined"
+                                        value={testOtp}
+                                        onChange={(e) => setTestOtp(e.target.value)}
+                                    />
+                                    <Button variant="contained" color="primary" onClick={handleVerifyOTP}>
+                                        Verify
+                                    </Button>
+                                    {otpVerificationAttempted && (
+                                        <Typography
+                                            variant="body2"
+                                            style={{ color: otpVerified ? 'green' : 'red', marginTop: '8px' }}
+                                        >
+                                            {otpVerified ? 'OTP verified successfully' : 'Try again'}
+                                        </Typography>
+                                    )}
+                                </div>
+                            )}
+
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2 }}
+                                onClick={handleRegister}
+                                disabled={!isRegistered || emailError || (!isPasswordValid && hasTypedPassword) || (!otpVerified && otpVerificationAttempted)} // Disable the button based on conditions
+                            >
+                                Register
+                            </Button>
+
+                            <Grid container>
+                                <Grid item>
+
+                                    <Link to="/login" variant='body2'>Already Registered? Login here</Link>
+                                </Grid>
+                            </Grid>
+                            <Copyright sx={{ mt: 5 }} />
+                            {isRegistered && <p>You have successfully registered!</p>}
+                        </Box>
+                    </Box>
+                </Grid>
             </Grid>
-            </Grid>
-            <Copyright sx={{ mt: 5 }} />
-            {isRegistered && <p>You have successfully registered!</p>}
-        </Box>
-        </Box>
-        </Grid>
-        </Grid>
         </ThemeProvider>
-        
+
     );
 };
 
