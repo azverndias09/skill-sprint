@@ -13,10 +13,10 @@ const DB_PORT = process.env.DB_PORT
 const db = mysql.createPool({
     connectionLimit: 100,
     host: DB_HOST,       //This is your localhost IP
-    user: DB_USER,        // "newuser" created in Step 1(e)
-    password: DB_PASSWORD,   // password for the new user
+    user: DB_USER,        // "newuser" 
+    password: DB_PASSWORD,   // password 
     database: DB_DATABASE,      // Database name
-    port: DB_PORT          // port name, "3306" by default
+    port: DB_PORT          // port name, "3306" 
 })
 
 // const port = process.env.PORT
@@ -49,24 +49,32 @@ router.post('/', (req, res) => {
 
             connection.release()
 
-            if (err) throw (err)
+            if (err){ 
+                res.sendStatus(500);
+                console.log(err);
+                console.log(res);
+            }
 
             if (result.length == 0) {
                 console.log("--------> User does not exist")
-                res.sendStatus(404)
+                res.sendStatus(301)
             } 
 
             else {
-                const hashedPassword = result[0].password
+                const hashedPassword = result[0].Password
      //get the hashedPassword from result
             
                 if (await bcrypt.compare(password, hashedPassword)) {
-                    console.log("---------> Login Successful")
-                    res.send(`${user} is logged in!`)
+                    console.log("---------> Login Successful");
+                    res.status(200);
+                    res.send(`${user} is logged in!`);
+                   // res.sendStatus(200)
                 } 
 
                 else {
                     console.log("---------> Password Incorrect")
+                  
+                    res.status(302);
                     res.send("Password incorrect!")
                 } //end of bcrypt.compare()
             }//end of User exists i.e. results.length==0
