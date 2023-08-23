@@ -29,7 +29,7 @@ function Copyright(props) {
 
 const customTheme = createTheme({
     typography: {
-        fontFamily: 'Roboto, sans-serif',
+        fontFamily: 'Nunito, sans-serif',
     },
 });
 
@@ -47,8 +47,8 @@ const Reset = () => {
     useEffect(() => {
         if (passwordResetSuccess == true) {
             console.log("hello")
-            // const goLogin = async () => { await delay(1500);  }
-            // goLogin();
+            const goLogin = async () => { await delay(1500);  }
+            goLogin();
             navigate("/login");
         }
 
@@ -60,18 +60,18 @@ const Reset = () => {
         //     setIsLoggedIn(true);
         // }
 
-        // const response = await fetch('http://localhost:3001/resetpass', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({ username, password }),
+        const response = await fetch('http://localhost:3001/resetpass', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password }),
 
-        // });
+        });
 
-        // console.log(response);
-        //   if (response.ok) {
-        if (true) {
+        console.log(response);
+          if (response.ok) {
+     
             console.log("Reset Password done brother");
             setPasswordResetSuccess(true);
 
@@ -82,13 +82,17 @@ const Reset = () => {
             console.error("no bro check code");
         }
         // console.log(response);
+   
     };
-
 
 
     return (
         <ThemeProvider theme={customTheme}>
-            <Grid container component="main" sx={{ height: '100vh',justifyContent: 'center', alignItems: 'center' }}>
+            <Grid container component="main" sx={{
+                height: '100vh', justifyContent: 'center', alignItems: 'center', backgroundColor: '#84c2f5',
+
+             }}>
+
                 <CssBaseline />
 
                 <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -161,5 +165,7 @@ const Reset = () => {
 
     );
 };
+
+
 
 export default Reset;

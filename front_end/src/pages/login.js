@@ -31,7 +31,7 @@ function Copyright(props) {
 
 const customTheme = createTheme({
     typography: {
-        fontFamily: 'Roboto, sans-serif',
+        fontFamily: 'Nunito, sans-serif',
     },
 });
 
@@ -60,58 +60,59 @@ const Login = () => {
     }, []);
 
 
-    // const handleLogin = async () => {
+    const handleLogin = async () => {
 
-    //     // if (username === 'user' && password === 'password') {
-    //     //     setIsLoggedIn(true);
-    //     // }
+        // if (username === 'user' && password === 'password') {
+        //     setIsLoggedIn(true);
+        // }
 
-    //     // const response = await fetch('http://localhost:3001/login', {
-    //     //     method: 'POST',
-    //     //     headers: {
-    //     //         'Content-Type': 'application/json',
-    //     //     },
-    //     //     body: JSON.stringify({ username, password }),
+        const response = await fetch('http://localhost:3001/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password }),
 
-    //     // });
+        });
 
-    //     //console.log(response);
-    //     //  if (response.ok) {
-    //     if (true) {
-    //         console.log("login done brother");
-    //         setIsLoggedIn(true);
-    //         let userData = { username, password };
-    //         setUser(userData);
+        // console.log(response);
+         if (response.ok) {
+        if (true) {
+            console.log("login done brother");
+            setIsLoggedIn(true);
+            let userData = { username, password };
+            setUser(userData);
 
-    //         localStorage.setItem('user', JSON.stringify(userData));
-    //         //console.log(userData);
-    //     }
-    //     else {
-    //         console.error("no bro check code");
-    //     }
-    //     // console.log(response);
-    // };
-
-    const handleLogin = async (e) => {
-        e.preventDefault();
-
-        // const response = await fetch('http://localhost:3001/login', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({ username, password }),
-        // });
+            localStorage.setItem('user', JSON.stringify(userData));
+            console.log(userData);
+        }
+        else {
+            console.error("no bro check code");
+        }
+        // console.log(response);
+    };
 
 
-        const simulatedResponses = {
-            success: { status: 200 },
-            passwordIncorrect: { status: 302 },
-            userNotFound: { status: 301 },
-            error: { status: 500 },
-        };
+    // const handleLogin = async (e) => {
+    //     e.preventDefault();
 
-        const response = simulatedResponses.success;
+    //     const response = await fetch('http://localhost:3001/login', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({ username, password }),
+    //     });
+
+
+        // const simulatedResponses = {
+        //     success: { status: 200 },
+        //     passwordIncorrect: { status: 302 },
+        //     userNotFound: { status: 301 },
+        //     error: { status: 500 },
+        // };
+
+        // const response = simulatedResponses.success;
         if (!loginError) {
             if (response.status === 200) {
                 console.log("Logged in successfully");
@@ -153,7 +154,22 @@ const Login = () => {
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                     }}
-                />
+                    >
+                <Box
+                        component="img"
+                        sx={{
+                            height: 233,
+                            width: 600,
+                            maxHeight: { xs: 233, md: 167 },
+                            maxWidth: { xs: 400, md: 250 },
+                            textAlign: 'center',
+                        }}
+                        alt="The house from the offer."
+                        src="/skillsprint.png"
+                    />
+                </Grid>
+
+                
                 <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                     <Box
                         sx={{
@@ -219,5 +235,6 @@ const Login = () => {
 
     );
 };
+
 
 export default Login;

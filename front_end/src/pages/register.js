@@ -30,9 +30,13 @@ function Copyright(props) {
 }
 const customTheme = createTheme({
     typography: {
-        fontFamily: 'Roboto, sans-serif',
+        fontFamily: 'Nunito, sans-serif',
     },
+
+    spacing: 8,
 });
+
+
 
 
 
@@ -69,18 +73,18 @@ const Register = () => {
 
 
     const handleRegister = async () => {
-        // const response = await fetch('http://localhost:3001/register', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({ name, email, password }),
+        const response = await fetch('http://localhost:3001/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name, email, password }),
 
-        // });
+        });
 
         // console.log(response);
-        //   if (response.ok) {
-        if (true) {
+           if (response.ok) {
+        //if (true) {
             console.log("registration done brother");
 
             navigate('/login');
@@ -120,7 +124,7 @@ const Register = () => {
                     //error stuff here
                 }
             );
-        setShowOTPInput(true);
+     //   setShowOTPInput(true);
 
     };
 
@@ -146,6 +150,7 @@ const Register = () => {
                     xs={false}
                     sm={4}
                     md={7}
+                    // className='new-background'
                     sx={{
                         backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
                         backgroundRepeat: 'no-repeat',
@@ -154,7 +159,27 @@ const Register = () => {
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                     }}
-                />
+                    >
+            
+
+                    <Box
+                        component="img"
+                        sx={{
+                            height: 233,
+                            width: 600,
+                            maxHeight: { xs: 233, md: 167 },
+                            maxWidth: { xs: 400, md: 250 },
+                            // justifyContent: 'center',
+                            // alignItems: 'center',
+                            textAlign: 'center',
+                            
+
+                        }}
+                        alt="The house from the offer."
+                        src="/skillsprint.png"
+                    />
+
+                 </Grid>
                 <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                     <Box
                         sx={{
