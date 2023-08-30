@@ -90,9 +90,9 @@ const customTheme = createTheme({
 
 const Home = () => {
   const navigate = useNavigate();
-
+  //const [user, setUser] = useState();
   const reset = () => {
-    localStorage.removeItem('user');
+   localStorage.removeItem('user');
     navigate("/login");
   }
 
@@ -122,6 +122,7 @@ const Home = () => {
                 ...(open && { display: 'none' }),
               }}
             >
+           
               <MenuIcon />
             </IconButton>
 
@@ -133,6 +134,9 @@ const Home = () => {
               sx={{ flexGrow: 1 }}
             >
               Dashboard
+            </Typography>
+            <Typography variant="h6"> 
+              Welcome!
             </Typography>
             <Toolbar
               sx={{

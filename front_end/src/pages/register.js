@@ -129,6 +129,17 @@ const Register = () => {
            if (response.ok) {
         //if (true) {
             console.log("registration done brother");
+            let userTemp={
+                name,
+                email,
+                userType,
+            };
+            setUser(userTemp);
+            localStorage.setItem('user',JSON.stringify(user));
+            console.log(user);
+            const data=JSON.parse(localStorage.getItem('user'));
+            console.log("data");
+               console.log(data);
 
             navigate('/login');
 
@@ -367,10 +378,11 @@ const Register = () => {
                             
                             <Button
                                 
-                                type="submit"
+                                type="button"
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
+                                
                                 onClick={handleRegister}
                                 disabled={!isRegistered || emailError || (!isPasswordValid && hasTypedPassword) || (!otpVerified && otpVerificationAttempted)} // Disable the button based on conditions
                             >

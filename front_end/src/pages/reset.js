@@ -14,7 +14,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { makeStyles } from '@mui/styles';
-import { Card, CardContent } from '@mui/material';
+//import { Card, CardContent } from '@mui/material';
 
 
 function Copyright(props) {
@@ -84,10 +84,10 @@ const Reset = () => {
 
 
     useEffect(() => {
+        console.log(passwordResetSuccess);
         if (passwordResetSuccess == true) {
-            console.log("hello")
-            const goLogin = async () => { await delay(1500);  }
-            goLogin();
+            console.log("kys")
+           
             navigate("/login");
         }
 
@@ -112,7 +112,7 @@ const Reset = () => {
           if (response.ok) {
      
             console.log("Reset Password done brother");
-            setPasswordResetSuccess(true);
+           setPasswordResetSuccess(true);
 
 
 
@@ -178,7 +178,7 @@ const Reset = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
 
-                            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={handleReset}>
+                            <Button type="button" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={handleReset}>
                                 Reset Password
                             </Button>
                             {passwordResetSuccess && (
