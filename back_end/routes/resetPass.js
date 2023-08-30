@@ -19,16 +19,16 @@ const db = mysql.createPool({
     password: DB_PASSWORD,   // password 
     database: DB_DATABASE,      // Database name
     port: DB_PORT          // port name, "3306" 
-})
-
-const pool = mysql.createPool({
-    connectionLimit: 100, //important
-    host: 'localhost',
-    user: 'root',
-    password: '1234',
-    database: 'skillsprint',
-    debug: false
 });
+
+// const pool = mysql.createPool({
+//     connectionLimit: 100, //important
+//     host: 'localhost',
+//     user: 'root',
+//     password: '1234',
+//     database: 'skillsprint',
+//     debug: false
+// });
 
 router.post("/", async (req, res) => {
     
@@ -44,6 +44,7 @@ router.post("/", async (req, res) => {
 
         await connection.query(search_query, (err, result) => {
             connection.release();
+            console.log("Working");
 
             if (err) {
                 console.error(err);
@@ -52,9 +53,9 @@ router.post("/", async (req, res) => {
 
             if (result.length == 0) {
                 console.log("User does not exist");
-                return res.sendStatus(404);
+                return res.sendStatus(301);
             } else {
-                pool.query('UPDATE users SET Password = ?  WHERE Name = ?', [hashedPassword, user], (error) => {
+                db.query('UPDATE users SET Password = ?  WHERE Name = ?', [hashedPassword, user], (error) => {
                     if (error) {
                         console.error('Error updating password:', error);
                         return res.sendStatus(500);

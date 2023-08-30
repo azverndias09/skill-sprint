@@ -25,19 +25,25 @@ db.getConnection((err, connection) => {
 })
 
 const bcrypt = require("bcrypt")
+const saltRounds=10
 router.use(express.json())
 
 router.post('/',async (req,res)=>{
     const user = req.body.name;
     const email = req.body.email;
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const pword=req.body.password;
+    const usertype=req.body.userType   //const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    async function hashPassword(pword){
+        const hashedPassword = await bcrypt.hash(pword, 10);
+        return hashedPassword;
+    }
 
     db.getConnection(async (err, connection) => {
         if (err) throw (err)
         const sqlSearch = "SELECT * FROM users WHERE Name = ?"
         const search_query = mysql.format(sqlSearch, [user])
-        const sqlInsert = "INSERT INTO  users (UId,Name,Email,Password) VALUES (0,?,?,?)";
-        const insert_query = mysql.format(sqlInsert, [user, email, hashedPassword])
+        const sqlInsert = "INSERT INTO  users (UId,Name,Email,Password,Usertype) VALUES (0,?,?,?,?)";
+        const insert_query = mysql.format(sqlInsert, [user, email, await hashPassword(pword),usertype])
 
         await connection.query(search_query, async (err, result) => {
             if (err) throw (err)

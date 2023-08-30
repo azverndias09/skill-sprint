@@ -63,12 +63,12 @@ router.post('/', (req, res) => {
             else {
                 const hashedPassword = result[0].Password
      //get the hashedPassword from result
-            
+        
                 if (await bcrypt.compare(password, hashedPassword)) {
                     console.log("---------> Login Successful");
                     res.status(200);
                     res.send(`${user} is logged in!`);
-                   // res.sendStatus(200)
+                   
                 } 
 
                 else {
@@ -76,23 +76,12 @@ router.post('/', (req, res) => {
                   
                     res.status(302);
                     res.send("Password incorrect!")
-                } //end of bcrypt.compare()
-            }//end of User exists i.e. results.length==0
-        }) //end of connection.query()
-    }) //end of db.connection()
-}); //end of router.post()
+                } 
+            }
+        }) 
+    }) 
+}); 
 
-            // const { username, password } = req.body;
-    // const user = users.find(u => u.username === username && u.password === password);
-
-    // if (user) {
-    //     res.json({ message: 'Login successful' });
-    //     console.log("backend login done");
-    // } else {
-    //     console.log(user);
-    //     console.log(req.body);
-    //     res.status(401).json({ message: 'Invalid credentials' });
-    // }
-
+        
 
 module.exports = router;
