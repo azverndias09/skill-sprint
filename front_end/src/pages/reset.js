@@ -13,6 +13,9 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
+import { Card, CardContent } from '@mui/material';
+
 
 function Copyright(props) {
     return (
@@ -29,9 +32,44 @@ function Copyright(props) {
 
 const customTheme = createTheme({
     typography: {
-        fontFamily: 'Nunito, sans-serif',
+        fontFamily: 'Poppins, sans-serif',
     },
+
+    palette: {
+       mode: 'dark',
+        primary: {
+            main: '#82cbe8', // Set primary color to white
+        },
+        background: {
+            default: '#0f0926',
+            Card: '#0f0926',
+        },
+        text: {
+            primary: '#ffffff', // Set primary text color to white
+        },
+    },
+
+
 });
+
+const useStyles = makeStyles((theme) => ({
+    whiteText: {
+        color: 'white',
+    },
+
+
+
+    whiteTextField: {
+        '& .MuiInputBase-input': {
+            color: 'white',
+        },
+    },
+
+
+
+
+}));
+
 
 const delay = ms => new Promise(
     resolve => setTimeout(resolve, ms)
@@ -42,6 +80,7 @@ const Reset = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [passwordResetSuccess, setPasswordResetSuccess] = useState(false);
+    const classes = useStyles();
 
 
     useEffect(() => {
@@ -90,12 +129,20 @@ const Reset = () => {
         <ThemeProvider theme={customTheme}>
             <Grid container component="main" sx={{
                 height: '100vh', justifyContent: 'center', alignItems: 'center', backgroundColor: '#84c2f5',
+                backgroundImage:  'url(/giphy.gif)',
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover',
+
 
              }}>
 
                 <CssBaseline />
 
-                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                <Box item xs={12} sm={8} md={5} elevation={6} 
+                sx={{
+                    backgroundColor:'#0f0926',
+                    borderRadius: '16px',
+                }} >
                     <Box
                         sx={{
                             my: 8,
@@ -103,6 +150,7 @@ const Reset = () => {
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
+                            
                         }}
                     >
                         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -158,7 +206,7 @@ const Reset = () => {
 
                         </Box>
                     </Box>
-                </Grid>
+                </Box>
             </Grid>
         </ThemeProvider>
 
