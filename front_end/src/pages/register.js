@@ -12,6 +12,7 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { makeStyles} from '@mui/styles';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -34,12 +35,48 @@ function Copyright(props) {
 }
 const customTheme = createTheme({
     typography: {
-        fontFamily: 'Nunito, sans-serif',
+        fontFamily: 'Poppins, sans-serif',
     },
-
+    palette: {
+       mode: 'dark',
+        primary: {
+            main: '#82cbe8', // Set primary color to white
+        },
+        background: {
+            default: '#0f0926',
+            paper: '#000003',
+        },
+        text: {
+            primary: '#ffffff', // Set primary text color to white
+        },
+    },
+        
+    
     spacing: 8,
 });
 
+const useStyles = makeStyles((theme) => ({
+    whiteText: {
+        color: 'white',
+    },
+   
+
+    
+    whiteRadio: {
+        '& .MuiRadio-root': {
+            color: 'white',
+        },
+    },
+    whiteTextField: {
+        '& .MuiInputBase-input': {
+            color: 'white',
+        },
+    },
+
+
+
+
+}));
 
 
 
@@ -60,7 +97,7 @@ const Register = () => {
     const [otpVerified, setOtpVerified] = useState(false);
     const [otpVerificationAttempted, setOtpVerificationAttempted] = useState(false);
     const [userType, setSelectedValue] = useState(''); // State to hold the selected value
-
+    const classes = useStyles();
 
     const [user, setUser] = useState();
 
@@ -172,8 +209,9 @@ const Register = () => {
                         alignItems: 'center',  
                         backgroundImage: 'url(/giphy.gif)',
                         backgroundRepeat: 'no-repeat',
-                        backgroundColor: (t) =>
-                        t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+                        // backgroundColor: (t) =>
+                        //      t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                     }}
@@ -199,10 +237,9 @@ const Register = () => {
                     />
 
                  </Grid>
-                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square
-                    sx={{
-                        backgroundColor: '#ebf4f7',
-                    }}>
+                <Grid item xs={12} sm={8} md={5}  elevation={20} square 
+                    
+                    >
                     <Box
                         sx={{
                             my: 8,
@@ -215,7 +252,7 @@ const Register = () => {
                         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                             <LockOutlinedIcon />
                         </Avatar>
-                        <Typography component="h1" variant="h4">
+                        <Typography component="h1" variant="h4" className={classes.whiteText}>
                             Register
                         </Typography>
 
@@ -262,7 +299,7 @@ const Register = () => {
                                 error={emailError || (focused && !isPasswordValid)}
                                 helperText={
                                     emailError
-                                        ? 'Invalid email address'
+                                        ? 'Invalid password'
                                         : focused && !isPasswordValid
                                             ? 'Password should be at least 6 characters long'
                                             : ''
@@ -305,6 +342,7 @@ const Register = () => {
                             <br></br>
 
                             <FormControl
+                                required
                                 disabled={!isRegistered || emailError || (!isPasswordValid && hasTypedPassword) || (!otpVerified && otpVerificationAttempted)}
                                 >
                                 <FormLabel  id="demo-row-radio-buttons-group-label"

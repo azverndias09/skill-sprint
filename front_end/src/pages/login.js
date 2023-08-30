@@ -16,6 +16,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { lightBlue } from '@mui/material/colors';
+import { makeStyles } from '@mui/styles';
 
 function Copyright(props) {
     return (
@@ -32,9 +33,44 @@ function Copyright(props) {
 
 const customTheme = createTheme({
     typography: {
-        fontFamily: 'Nunito, sans-serif',
+        fontFamily: 'Poppins, sans-serif',
+        body2: {
+            color: '#69c2bf', // Set the color for the h4 variant
+        },
     },
+    palette: {
+        mode: 'dark',
+        primary: {
+            main: '#82cbe8', // Set primary color to white
+        },
+        background: {
+            default: '#0f0926',
+            paper: '#000003',
+        },
+        text: {
+            primary: '#ffffff', // Set primary text color to white
+        },
+    },
+
+   
 });
+
+const useStyles = makeStyles((theme) => ({
+    whiteText: {
+        color: 'white',
+    },
+
+    
+    whiteTextField: {
+        '& .MuiInputBase-input': {
+            color: 'white',
+        },
+    },
+
+
+
+
+}));
 
 
 
@@ -45,6 +81,8 @@ const Login = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState();
     const [loginError, setLoginError] = useState(null);
+    const classes = useStyles();
+
 
     useEffect(() => {
         const loggedInUser = localStorage.getItem('user');
@@ -154,8 +192,8 @@ const Login = () => {
                         alignItems: 'center',
                         backgroundImage: 'url(/giphy.gif)',
                         backgroundRepeat: 'no-repeat',
-                        backgroundColor: (t) =>
-                            t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+                        // backgroundColor: (t) =>
+                        //     t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                     }}
@@ -176,10 +214,11 @@ const Login = () => {
                 </Grid>
 
                 
-                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square 
-                sx={{
-                    backgroundColor:'#ebf4f7',
-                }} >
+                <Grid item xs={12} sm={8} md={5}  elevation={6} square 
+                // sx={{
+                //     backgroundColor:'#ebf4f7',
+                // }} 
+                >
                     <Box
                         sx={{
                             my: 8,
@@ -193,7 +232,7 @@ const Login = () => {
                             <LockOutlinedIcon />
                         </Avatar>
 
-                        <Typography component="h1" variant="h4">Login</Typography>
+                        <Typography component="h1" variant="h4" className={classes.whiteText}>Login</Typography>
                         <Box component="form" noValidate sx={{ mt: 1 }}>
                             <TextField
                                 margin="normal"
