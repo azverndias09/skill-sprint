@@ -33,7 +33,7 @@ const db = mysql.createPool({
 router.post("/", async (req, res) => {
     
     const user = req.body.username;
-    const newPass = req.body.newPass;
+    const newPass = req.body.password;
     const hashedPassword = await bcrypt.hash(newPass, 10);
     // res.send("User route is displaying data")
    
