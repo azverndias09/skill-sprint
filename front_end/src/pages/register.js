@@ -1,19 +1,23 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+//import './background.css';
 
 import Avatar from '@mui/material/Avatar';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import './AnimatedBackground.css';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+
 import emailjs from '@emailjs/browser';
 
 function Copyright(props) {
@@ -55,6 +59,8 @@ const Register = () => {
     const [showOTPInput, setShowOTPInput] = useState(false);
     const [otpVerified, setOtpVerified] = useState(false);
     const [otpVerificationAttempted, setOtpVerificationAttempted] = useState(false);
+    const [userType, setSelectedValue] = useState(''); // State to hold the selected value
+
 
     const [user, setUser] = useState();
 
@@ -78,7 +84,7 @@ const Register = () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ name, email, password }),
+            body: JSON.stringify({ name, email, password ,userType}),
 
         });
 
@@ -140,9 +146,17 @@ const Register = () => {
         setOtpVerificationAttempted(true); // Indicate that OTP verification was attempted
     };
 
+    
+
+        const handleRadioChange = (event) => {
+            setSelectedValue(event.target.value);
+        };
+
+   
 
     return (
         <ThemeProvider theme={customTheme}>
+            {/* <div className='background-container'> */}
             <Grid container component="main" sx={{ height: '100vh' }}>
                 <CssBaseline />
                 <Grid
@@ -150,12 +164,16 @@ const Register = () => {
                     xs={false}
                     sm={4}
                     md={7}
-                    // className='new-background'
+                    
                     sx={{
-                        backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
+                        display: 'flex',          // Use flexbox for vertical and horizontal centering
+                        flexDirection: 'column',  // Align items vertically
+                        justifyContent: 'center', // Center vertically
+                        alignItems: 'center',  
+                        backgroundImage: 'url(/giphy.gif)',
                         backgroundRepeat: 'no-repeat',
                         backgroundColor: (t) =>
-                            t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+                        t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                     }}
@@ -163,24 +181,28 @@ const Register = () => {
             
 
                     <Box
+                       
                         component="img"
                         sx={{
-                            height: 233,
-                            width: 600,
-                            maxHeight: { xs: 233, md: 167 },
-                            maxWidth: { xs: 400, md: 250 },
+                            height: 230,
+                            width: '100%',
+                            // maxHeight: { xs: 233, md: 167 },
+                            // maxWidth: { xs: 400, md: 250 },
                             // justifyContent: 'center',
                             // alignItems: 'center',
-                            textAlign: 'center',
+                            //textAlign: 'center',
                             
 
                         }}
-                        alt="The house from the offer."
+                        //alt="The house from the offer."
                         src="/skillsprint.png"
                     />
 
                  </Grid>
-                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square
+                    sx={{
+                        backgroundColor: '#ebf4f7',
+                    }}>
                     <Box
                         sx={{
                             my: 8,
@@ -193,7 +215,7 @@ const Register = () => {
                         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                             <LockOutlinedIcon />
                         </Avatar>
-                        <Typography component="h1" variant="h5">
+                        <Typography component="h1" variant="h4">
                             Register
                         </Typography>
 
@@ -279,8 +301,34 @@ const Register = () => {
                                     )}
                                 </div>
                             )}
+                            <br></br>
+                            <br></br>
 
+                            <FormControl
+                                disabled={!isRegistered || emailError || (!isPasswordValid && hasTypedPassword) || (!otpVerified && otpVerificationAttempted)}
+                                >
+                                <FormLabel  id="demo-row-radio-buttons-group-label"
+                                sx={{
+                                    color:'black'
+                                }}>
+                                Register As</FormLabel>
+                                <RadioGroup
+                                    row
+                                    aria-labelledby="demo-row-radio-buttons-group-label"
+                                    name="row-radio-buttons-group"
+                                    value={userType} // Set the selected value
+                                    onChange={handleRadioChange} // Update selected value
+
+                                >
+                                    <FormControlLabel value="Client" control={<Radio />} label="Client" />
+                                    <FormControlLabel value="Business" control={<Radio />} label="Business" />
+                                    
+                                 
+                                </RadioGroup>
+                            </FormControl>
+                            
                             <Button
+                                
                                 type="submit"
                                 fullWidth
                                 variant="contained"
@@ -303,6 +351,7 @@ const Register = () => {
                     </Box>
                 </Grid>
             </Grid>
+            {/* </div> */}
         </ThemeProvider>
 
     );

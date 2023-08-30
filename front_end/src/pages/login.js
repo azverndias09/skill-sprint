@@ -15,6 +15,7 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { lightBlue } from '@mui/material/colors';
 
 function Copyright(props) {
     return (
@@ -147,7 +148,11 @@ const Login = () => {
                     sm={4}
                     md={7}
                     sx={{
-                        backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
+                        display: 'flex',          // Use flexbox for vertical and horizontal centering
+                        flexDirection: 'column',  // Align items vertically
+                        justifyContent: 'center', // Center vertically
+                        alignItems: 'center',
+                        backgroundImage: 'url(/giphy.gif)',
                         backgroundRepeat: 'no-repeat',
                         backgroundColor: (t) =>
                             t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -158,11 +163,12 @@ const Login = () => {
                 <Box
                         component="img"
                         sx={{
-                            height: 233,
-                            width: 600,
-                            maxHeight: { xs: 233, md: 167 },
-                            maxWidth: { xs: 400, md: 250 },
-                            textAlign: 'center',
+                            height: 230,
+                            width: '100%',
+                            // objectFit: 'cover',
+                            // maxHeight: { xs: 233, md: 167 },
+                            // maxWidth: { xs: 400, md: 250 },
+                            // textAlign: 'center',
                         }}
                         alt="The house from the offer."
                         src="/skillsprint.png"
@@ -170,7 +176,10 @@ const Login = () => {
                 </Grid>
 
                 
-                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square 
+                sx={{
+                    backgroundColor:'#ebf4f7',
+                }} >
                     <Box
                         sx={{
                             my: 8,
@@ -184,7 +193,7 @@ const Login = () => {
                             <LockOutlinedIcon />
                         </Avatar>
 
-                        <Typography component="h1" variant="h5">Login</Typography>
+                        <Typography component="h1" variant="h4">Login</Typography>
                         <Box component="form" noValidate sx={{ mt: 1 }}>
                             <TextField
                                 margin="normal"

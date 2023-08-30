@@ -14,6 +14,8 @@ import Home from "./pages/home";
 import Chat from "./pages/chat";
 import Email from "./pages/email";
 import Reset from "./pages/reset";
+//import MaterialChat from "./pages/materialchat";
+
 
 
 export default function App() {
@@ -28,6 +30,8 @@ export default function App() {
         <Route path="/chat" element={<Chat />} />
         <Route path="/email" element={<Email />} />
         <Route path="/numbers" element={<Numbers />} />
+        {/* <Route path="/materialchat" element={<MaterialChat />}/> */}
+
       </Routes>
     </BrowserRouter>
   );
