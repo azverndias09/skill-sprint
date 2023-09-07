@@ -52,7 +52,7 @@ const customTheme = createTheme({
         },
     },
 
-   
+
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
         color: 'white',
     },
 
-    
+
     whiteTextField: {
         '& .MuiInputBase-input': {
             color: 'white',
@@ -116,8 +116,8 @@ const Login = () => {
         });
 
         // console.log(response);
-         if (response.ok) {
-        if (true) {
+        if (response.ok) {
+
             console.log("login done brother");
             setIsLoggedIn(true);
             let userData = { username, password };
@@ -133,47 +133,6 @@ const Login = () => {
     };
 
 
-    // const handleLogin = async (e) => {
-    //     e.preventDefault();
-
-    //     const response = await fetch('http://localhost:3001/login', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify({ username, password }),
-    //     });
-
-
-        // const simulatedResponses = {
-        //     success: { status: 200 },
-        //     passwordIncorrect: { status: 302 },
-        //     userNotFound: { status: 301 },
-        //     error: { status: 500 },
-        // };
-
-        // const response = simulatedResponses.success;
-        if (!loginError) {
-            if (response.status === 200) {
-                console.log("Logged in successfully");
-                setIsLoggedIn(true);
-                let userData = { username, password };
-                setUser(userData);
-                localStorage.setItem('user', JSON.stringify(userData));
-                navigate("/home");
-            } else if (response.status === 302) {
-
-                console.error("Password is incorrect");
-                setLoginError("Password is incorrect");
-            } else if (response.status === 301) {
-                console.error("User doesn't exist");
-                setLoginError("User doesn't exist");
-            } else {
-                console.error("Error during login");
-                setLoginError("Error during login");
-            }
-        }
-    };
 
 
     return (
@@ -198,8 +157,8 @@ const Login = () => {
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                     }}
-                    >
-                <Box
+                >
+                    <Box
                         component="img"
                         sx={{
                             height: 230,
@@ -214,8 +173,8 @@ const Login = () => {
                     />
                 </Grid>
 
-                
-                <Grid item xs={12} sm={8} md={5}  elevation={6} square 
+
+                <Grid item xs={12} sm={8} md={5} elevation={6} square
                 // sx={{
                 //     backgroundColor:'#ebf4f7',
                 // }} 
