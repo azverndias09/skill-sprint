@@ -191,7 +191,7 @@ const Login = () => {
                         flexDirection: 'column',  // Align items vertically
                         justifyContent: 'center', // Center vertically
                         alignItems: 'center',
-                        backgroundImage: 'url(/giphy.gif)',
+                        backgroundImage: 'url(/artifact.gif)',
                         backgroundRepeat: 'no-repeat',
                         // backgroundColor: (t) =>
                         //     t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -202,15 +202,15 @@ const Login = () => {
                 <Box
                         component="img"
                         sx={{
-                            height: 230,
-                            width: '100%',
+                            height: 500,
+                            width: 500,
                             // objectFit: 'cover',
                             // maxHeight: { xs: 233, md: 167 },
                             // maxWidth: { xs: 400, md: 250 },
                             // textAlign: 'center',
                         }}
-                        alt="The house from the offer."
-                        src="/skillsprint.png"
+                        
+                        src="/skillsprintlogo3.png"
                     />
                 </Grid>
 
@@ -233,7 +233,7 @@ const Login = () => {
                             <LockOutlinedIcon />
                         </Avatar>
 
-                        <Typography component="h1" variant="h4" className={classes.whiteText}>Login</Typography>
+                        <Typography component="h1" variant="h4" className={classes.whiteText}>Log in to SkillSprint®</Typography>
                         <Box component="form" noValidate sx={{ mt: 1 }}>
                             <TextField
                                 margin="normal"

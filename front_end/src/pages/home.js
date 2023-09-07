@@ -83,8 +83,26 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 const customTheme = createTheme({
   typography: {
-    fontFamily: 'Nunito, sans-serif',
+    fontFamily: 'Poppins, sans-serif',
   },
+  palette: {
+       mode: 'dark',
+        primary: {
+            main: '#82cbe8', // Set primary color to white
+        },
+        background: {
+            default: '#0f0926',
+            paper: '#000003',
+        },
+        text: {
+            primary: '#ffffff', // Set primary text color to white
+        },
+    },
+        
+    
+    spacing: 8,
+
+
 });
 
 
@@ -101,6 +119,7 @@ const Home = () => {
     setOpen(!open);
   };
 
+  const user = "james";
   return (
 
     <ThemeProvider theme={customTheme}>
@@ -136,7 +155,8 @@ const Home = () => {
               Dashboard
             </Typography>
             <Typography variant="h6"> 
-              Welcome!
+             
+              Welcome {user}!
             </Typography>
             <Toolbar
               sx={{

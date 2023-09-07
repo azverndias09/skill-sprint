@@ -18,7 +18,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-
+import Alert from '@mui/material/Alert';
 import emailjs from '@emailjs/browser';
 
 function Copyright(props) {
@@ -218,7 +218,7 @@ const Register = () => {
                         flexDirection: 'column',  // Align items vertically
                         justifyContent: 'center', // Center vertically
                         alignItems: 'center',  
-                        backgroundImage: 'url(/giphy.gif)',
+                        backgroundImage: 'url(/artifact.gif)',
                         backgroundRepeat: 'no-repeat',
                         // backgroundColor: (t) =>
                         //      t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -233,8 +233,8 @@ const Register = () => {
                        
                         component="img"
                         sx={{
-                            height: 230,
-                            width: '100%',
+                            height: 500,
+                            width: 500,
                             // maxHeight: { xs: 233, md: 167 },
                             // maxWidth: { xs: 400, md: 250 },
                             // justifyContent: 'center',
@@ -243,8 +243,8 @@ const Register = () => {
                             
 
                         }}
-                        //alt="The house from the offer."
-                        src="/skillsprint.png"
+                        
+                        src="/skillsprintlogo3.png"
                     />
 
                  </Grid>
@@ -264,7 +264,7 @@ const Register = () => {
                             <LockOutlinedIcon />
                         </Avatar>
                         <Typography component="h1" variant="h4" className={classes.whiteText}>
-                            Register
+                            Sign in to SkillSprint®
                         </Typography>
 
 
@@ -382,7 +382,7 @@ const Register = () => {
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
-                                
+
                                 onClick={handleRegister}
                                 disabled={!isRegistered || emailError || (!isPasswordValid && hasTypedPassword) || (!otpVerified && otpVerificationAttempted)} // Disable the button based on conditions
                             >
@@ -396,7 +396,7 @@ const Register = () => {
                                 </Grid>
                             </Grid>
                             <Copyright sx={{ mt: 5 }} />
-                            {isRegistered && <p>You have successfully registered!</p>}
+                            {isRegistered && <Alert severity="success">You have successfully registered!</Alert>}
                         </Box>
                     </Box>
                 </Grid>

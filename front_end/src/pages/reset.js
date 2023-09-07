@@ -52,23 +52,18 @@ const customTheme = createTheme({
 
 });
 
-const useStyles = makeStyles((theme) => ({
-    whiteText: {
-        color: 'white',
-    },
+// const useStyles = makeStyles((theme) => ({
+//     whiteText: {
+//         color: 'white',
+//     },
 
+//     whiteTextField: {
+//         '& .MuiInputBase-input': {
+//             color: 'white',
+//         },
+//     },
 
-
-    whiteTextField: {
-        '& .MuiInputBase-input': {
-            color: 'white',
-        },
-    },
-
-
-
-
-}));
+// }));
 
 
 const delay = ms => new Promise(
@@ -80,7 +75,7 @@ const Reset = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [passwordResetSuccess, setPasswordResetSuccess] = useState(false);
-    const classes = useStyles();
+   // const classes = useStyles();
 
 
     useEffect(() => {
@@ -129,7 +124,7 @@ const Reset = () => {
         <ThemeProvider theme={customTheme}>
             <Grid container component="main" sx={{
                 height: '100vh', justifyContent: 'center', alignItems: 'center', backgroundColor: '#84c2f5',
-                backgroundImage:  'url(/giphy.gif)',
+                backgroundImage:  'url(/artifact.gif)',
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: 'cover',
 
@@ -189,14 +184,16 @@ const Reset = () => {
                                     Password reset successfully!
                                 </Typography>
                             )}
-                            <Grid container spacing={8}>
+                            <Grid container spacing={8} justifyContent='space-between'>
 
                                 <Grid item>
-                                    <Link to="/register" variant="body2">
+                                    <Typography variant="body2" >
+                                    <Link to="/register" >
                                         {"Don't have an account? Sign Up"}
                                     </Link>
+                                    </Typography>
                                 </Grid>
-                                <Grid item>
+                                <Grid item >
                                     <Link to="/login" variant="body2">
                                         {"Have one? Login "}
                                     </Link>
