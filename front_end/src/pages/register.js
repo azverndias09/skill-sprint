@@ -12,7 +12,7 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { makeStyles} from '@mui/styles';
+import { makeStyles } from '@mui/styles';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -38,7 +38,7 @@ const customTheme = createTheme({
         fontFamily: 'Poppins, sans-serif',
     },
     palette: {
-       mode: 'dark',
+        mode: 'dark',
         primary: {
             main: '#82cbe8', // Set primary color to white
         },
@@ -50,8 +50,8 @@ const customTheme = createTheme({
             primary: '#ffffff', // Set primary text color to white
         },
     },
-        
-    
+
+
     spacing: 8,
 });
 
@@ -59,9 +59,9 @@ const useStyles = makeStyles((theme) => ({
     whiteText: {
         color: 'white',
     },
-   
 
-    
+
+
     whiteRadio: {
         '& .MuiRadio-root': {
             color: 'white',
@@ -121,25 +121,25 @@ const Register = () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ name, email, password ,userType}),
+            body: JSON.stringify({ name, email, password, userType }),
 
         });
 
         // console.log(response);
-           if (response.ok) {
-        //if (true) {
+        if (response.ok) {
+            //if (true) {
             console.log("registration done brother");
-            let userTemp={
+            let userTemp = {
                 name,
                 email,
                 userType,
             };
             setUser(userTemp);
-            localStorage.setItem('user',JSON.stringify(user));
+            localStorage.setItem('user', JSON.stringify(userTemp));
             console.log(user);
-            const data=JSON.parse(localStorage.getItem('user'));
+            const data = JSON.parse(localStorage.getItem('user'));
             console.log("data");
-               console.log(data);
+            console.log(data);
 
             navigate('/login');
 
@@ -178,7 +178,7 @@ const Register = () => {
                     //error stuff here
                 }
             );
-     //   setShowOTPInput(true);
+        //   setShowOTPInput(true);
 
     };
 
@@ -194,13 +194,13 @@ const Register = () => {
         setOtpVerificationAttempted(true); // Indicate that OTP verification was attempted
     };
 
-    
 
-        const handleRadioChange = (event) => {
-            setSelectedValue(event.target.value);
-        };
 
-   
+    const handleRadioChange = (event) => {
+        setSelectedValue(event.target.value);
+    };
+
+
 
     return (
         <ThemeProvider theme={customTheme}>
@@ -212,12 +212,12 @@ const Register = () => {
                     xs={false}
                     sm={4}
                     md={7}
-                    
+
                     sx={{
                         display: 'flex',          // Use flexbox for vertical and horizontal centering
                         flexDirection: 'column',  // Align items vertically
                         justifyContent: 'center', // Center vertically
-                        alignItems: 'center',  
+                        alignItems: 'center',
                         backgroundImage: 'url(/giphy.gif)',
                         backgroundRepeat: 'no-repeat',
                         // backgroundColor: (t) =>
@@ -226,11 +226,11 @@ const Register = () => {
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                     }}
-                    >
-            
+                >
+
 
                     <Box
-                       
+
                         component="img"
                         sx={{
                             height: 230,
@@ -240,17 +240,17 @@ const Register = () => {
                             // justifyContent: 'center',
                             // alignItems: 'center',
                             //textAlign: 'center',
-                            
+
 
                         }}
                         //alt="The house from the offer."
                         src="/skillsprint.png"
                     />
 
-                 </Grid>
-                <Grid item xs={12} sm={8} md={5}  elevation={20} square 
-                    
-                    >
+                </Grid>
+                <Grid item xs={12} sm={8} md={5} elevation={20} square
+
+                >
                     <Box
                         sx={{
                             my: 8,
@@ -355,12 +355,12 @@ const Register = () => {
                             <FormControl
                                 required
                                 disabled={!isRegistered || emailError || (!isPasswordValid && hasTypedPassword) || (!otpVerified && otpVerificationAttempted)}
-                                >
-                                <FormLabel  id="demo-row-radio-buttons-group-label"
-                                sx={{
-                                    color:'black'
-                                }}>
-                                Register As</FormLabel>
+                            >
+                                <FormLabel id="demo-row-radio-buttons-group-label"
+                                    sx={{
+                                        color: 'black'
+                                    }}>
+                                    Register As</FormLabel>
                                 <RadioGroup
                                     row
                                     aria-labelledby="demo-row-radio-buttons-group-label"
@@ -371,18 +371,18 @@ const Register = () => {
                                 >
                                     <FormControlLabel value="Client" control={<Radio />} label="Client" />
                                     <FormControlLabel value="Business" control={<Radio />} label="Business" />
-                                    
-                                 
+
+
                                 </RadioGroup>
                             </FormControl>
-                            
+
                             <Button
-                                
+
                                 type="button"
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
-                                
+
                                 onClick={handleRegister}
                                 disabled={!isRegistered || emailError || (!isPasswordValid && hasTypedPassword) || (!otpVerified && otpVerificationAttempted)} // Disable the button based on conditions
                             >
