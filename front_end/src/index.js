@@ -11,6 +11,7 @@ import Register from "./pages/register";
 
 import Numbers from "./pages/numbers";
 import Home from "./pages/home";
+
 import Chat from "./pages/chat";
 import Email from "./pages/email";
 import Reset from "./pages/reset";

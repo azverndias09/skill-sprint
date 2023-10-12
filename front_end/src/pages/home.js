@@ -20,6 +20,8 @@ import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import { mainListItems } from '../components/listItems';
+import {mainHeader} from  '../components/header';
 
 
 function Copyright(props) {
@@ -85,20 +87,7 @@ const customTheme = createTheme({
   typography: {
     fontFamily: 'Poppins, sans-serif',
   },
-  palette: {
-       mode: 'dark',
-        primary: {
-            main: '#82cbe8', // Set primary color to white
-        },
-        background: {
-            default: '#0f0926',
-            paper: '#000003',
-        },
-        text: {
-            primary: '#ffffff', // Set primary text color to white
-        },
-    },
-        
+
     
     spacing: 8,
 
@@ -113,6 +102,7 @@ const Home = () => {
    localStorage.removeItem('user');
     navigate("/login");
   }
+
 
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
@@ -141,20 +131,15 @@ const Home = () => {
                 ...(open && { display: 'none' }),
               }}
             >
-           
               <MenuIcon />
             </IconButton>
+            
+            <Grid item xs={12} sm={6} md={4} lg={3}>
+              <img src="/skillsprint.png" alt="Logo" style={{ width: '200px', height: '60px' }} />
+            </Grid>
 
-            <Typography
-              component="h1"
-              variant="h6"
-              color="inherit"
-              noWrap
-              sx={{ flexGrow: 1 }}
-            >
-              Dashboard
-            </Typography>
-            <Typography variant="h6"> 
+            
+            <Typography variant="h6">  
              
               Welcome {user}!
             </Typography>
@@ -164,7 +149,7 @@ const Home = () => {
                 justifyContent: 'center',    // Horizontally center
                 alignItems: 'center',        // Vertically center
               }}>
-              <img src="/skillsprint.png" alt="Logo" style={{ width: '200px', height: '50px' }} />
+              
             </Toolbar>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
@@ -173,24 +158,31 @@ const Home = () => {
             </IconButton>
           </Toolbar>
         </AppBar>
+
+
+
         <Drawer variant="permanent" open={open}>
           <Toolbar
             sx={{
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'flex-end',
+              justifyContent: 'space-between',
               px: [1],
             }}
           >
+            <Button variant="contained" sx={{ mt: 3, mb: 2 }} onClick={reset}>
+              Logout
+            </Button>
+          
             <IconButton onClick={toggleDrawer}>
               <ChevronLeftIcon />
             </IconButton>
           </Toolbar>
           <Divider />
           <List component="nav">
-            {/* {mainListItems} */}
+            {mainListItems}
             <Divider sx={{ my: 1 }} />
-            {/* {secondaryListItems} */}
+           
           </List>
         </Drawer>
         <Box
@@ -209,19 +201,6 @@ const Home = () => {
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
               {/* Chart */}
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  {/* <Chart /> */}
-                </Paper>
-              </Grid>
-              {/* Recent Deposits */}
               <Grid item xs={12} md={4} lg={3}>
                 <Paper
                   sx={{
@@ -231,15 +210,102 @@ const Home = () => {
                     height: 240,
                   }}
                 >
-                  {/* <Deposits /> */}
+                   
                 </Paper>
               </Grid>
-              {/* Recent Orders */}
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  {/* <Orders /> */}
+              
+              <Grid item xs={12} md={4} lg={3}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 240,
+                  }}
+                >
+                  
                 </Paper>
               </Grid>
+
+              <Grid item xs={12} md={4} lg={3}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 240,
+                  }}
+                >
+
+                </Paper>
+              </Grid>
+
+              <Grid item xs={12} md={4} lg={3}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 240,
+                  }}
+                >
+
+                </Paper>
+              </Grid>
+
+              <Grid item xs={12} md={4} lg={3}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 240,
+                  }}
+                >
+
+                </Paper>
+              </Grid>
+
+              <Grid item xs={12} md={4} lg={3}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 240,
+                  }}
+                >
+
+                </Paper>
+              </Grid>
+
+              <Grid item xs={12} md={4} lg={3}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 240,
+                  }}
+                >
+
+                </Paper>
+              </Grid>
+
+              <Grid item xs={12} md={4} lg={3}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 240,
+                  }}
+                >
+
+                </Paper>
+              </Grid>
+             
+           
             </Grid>
             <Copyright sx={{ pt: 4 }} />
           </Container>
@@ -248,9 +314,7 @@ const Home = () => {
 
 
   
-      <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={reset}>
-        Logout
-      </Button>
+      
 
     </ThemeProvider>
    

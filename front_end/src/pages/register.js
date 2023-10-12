@@ -91,7 +91,7 @@ const Register = () => {
     const [testOtp, setTestOtp] = useState('');
     const [isRegistered, setIsRegistered] = useState(false);
     const [isPasswordValid, setIsPasswordValid] = useState(null);
-    const [focused, setFocused] = useState(false);
+    const [focused, setFocused] = useState(false); 
     const [hasTypedPassword, setHasTypedPassword] = useState(false);
     const [showOTPInput, setShowOTPInput] = useState(false);
     const [otpVerified, setOtpVerified] = useState(false);
