@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
 import Button from '@mui/material/Button';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -16,14 +15,20 @@ import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-//import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems } from '../components/listItems';
-import {mainHeader} from  '../components/header';
+import { mainHeader } from '../components/header';
 
-
+function getUsernameFromLocalStorage() {
+  const userJSON = localStorage.getItem('user');
+  if (userJSON) {
+    const userObj = JSON.parse(userJSON);
+    return userObj.username;
+  }
+  return 'Guest'; // Default value when no user data is found in localStorage
+}
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -93,23 +98,20 @@ const customTheme = createTheme({
 
 
 });
-
-
-const Home = () => {
+function Home() {
   const navigate = useNavigate();
-  //const [user, setUser] = useState();
+
   const reset = () => {
-   localStorage.removeItem('user');
+    localStorage.removeItem('user');
     navigate("/login");
   }
-
 
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
-  const user = "james";
+  const user = getUsernameFromLocalStorage();
   return (
 
     <ThemeProvider theme={customTheme}>

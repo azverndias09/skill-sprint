@@ -52,18 +52,7 @@ const customTheme = createTheme({
 
 });
 
-// const useStyles = makeStyles((theme) => ({
-//     whiteText: {
-//         color: 'white',
-//     },
 
-//     whiteTextField: {
-//         '& .MuiInputBase-input': {
-//             color: 'white',
-//         },
-//     },
-
-// }));
 
 
 const delay = ms => new Promise(

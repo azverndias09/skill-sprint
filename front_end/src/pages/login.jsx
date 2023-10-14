@@ -125,6 +125,7 @@ const Login = () => {
 
             localStorage.setItem('user', JSON.stringify(userData));
             console.log(userData);
+            navigate("/home");
         }
         else {
             console.error("no bro check code");
