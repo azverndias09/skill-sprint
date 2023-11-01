@@ -22,7 +22,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems } from '../components/listItems';
 import { mainAppBar } from '../components/appbar';
-
+import RazorpayPaymentButton from "../components/PaymentButton";
 
 function Copyright(props) {
   return (
@@ -177,7 +177,7 @@ const Home = () => {
             <Button variant="contained" sx={{ mt: 3, mb: 2 }} onClick={reset}>
               Logout
             </Button>
-
+            <RazorpayPaymentButton amount={250} />
             <IconButton onClick={toggleDrawer}>
               <ChevronLeftIcon />
             </IconButton>

@@ -7,6 +7,7 @@ const userRoute = require('./routes/user');
 const loginRoute = require('./routes/login');
 const registerRoute = require('./routes/register');
 const resetpassRoute = require('./routes/resetPass');
+const paymentRoutes = require("./routes/payment");
 
 const app = express();
 const server = http.createServer(app);
@@ -23,7 +24,7 @@ app.use("/login", loginRoute);
 app.use("/register", registerRoute);
 app.use("/resetPass", resetpassRoute);
 
-
+app.use("/api/payment/", paymentRoutes);
 setupChat(server);
 
 server.listen(3001, () => {

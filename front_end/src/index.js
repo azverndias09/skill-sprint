@@ -15,6 +15,7 @@ import Email from "./pages/email";
 import Reset from "./pages/reset";
 import Businessprofile from "./pages/businessprofile";
 import Clientprofile from "./pages/clientprofile";
+import PaymentPage from './components/PaymentButton';
 
 
 
@@ -30,6 +31,7 @@ export default function App() {
         <Route path="/chat" element={<Chat />} />
         <Route path="/email" element={<Email />} />
         <Route path="/numbers" element={<Numbers />} />
+        <Route path="/payment" element={<PaymentPage />} />
         <Route path="/businessprofile" element={<Businessprofile />} />
         <Route path="/clientprofile" element={<Clientprofile />} />
  
@@ -40,6 +42,7 @@ export default function App() {
 }
 ReactDOM.render(
   <React.StrictMode>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <App />
   </React.StrictMode>,
   document.getElementById('root')
