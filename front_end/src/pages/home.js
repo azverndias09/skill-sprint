@@ -21,7 +21,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems } from '../components/listItems';
-import {mainHeader} from  '../components/header';
+import {mainAppBar} from  '../components/appbar';
 
 
 function Copyright(props) {
@@ -95,7 +95,7 @@ const customTheme = createTheme({
 });
 
 
-const Home = () => {
+const Businessprofile = () => {
   const navigate = useNavigate();
   //const [user, setUser] = useState();
   const reset = () => {
@@ -141,21 +141,25 @@ const Home = () => {
             
             <Typography variant="h6">  
              
-              Welcome {user}!
+              Welcome!
             </Typography>
+
             <Toolbar
               sx={{
                 display: 'flex',
-                justifyContent: 'center',    // Horizontally center
+                justifyContent: 'right',    // Horizontally center
                 alignItems: 'center',        // Vertically center
               }}>
               
             </Toolbar>
+            
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
+            
+
           </Toolbar>
         </AppBar>
 
@@ -185,6 +189,8 @@ const Home = () => {
            
           </List>
         </Drawer>
+
+
         <Box
           component="main"
           sx={{
@@ -321,4 +327,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Businessprofile;

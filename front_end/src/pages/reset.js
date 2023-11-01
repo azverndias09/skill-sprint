@@ -5,7 +5,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-
 //  import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -52,18 +51,7 @@ const customTheme = createTheme({
 
 });
 
-// const useStyles = makeStyles((theme) => ({
-//     whiteText: {
-//         color: 'white',
-//     },
 
-//     whiteTextField: {
-//         '& .MuiInputBase-input': {
-//             color: 'white',
-//         },
-//     },
-
-// }));
 
 
 const delay = ms => new Promise(
@@ -137,7 +125,9 @@ const Reset = () => {
                 sx={{
                     backgroundColor:'#0f0926',
                     borderRadius: '16px',
+                    justifyContent:'center'
                 }} >
+
                     <Box
                         sx={{
                             my: 8,
@@ -145,12 +135,28 @@ const Reset = () => {
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
+                           
                             
                         }}
                     >
-                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                        {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                             <LockOutlinedIcon />
-                        </Avatar>
+                        </Avatar> */}
+
+                        <Grid item xs={12} sm={6} md={4} lg={3}
+                        sx={{
+                           display:'flex',
+                           justifyContent:'center',
+                            
+                        }}>
+                            <img src="/skillsprint.png" alt="Logo"
+                             style={{
+                                 width: '430px',
+                                  height: '130px',
+                                
+                                
+                                  }} />
+                        </Grid>
 
                         <Typography component="h1" variant="h5">Reset Password</Typography>
                         <Box component="form" noValidate sx={{ mt: 1 }}>

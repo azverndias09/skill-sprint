@@ -8,14 +8,13 @@ import reportWebVitals from './reportWebVitals';
 
 import Login from "./pages/login";
 import Register from "./pages/register";
-
 import Numbers from "./pages/numbers";
 import Home from "./pages/home";
-
 import Chat from "./pages/chat";
 import Email from "./pages/email";
 import Reset from "./pages/reset";
-//import MaterialChat from "./pages/materialchat";
+import Businessprofile from "./pages/businessprofile";
+import Clientprofile from "./pages/clientprofile";
 
 
 
@@ -31,7 +30,9 @@ export default function App() {
         <Route path="/chat" element={<Chat />} />
         <Route path="/email" element={<Email />} />
         <Route path="/numbers" element={<Numbers />} />
-        {/* <Route path="/materialchat" element={<MaterialChat />}/> */}
+        <Route path="/businessprofile" element={<Businessprofile />} />
+        <Route path="/clientprofile" element={<Clientprofile />} />
+ 
 
       </Routes>
     </BrowserRouter>
