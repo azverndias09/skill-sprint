@@ -10,12 +10,16 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 import Numbers from "./pages/numbers";
 import Home from "./pages/home";
+import Home2 from "./pages/home2";
+
 import Chat from "./pages/chat";
 import Email from "./pages/email";
 import Reset from "./pages/reset";
 import Businessprofile from "./pages/businessprofile";
 import Clientprofile from "./pages/clientprofile";
 import PaymentPage from './components/PaymentButton';
+
+import Location from './pages/location';
 
 
 
@@ -28,12 +32,14 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/reset" element={<Reset />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/home2" element={<Home2 />} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/email" element={<Email />} />
         <Route path="/numbers" element={<Numbers />} />
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/businessprofile" element={<Businessprofile />} />
         <Route path="/clientprofile" element={<Clientprofile />} />
+        <Route path="/location" element={<Location />} />
  
 
       </Routes>
