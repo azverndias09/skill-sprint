@@ -1,4 +1,5 @@
 import * as React from 'react';
+import  { useState, useRef, useEffect } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -62,6 +63,48 @@ const customTheme = createTheme({
 
 
 export default function Clientprofile() {
+
+    const [firstname, setFirstname] = useState('');
+    const [lastname, setLastname] = useState('');
+    const [contactnumber, setContactnumber] = useState('');
+    const [city, setCity] = useState('');
+    const [state, setState] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const handleSubmit = () => {
+        // Create a JSON object from the form data
+        const formData = {
+            first_name: firstname,
+            last_name: lastname,
+            contact_number: contactnumber,
+            city,
+            state,
+        };
+
+        // Send formData to the backend
+        fetch('http://localhost:3001/clientprofile', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(() => {
+                setSuccessMessage('Client profile details updated!');
+                setErrorMessage('');
+            })
+            .catch((error) => {
+                setSuccessMessage('');
+                setErrorMessage('Error updating client profile: ' + error.message);
+            });
+    };
 
 
     return (
@@ -131,9 +174,11 @@ export default function Clientprofile() {
 
                                 <TextField
                                     required
-                                    id="First Name"
-                                    name="First Name"
+                                    id="first_name"
+                                    name="first_name"
                                     label= "First Name"
+                                    value={firstname}
+                                    onChange={(e) => setFirstname(e.target.value)}
                                     fullWidth
                                     autoComplete="given-name"
                                     variant="standard"
@@ -144,9 +189,11 @@ export default function Clientprofile() {
 
                                 <TextField
                                     required
-                                    id="Last Name"
-                                    name="Last Name"
+                                    id="last_name"
+                                    name="last_name"
                                     label="Last Name"
+                                    value={lastname}
+                                    onChange={(e) => setLastname(e.target.value)}
                                     fullWidth
                                     autoComplete="given-name"
                                     variant="standard"
@@ -157,9 +204,12 @@ export default function Clientprofile() {
                             <Grid item xs={12} >
                                 <TextField
                                     required
-                                    id="contact number"
-                                    name="contact number"
+                                    id="contact_number"
+                                    name="contact_number"
                                     label="Contact Number"
+                                    value={contactnumber}
+                                    onChange={(e) => setContactnumber(e.target.value)}
+                                    
                                     fullWidth
                                     autoComplete="phone"
                                     variant="standard"
@@ -171,6 +221,8 @@ export default function Clientprofile() {
                                     id="city"
                                     name="city"
                                     label="City"
+                                    value={city}
+                                    onChange={(e) => setCity(e.target.value)}
                                     fullWidth
                                     autoComplete="shipping address-level2"
                                     variant="standard"
@@ -181,13 +233,16 @@ export default function Clientprofile() {
                                     id="state"
                                     name="state"
                                     label="State/Province/Region"
+                                    value={state}
+                                    onChange={(e) => setState(e.target.value)}
                                     fullWidth
                                     variant="standard"
                                 />
                             </Grid>
 
 
-                            <Button size='large' fullWidth type="button" variant="contained" sx={{ mt: 3, mb: 2 }} >
+                            <Button size='large' fullWidth type="button" variant="contained" sx={{ mt: 3, mb: 2 }} 
+                            onClick={handleSubmit}>
                                 Next
                             </Button>
 

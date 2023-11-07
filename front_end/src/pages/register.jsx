@@ -235,11 +235,7 @@ const Register = () => {
                         sx={{
                             height: 500,
                             width: 500,
-                            // maxHeight: { xs: 233, md: 167 },
-                            // maxWidth: { xs: 400, md: 250 },
-                            // justifyContent: 'center',
-                            // alignItems: 'center',
-                            //textAlign: 'center',
+                          
 
 
                         }}

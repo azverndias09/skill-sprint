@@ -5,6 +5,7 @@ import {
     Avatar,
     Badge,
     Box,
+    Divider,
     InputBase,
     Menu,
     MenuItem,
@@ -113,7 +114,7 @@ const Navbar = () => {
                     />
                 </Search>
                 <Icons>
-                    <Badge badgeContent={4} color="error">
+                    <Badge badgeContent={4} color="error" sx={{mr:'24px',mt:'6px'}}>
                         <Notifications />
                     </Badge>
                     
@@ -149,6 +150,7 @@ const Navbar = () => {
             >
                 <MenuItem>Profile</MenuItem>
                 <MenuItem>My account</MenuItem>
+                <Divider/>
                 <MenuItem onClick={reset}>Logout</MenuItem>
             </Menu>
         </AppBar>

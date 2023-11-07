@@ -29,20 +29,6 @@ import SortButton from '../components/sortbutton'
 import StickyFooter from '../components/footer';
 
 
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                SkillSprint
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
-
-
 const customTheme = createTheme({
     typography: {
         fontFamily: 'Poppins, sans-serif',
@@ -52,7 +38,7 @@ const customTheme = createTheme({
 });
 
 
-const Home2 = () => {
+const ServicePage = () => {
     const navigate = useNavigate();
     //const [user, setUser] = useState();
     const reset = () => {
@@ -70,60 +56,28 @@ const Home2 = () => {
 
         <ThemeProvider theme={customTheme}>
 
+           
             <Box bgcolor={"background.default"} color={"text.primary"}>
                 <Navbar />
             </Box>
 
-        <Box sx={{ margin: '64px' }}>
-          <Grid container sx={{justifyContent:'end'}}>
-          <SortButton/>
-          </Grid>
 
 
-            <Grid container spacing={2} flex={4} py={4} maxRows={4} sx={{ display: 'flex', justifyContent: 'start', wrap: true, }}>
-                <Grid item xs={12} md={3}>
-                    <ServiceCard />
+            <Box sx={{ margin: '64px' }}>
+                
+                <Grid >
+                    
                 </Grid>
-                <Grid item xs={12} md={3}>
-                    <ServiceCard />
-                </Grid>
-                <Grid item xs={12} md={3}>
-                    <ServiceCard />
-                </Grid>
-                <Grid item xs={12} md={3}>
-                    <ServiceCard />
-                </Grid>
-                <Grid item xs={12} md={3}>
-                    <ServiceCard />
-                </Grid>
-                <Grid item xs={12} md={3}>
-                    <ServiceCard />
-                </Grid>
-                <Grid item xs={12} md={3}>
-                    <ServiceCard />
-                </Grid>
-                <Grid item xs={12} md={3}>
-                    <ServiceCard />
-                </Grid>
+            </Box>
 
-                <Grid item xs={12} md={3}>
-                  <ServiceCard />
-                </Grid>
-                <Grid item xs={12} md={3}>
-                  <ServiceCard />
-                </Grid>
-                <Grid item xs={12} md={3}>
-                  <ServiceCard />
-                </Grid>
-            </Grid>
-        </Box>
+            <Box sx={{ marginTop: '-600px' }}>
+                <StickyFooter />
+            </Box>
 
-      <Box sx={{marginTop:'-600px'}}>
-        <StickyFooter/>
-      </Box>
+            
         </ThemeProvider>
 
     );
 };
 
-export default Home2;
+export default ServicePage;

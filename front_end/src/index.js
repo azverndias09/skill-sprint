@@ -18,6 +18,9 @@ import Reset from "./pages/reset";
 import Businessprofile from "./pages/businessprofile";
 import Clientprofile from "./pages/clientprofile";
 import PaymentPage from './components/PaymentButton';
+import Displayclientprofile from './pages/displayclientprofile';
+import Displaybusinessprofile from './pages/displaybusinessprofile';
+import ServicePage from './pages/servicepage'
 
 import Location from './pages/location';
 
@@ -40,7 +43,10 @@ export default function App() {
         <Route path="/businessprofile" element={<Businessprofile />} />
         <Route path="/clientprofile" element={<Clientprofile />} />
         <Route path="/location" element={<Location />} />
- 
+        <Route path="/displayclientprofile" element={<Displayclientprofile />} />
+        <Route path="/displaybusinessprofile" element={<Displaybusinessprofile />} />
+        <Route path="/servicepage" element={<ServicePage />} />
+        
 
       </Routes>
     </BrowserRouter>
