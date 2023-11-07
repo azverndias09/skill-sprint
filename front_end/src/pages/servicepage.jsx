@@ -15,19 +15,26 @@ import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
+import Rating from '@mui/material/Rating';
+import { CardHeader } from '@mui/material'
+import { Avatar } from '@mui/material';
+import Stack from '@mui/material/Stack';
+
+
+
 import Paper from '@mui/material/Paper';
-//import Link from '@mui/material/Link';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems } from '../components/listItems';
-import { mainAppBar } from '../components/appbar';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import { CardActionArea } from '@mui/material';
+
+import ChatIcon from '@mui/icons-material/Chat';
+import PaymentIcon from '@mui/icons-material/Payment';
+
 
 import Navbar from '../components/navbar';
-import ServiceCard from '../components/servicecard';
-import SortButton from '../components/sortbutton'
 import StickyFooter from '../components/footer';
-
+import GoogleMap from '../components/mapcomponent'
 
 const customTheme = createTheme({
     typography: {
@@ -46,11 +53,8 @@ const ServicePage = () => {
         navigate("/login");
     }
 
-
-    const [open, setOpen] = React.useState(true);
-    const toggleDrawer = () => {
-        setOpen(!open);
-    };
+    const [rating, setRating] = React.useState(4);
+    
 
     return (
 
@@ -63,14 +67,144 @@ const ServicePage = () => {
 
 
 
-            <Box sx={{ margin: '64px' }}>
+            <Box main sx={{ margin:'64px' , display:'flex', }}>
                 
-                <Grid >
-                    
+                
+                <Grid className='picturedescription' >
+                    <Card sx={{ maxWidth: 800 }}>
+                        <CardActionArea>
+                            <CardMedia
+                                component="img"
+                                height="560"
+                                
+                                image="/freelancing.jpg"
+                                alt="freelancing picture"
+                            />
+                            <CardContent>
+                                <Typography gutterBottom variant="h5" component="div">
+                                    Description
+                                </Typography>
+                                <Typography variant="body2" color="initial">
+                                    Royal Event Planners is a premier event management company that delivers
+                                     exceptional experiences for its clients. 
+                                     With a proven track record of successfully executed events, 
+                                     our team of experts provides personalized service, creative ideas, 
+                                     and strong vendor relationships to ensure that your event runs smoothly 
+                                     and exceeds your expectations. Whether it's a corporate conference,
+                                    social celebration, or outdoor festival, we'll work closely with you
+                                    to design and execute a flawless event that fits your vision and budget.<br />
+                                    
+                                    Why choose Royal Event Planners?<br />
+
+                                    -Personalized service and attention to detail<br/>
+                                    -Creativity and innovative ideas<br />
+                                    -Strong relationships with vendors and suppliers<br />
+                                    -Budget-friendly solutions without compromising quality<br />
+                                    -Flexibility and adaptability to accommodate last-minute changes or unexpected challenges<br />
+                                    Let us help you make your next event a royal success!
+                                    
+                                </Typography>
+                            </CardContent>
+                        </CardActionArea>
+                    </Card>
                 </Grid>
+
+
+                
+
+                <Grid item className='servicenameandseller' ml={4} sx={{ flexGrow: 1, order: 1 }}>
+                    <Card>
+
+                    <CardActionArea>
+                        
+                        <CardContent>
+                            <Typography gutterBottom variant="h4" component="div" sx={{ fontWeight: '500' }}>
+                                Event Planning
+                            </Typography>
+
+                                <Typography gutterBottom variant="body2" component="div" mb={2} sx={{ fontWeight: '300' }}>
+                                    Category: Event Management
+                                </Typography>
+                                
+                               
+                            <Grid container sx={{ display: 'flex', alignItems: 'center' }} >
+                                <Rating name="read-only" value={rating} readOnly size='small'
+                                    sx={{ marginTop: '-8px' }} />
+
+                                <Typography variant='body3' color='textSecondary' sx={{ marginBottom: '5px' }}>(12)</Typography>
+                            </Grid>
+
+                            <Grid item style={{ display: 'flex', alignItems: 'center', marginTop: '4px', justifyContent: 'space-between' }}>
+                                <Grid container sx={{ alignItems: 'center', justifyContent: 'start' }}>
+                                    <Typography variant="body1" sx={{ fontWeight: '500', mr: '8px' }}>
+                                        From
+                                    </Typography>
+                                    <Typography variant="h4" sx={{ fontWeight: '500' }}>
+                                        ₹1000
+                                    </Typography>
+                                </Grid>
+
+                                    
+
+
+                                <Typography variant='body3' color='grey' sx={{ textAlign: 'right' }}>
+                                    MARGAO,GOA
+                                </Typography>
+                                
+
+
+                            </Grid>
+                        </CardContent>
+                    </CardActionArea>
+
+                    </Card>
+
+                    <Grid item mt={2} pb={16}>
+
+                        <Card>
+                            <CardContent>
+
+                                <Grid sx={{display:'flex', alignItems:'center'}}>
+                                <Avatar sx={{ bgcolor: '#6f0094', mr:'8px'}} aria-label="recipe">
+                                    R
+                                </Avatar>
+                                <Typography variant="h6" sx={{ color: 'initial' }}>
+                                    Royal Event Planners
+                                </Typography>
+                                </Grid>
+
+
+
+                                <Grid mt={2}>
+                                <Stack direction="row" spacing={4}>
+                                    <Button variant="outlined" startIcon={<ChatIcon />}>
+                                        Chat with Business
+                                    </Button>
+                                    <Button variant="outlined" endIcon={<PaymentIcon />}>
+                                        Pay Business
+                                    </Button>
+                                </Stack>
+
+                                </Grid>
+                                
+  
+
+
+
+                            </CardContent>
+                        </Card>
+                   
+                    </Grid>
+                </Grid>
+
+                {/* <div className="map">
+                    <GoogleMap />
+                </div> */}
+
+
             </Box>
 
-            <Box sx={{ marginTop: '-600px' }}>
+            <Box className='footer' sx={{ marginTop: '-600px' }}>
                 <StickyFooter />
             </Box>
 
