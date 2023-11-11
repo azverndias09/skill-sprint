@@ -143,10 +143,12 @@ const ServicePage = () => {
 
                                     
 
+                                    <Grid item sx={{display:'flex'}}>
 
-                                <Typography variant='body3' color='grey' sx={{ textAlign: 'right' }}>
-                                    MARGAO,GOA
-                                </Typography>
+                                        <Typography variant="body2" color="grey" sx={{ display: 'inline' }}>Margao</Typography>
+                                        <Typography variant="body2" color="grey" sx={{ display: 'inline', marginRight:'8px' }}>,</Typography>
+                                        <Typography variant="body2" color="grey" sx={{ display: 'inline' }} > Goa</Typography>
+                                    </Grid>
                                 
 
 
@@ -181,6 +183,12 @@ const ServicePage = () => {
                                         Pay Business
                                     </Button>
                                 </Stack>
+
+                                    <Grid item xs={12} sm={12} mt={2}   >
+
+                                        <Typography variant="body2" color="initial" sx={{ display: 'inline' }}> Ph No: </Typography>
+                                        <Typography variant="body2" color="initial" sx={{ display: 'inline' }} > 1234567890</Typography>
+                                    </Grid>
 
                                 </Grid>
                                 

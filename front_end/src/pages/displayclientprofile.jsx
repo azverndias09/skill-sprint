@@ -151,9 +151,10 @@ export default function Displayclientprofile() {
                         <Grid container spacing={3} pr={4} pl={4}>
 
                             <Grid container pb={4} sx={{ textAlign: 'center' }}>
-                                <Grid item xs={12} sm={12}   >
+                                <Grid item xs={12} sm={12}    >
 
-                                    <Typography variant="h5" color="initial" > Jason Miranda</Typography>
+                                    <Typography variant="h5" color="initial" sx={{display:'inline'}}> Jason</Typography>
+                                    <Typography variant="h5" color="initial" sx={{ display: 'inline' }} > Miranda</Typography>
                                 </Grid>
 
                                 <Grid item xs={12} sm={12} >
