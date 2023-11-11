@@ -8,9 +8,7 @@ import reportWebVitals from './reportWebVitals';
 
 import Login from "./pages/login";
 import Register from "./pages/register";
-import Numbers from "./pages/numbers";
 import Home from "./pages/home";
-import Home2 from "./pages/clienthome";
 
 import Chat from "./pages/chat";
 import Email from "./pages/email";
@@ -43,7 +41,6 @@ export default function App() {
         <Route path='/businesshome' element={<BusinessHome/>}/>
         <Route path="/chat" element={<Chat />} />
         <Route path="/email" element={<Email />} />
-        <Route path="/numbers" element={<Numbers />} />
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/businessprofile" element={<Businessprofile />} />
         <Route path="/clientprofile" element={<Clientprofile />} />

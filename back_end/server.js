@@ -36,7 +36,7 @@ server.listen(3001, () => {
 
 app.get("/status", (req, res) => {
     const status = {
-        "Status": "running bruv"
+        "Status": "running!"
     };
     res.send(status);
 });

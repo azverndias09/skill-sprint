@@ -19,7 +19,7 @@ import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Navbar from '../components/navbar';
+import BusinessNavbar from '../components/businessnavbar';
 import StickyFooter from '../components/footer';
 
 
@@ -116,7 +116,7 @@ export default function Displaybusinessprofile() {
             <ThemeProvider theme={customTheme}>
 
                 <Box bgcolor={"background.default"} color={"text.primary"}>
-                    <Navbar />
+                    <BusinessNavbar />
 
                 </Box>
 

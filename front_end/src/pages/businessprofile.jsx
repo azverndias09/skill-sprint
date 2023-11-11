@@ -157,6 +157,7 @@ export default function Businessprofile() {
                                     label="Contact Number"
                                     fullWidth
                                     autoComplete="phone"
+                                    type='number'
                                     variant="standard"
                                 />
                             </Grid>

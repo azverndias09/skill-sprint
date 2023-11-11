@@ -34,7 +34,6 @@ import PaymentIcon from '@mui/icons-material/Payment';
 
 import Navbar from '../components/navbar';
 import StickyFooter from '../components/footer';
-import GoogleMap from '../components/mapcomponent'
 
 const customTheme = createTheme({
     typography: {
@@ -195,9 +194,7 @@ const ServicePage = () => {
                     </Grid>
                 </Grid>
 
-                {/* <div className="map">
-                    <GoogleMap />
-                </div> */}
+            
 
 
             </Box>

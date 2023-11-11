@@ -1,40 +1,59 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from 'react';
 
-const Location = () => {
-    const [location, setLocation] = useState(null);
+function LocationPrompt() {
+    const [locationPermission, setLocationPermission] = useState(false);
+    const [state, setState] = useState('');
+    const [city, setCity] = useState('');
 
-    useEffect(() => {
-        // Fetch location data from your backend
-        fetch("/api/location")
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
-                return response.json();
-            })
-            .then((data) => {
-                setLocation(data);
-            })
-            .catch((error) => {
-                console.error("Error fetching location data:", error);
-            });
-    }, []);
+    const handleLocationButtonClick = async () => {
+        // Check if device supports geolocation
+        if (!navigator.geolocation) {
+            alert('Your device does not support geolocation.');
+            return;
+        }
+
+        // Prompt user for location permission
+        const permission = await requestPermissions();
+
+        // Handle permission response
+        if (permission) {
+            // Get user's location
+            const position = await getCurrentPosition();
+
+            // Retrieve state and city using OpenCage geocoding API
+            const url = `https://api.opencagedata.com/geocode?q=${position.coords.latitude},${position.coords.longitude}&key=beb5c896b764449dab227590b9f6205c`;
+            const response = await fetch(url);
+            const data = await response.json();
+
+            // Update state and city fields
+            setState(data.results[0].address_components.find(component => component.types.includes('administrative')).short_name);
+            setCity(data.results[0].address_components.find(component => component.types.includes('locality')).short_name);
+        } else {
+            alert('You denied the request for your location.');
+        }
+    };
+
+    const requestPermissions = async () => {
+        return new Promise((resolve, reject) => {
+            navigator.permissions.query('geolocation')
+                .then(permission => resolve(permission.state === 'granted'))
+                .catch(() => reject());
+        });
+    };
+
+    const getCurrentPosition = async () => {
+        return new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(resolve, reject);
+        });
+    };
 
     return (
         <div>
-            <h2>Location Details</h2>
-            {location ? (
-                <div>
-                    <p>Country: {location.country}</p>
-                    <p>City: {location.city}</p>
-                    <p>Latitude: {location.latitude}</p>
-                    <p>Longitude: {location.longitude}</p>
-                </div>
-            ) : (
-                <p>Loading location data...</p>
-            )}
+            <button onClick={handleLocationButtonClick}>Retrieve My Location</button>
+            <p>{state}</p>
+            <p>{city}</p>
         </div>
     );
-};
+}
 
-export default Location;
+export default LocationPrompt;

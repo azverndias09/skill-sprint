@@ -34,17 +34,7 @@ const customTheme = createTheme({
 
 const BusinessHome = () => {
     const navigate = useNavigate();
-    //const [user, setUser] = useState();
-    const reset = () => {
-        localStorage.removeItem('user');
-        navigate("/login");
-    }
 
-
-    const [open, setOpen] = React.useState(true);
-    const toggleDrawer = () => {
-        setOpen(!open);
-    };
 
     return (
 
@@ -55,10 +45,16 @@ const BusinessHome = () => {
             </Box>
 
             <Box sx={{ margin: '64px' }}>
-                
+               <Grid>
+                <Typography variant='h4'> My Ads </Typography>
+                </Grid> 
 
 
                 <Grid container spacing={2} flex={4} py={4} maxRows={4} sx={{ display: 'flex', justifyContent: 'start', wrap: true, }}>
+                    <Grid item xs={12} md={3}>
+                        <ServiceCard />
+                    </Grid>
+                   
                    
                 </Grid>
             </Box>

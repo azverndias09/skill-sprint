@@ -1,5 +1,4 @@
 import * as React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -11,29 +10,18 @@ import Avatar from '@mui/material/Avatar';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import Paper from '@mui/material/Paper';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
+
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import InputAdornment from '@mui/material/InputAdornment';
 import {styled} from "@mui/material";
+import StickyFooter from '../components/footer';
+import { Link, useNavigate } from 'react-router-dom';
 
 
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                SkillSprint
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
+
+
 
 const customTheme = createTheme({
     typography: {
@@ -77,6 +65,11 @@ const VisuallyHiddenInput = styled('input')({
 
 
 export default function CreateAd() {
+
+    const navigate = useNavigate();
+    const gotohomepage = () => {
+        navigate("/businesshome")
+    }
  
 
     return (
@@ -99,7 +92,7 @@ export default function CreateAd() {
                             justifyContent: 'start'
                         }}>
 
-                        <Button size='large' startIcon={<ArrowBackIcon />}
+                        <Button size='large' startIcon={<ArrowBackIcon />} onClick={gotohomepage}
                             sx={{
                             }}>
                         
@@ -202,8 +195,11 @@ export default function CreateAd() {
 
 
                     </Paper>
-                    <Copyright />
+                  
                 </Container>
+                <Box sx={{ marginTop: '-600px' }}>
+                    <StickyFooter />
+                </Box>
             </ThemeProvider>
         </React.Fragment>
     );

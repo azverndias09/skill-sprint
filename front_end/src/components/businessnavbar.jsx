@@ -19,7 +19,10 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import React, { useState } from "react";
 import { Grid } from "@mui/material";
 import { alpha } from '@mui/material/styles';
-
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Logout from '@mui/icons-material/Logout';
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
 
 
 
@@ -81,14 +84,7 @@ const Icons = styled(Box)(({ theme }) => ({
     },
 }));
 
-const UserBox = styled(Box)(({ theme }) => ({
-    display: "flex",
-    alignItems: "center",
-    gap: "10px",
-    [theme.breakpoints.up("sm")]: {
-        display: "none",
-    },
-}));
+
 
 const BusinessNavbar = () => {
 
@@ -98,13 +94,37 @@ const BusinessNavbar = () => {
         localStorage.removeItem('user');
         navigate("/login");
     }
-    const [open, setOpen] = useState(false);
+
+    const gotobusinessprofile = () => {
+        navigate("/displaybusinessprofile")
+    }
+
+    const gotohomepage = () => {
+        navigate("/businesshome")
+    }
+
+    const gotocreatead=()=>{
+        navigate('/createad')
+    }
+
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+
     return (
         <AppBar position="sticky">
             <StyledToolbar>
                 <Grid item xs={12} sm={6} md={4} lg={3}>
-                    <img src="/skillsprint.png" alt="Logo" style={{ width: '220px', height: '60px' }} />
-                </Grid>
+                    <Button onClick={gotohomepage} sx={{ padding: 0.5 }} >
+                        <img src="/skillsprint.png" alt="Logo" style={{ width: '220px', height: '60px' }} />
+                    </Button>                </Grid>
                 <Pets sx={{ display: { xs: "block", sm: "none" } }} />
                 <Search>
                     <SearchIconWrapper>
@@ -117,51 +137,84 @@ const BusinessNavbar = () => {
                 </Search>
                 <Icons>
 
-                    <Button variant="contained" startIcon={<AddBoxIcon />}
+                    <Button variant="contained" startIcon={<AddBoxIcon />} onClick={gotocreatead}
                     sx={{
                         marginRight:'16px'
                     }}>
                         New Ad
                     </Button>
 
-                    <Badge badgeContent={4} color="error" sx={{ mr: '24px', mt: '6px' }}>
+                    <Badge badgeContent={4} color="error" sx={{ mr: '8px', mt: '6px' }}>
                         <Notifications />
                     </Badge>
+                    <Tooltip title="Account settings">
+                        <IconButton
+                            onClick={handleClick}
+                            size="small"
+                            sx={{ ml: 2 }}
+                            aria-controls={open ? 'account-menu' : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={open ? 'true' : undefined}
+                        >
+                            <Avatar sx={{ width: 32, height: 32 }}>J</Avatar>
+                        </IconButton>
+                    </Tooltip>
 
-                    <Avatar
-                        sx={{ width: 30, height: 30 }}
-                        src="https://images.pexels.com/photos/846741/pexels-photo-846741.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                        onClick={(e) => setOpen(true)}
-                    />
+                    
                 </Icons>
-                <UserBox onClick={(e) => setOpen(true)}>
-                    <Avatar
-                        sx={{ width: 30, height: 30 }}
-                        src="https://images.pexels.com/photos/846741/pexels-photo-846741.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                    />
-                    <Typography variant="span">John</Typography>
-                </UserBox>
+                
             </StyledToolbar>
 
 
             <Menu
-                id="demo-positioned-menu"
-                aria-labelledby="demo-positioned-button"
+                anchorEl={anchorEl}
+                id="account-menu"
                 open={open}
-                onClose={(e) => setOpen(false)}
-                anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
+                onClose={handleClose}
+                onClick={handleClose}
+                PaperProps={{
+                    elevation: 0,
+                    sx: {
+                        overflow: 'visible',
+                        filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                        mt: 1.5,
+                        '& .MuiAvatar-root': {
+                            width: 32,
+                            height: 32,
+                            ml: -0.5,
+                            mr: 1,
+                        },
+                        '&:before': {
+                            content: '""',
+                            display: 'block',
+                            position: 'absolute',
+                            top: 0,
+                            right: 14,
+                            width: 10,
+                            height: 10,
+                            bgcolor: 'background.paper',
+                            transform: 'translateY(-50%) rotate(45deg)',
+                            zIndex: 0,
+                        },
+                    },
                 }}
-                transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                }}
+                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <MenuItem>Profile</MenuItem>
-                <MenuItem>My account</MenuItem>
+                <MenuItem onClick={gotobusinessprofile}>
+                    <Avatar /> Profile
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                    <Avatar /> My account
+                </MenuItem>
                 <Divider />
-                <MenuItem onClick={reset}>Logout</MenuItem>
+
+                <MenuItem onClick={reset}>
+                    <ListItemIcon>
+                        <Logout fontSize="small" />
+                    </ListItemIcon>
+                    Logout
+                </MenuItem>
             </Menu>
         </AppBar>
     );
