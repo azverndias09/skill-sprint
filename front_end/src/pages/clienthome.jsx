@@ -3,11 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import Button from '@mui/material/Button';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import MuiDrawer from '@mui/material/Drawer';
+
 import Box from '@mui/material/Box';
-import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
+
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
@@ -16,12 +14,7 @@ import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-//import Link from '@mui/material/Link';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems } from '../components/listItems';
-import { mainAppBar } from '../components/appbar';
+
 
 import Navbar from '../components/navbar';
 import ServiceCard from '../components/servicecard';
@@ -52,7 +45,7 @@ const customTheme = createTheme({
 });
 
 
-const Home2 = () => {
+const ClientHome = () => {
     const navigate = useNavigate();
     //const [user, setUser] = useState();
     const reset = () => {
@@ -80,7 +73,7 @@ const Home2 = () => {
           </Grid>
 
 
-            <Grid container spacing={2} flex={4} py={4} maxRows={4} sx={{ display: 'flex', justifyContent: 'start', wrap: true, }}>
+            <Grid container className='servicecards' spacing={2} flex={4} py={4} maxRows={4} sx={{ display: 'flex', justifyContent: 'start', wrap: true, }}>
                 <Grid item xs={12} md={3}>
                     <ServiceCard />
                 </Grid>
@@ -126,4 +119,4 @@ const Home2 = () => {
     );
 };
 
-export default Home2;
+export default ClientHome;

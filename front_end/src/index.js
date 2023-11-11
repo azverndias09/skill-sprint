@@ -10,7 +10,7 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 import Numbers from "./pages/numbers";
 import Home from "./pages/home";
-import Home2 from "./pages/home2";
+import Home2 from "./pages/clienthome";
 
 import Chat from "./pages/chat";
 import Email from "./pages/email";
@@ -21,8 +21,12 @@ import PaymentPage from './components/PaymentButton';
 import Displayclientprofile from './pages/displayclientprofile';
 import Displaybusinessprofile from './pages/displaybusinessprofile';
 import ServicePage from './pages/servicepage'
+import CreateAd from './pages/createad'
+
 
 import Location from './pages/location';
+import ClientHome from './pages/clienthome';
+import BusinessHome from './pages/businesshome'
 
 
 
@@ -35,7 +39,8 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/reset" element={<Reset />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/home2" element={<Home2 />} />
+        <Route path="/clienthome" element={<ClientHome />} />
+        <Route path='/businesshome' element={<BusinessHome/>}/>
         <Route path="/chat" element={<Chat />} />
         <Route path="/email" element={<Email />} />
         <Route path="/numbers" element={<Numbers />} />
@@ -46,6 +51,9 @@ export default function App() {
         <Route path="/displayclientprofile" element={<Displayclientprofile />} />
         <Route path="/displaybusinessprofile" element={<Displaybusinessprofile />} />
         <Route path="/servicepage" element={<ServicePage />} />
+        <Route path="/createad" element={<CreateAd />} />
+
+
         
 
       </Routes>

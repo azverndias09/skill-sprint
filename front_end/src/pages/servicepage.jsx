@@ -81,10 +81,10 @@ const ServicePage = () => {
                                 alt="freelancing picture"
                             />
                             <CardContent>
-                                <Typography gutterBottom variant="h5" component="div">
+                                <Typography gutterBottom variant="h5" component="div" sx={{fontWeight:'500'}}>
                                     Description
                                 </Typography>
-                                <Typography variant="body2" color="initial">
+                                <Typography variant="body1" color="initial">
                                     Royal Event Planners is a premier event management company that delivers
                                      exceptional experiences for its clients. 
                                      With a proven track record of successfully executed events, 
@@ -122,9 +122,7 @@ const ServicePage = () => {
                                 Event Planning
                             </Typography>
 
-                                <Typography gutterBottom variant="body2" component="div" mb={2} sx={{ fontWeight: '300' }}>
-                                    Category: Event Management
-                                </Typography>
+                            
                                 
                                
                             <Grid container sx={{ display: 'flex', alignItems: 'center' }} >

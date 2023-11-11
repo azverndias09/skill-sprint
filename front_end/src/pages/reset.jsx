@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { makeStyles } from '@mui/styles';
 //import { Card, CardContent } from '@mui/material';
+import emailjs from '@emailjs/browser';
 
 
 function Copyright(props) {
@@ -63,6 +64,14 @@ const Reset = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [passwordResetSuccess, setPasswordResetSuccess] = useState(false);
+    const [email, setEmail] = useState('');
+    const [emailError, setEmailError] = useState(false);
+    const [focused, setFocused] = useState(false); 
+    const [isRegistered, setIsRegistered] = useState(false);
+    const [showOTPInput, setShowOTPInput] = useState(false);
+    const [otpVerified, setOtpVerified] = useState(false);
+    const [otpVerificationAttempted, setOtpVerificationAttempted] = useState(false);
+
    // const classes = useStyles();
 
 
@@ -75,6 +84,12 @@ const Reset = () => {
         }
 
     }, [passwordResetSuccess]);
+
+    const handleEmailChange = (value) => {
+        setEmail(value);
+        const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        setEmailError(!isValidEmail);
+    };
 
     const handleReset = async () => {
 
@@ -107,21 +122,63 @@ const Reset = () => {
    
     };
 
+    const sendOTPTest = (e) => {
+        const newGeneratedOtp = Math.floor(1000 + Math.random() * 9000);
+        setGeneratedOtp(newGeneratedOtp);
+        console.log("hello");
+        console.log(newGeneratedOtp);
+        //e.preventDefault();
+        console.log("hello");
+        const templateParams = {
+            user_name: name,
+            user_email: email,
+            message: newGeneratedOtp,
+        };
+
+
+
+        emailjs
+            .send('service_5dqwn3h', 'template_309hj8f', templateParams, 'fg0vs7jHRI7Fm0CsK')
+            .then(
+                (result) => {
+
+                    setShowOTPInput(true);
+                },
+                (error) => {
+                    //error stuff here
+                }
+            );
+        //   setShowOTPInput(true);
+
+    };
+
+    const handleVerifyOTP = () => {
+        if (testOtp == generatedOtp) {
+            console.log("OTP is correct!");
+           setIsRegistered(true);
+            setOtpVerified(true); // Set OTP verification success
+        } else {
+            console.log("OTP is incorrect!");
+            setOtpVerified(false); // Set OTP verification failure
+        }
+        setOtpVerificationAttempted(true); // Indicate that OTP verification was attempted
+    };
+
 
     return (
         <ThemeProvider theme={customTheme}>
             <Grid container component="main" sx={{
-                height: '100vh', justifyContent: 'center', alignItems: 'center', backgroundColor: '#84c2f5',
+                display:'flex',
+                height: '120vh', justifyContent: 'center', alignItems: 'center', backgroundColor: '#84c2f5',
                 backgroundImage:  'url(/artifact.gif)',
                 backgroundRepeat: 'no-repeat',
-                backgroundSize: 'cover',
+                backgroundSize:'cover'
 
 
              }}>
 
-                <CssBaseline />
 
-                <Box item xs={12} sm={8} md={5} elevation={6} 
+                <Box item xs={12} sm={8} md={5} elevation={6} m={4} mb={4}
                 sx={{
                     backgroundColor:'#0f0926',
                     borderRadius: '16px',
@@ -158,7 +215,7 @@ const Reset = () => {
                                   }} />
                         </Grid>
 
-                        <Typography component="h1" variant="h5">Reset Password</Typography>
+                        <Typography  variant="h5" color='white'>Reset Password</Typography>
                         <Box component="form" noValidate sx={{ mt: 1 }}>
 
                             <TextField
@@ -169,6 +226,21 @@ const Reset = () => {
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                             />
+
+                            <TextField
+                                margin="normal"
+                                required
+                                fullWidth
+                                label="Email"
+                                type="text"
+                                name="user_email"
+                                value={email}
+                                onChange={(e) => handleEmailChange(e.target.value)}
+                                //variant="outlined"
+                                error={emailError} // Use the emailError state to control error display
+                                helperText={emailError ? 'Invalid email address' : ''}
+
+                            />
                             <TextField
                                 margin="normal"
                                 required
@@ -176,8 +248,66 @@ const Reset = () => {
                                 label="New Password"
                                 type="password"
                                 value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                onChange={(e) => handlePasswordChange(e.target.value)}
+                                onFocus={() => setFocused(true)}
+                                onBlur={() => setHasTypedPassword(true)}
+                                error={emailError || (focused && !isPasswordValid)}
+                                helperText={
+                                    emailError
+                                        ? 'Invalid password'
+                                        : focused && !isPasswordValid
+                                            ? 'Password should be at least 6 characters long'
+                                            : ''
+                                } // Display error message for password after focus
+                                
+                                disabled={!isRegistered}
                             />
+                            {!showOTPInput && (
+                                <Button variant="contained" color="primary" disabled={emailError} onClick={sendOTPTest}>
+                                    Send OTP
+                                </Button>
+                            )}
+
+
+
+                            {showOTPInput && (
+                                <div>
+                                    <TextField
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        label="Enter OTP"
+                                        variant="outlined"
+                                        value={testOtp}
+                                        onChange={(e) => setTestOtp(e.target.value)}
+                                    />
+                                    <Button variant="contained" color="primary" onClick={handleVerifyOTP}>
+                                        Verify
+                                    </Button>
+                                    {otpVerificationAttempted && (
+                                        <Typography
+                                            variant="body2"
+                                            style={{ color: otpVerified ? 'green' : 'red', marginTop: '8px' }}
+                                        >
+                                            {otpVerified ? 'OTP verified successfully' : 'Try again'}
+                                        </Typography>
+                                    )}
+                                </div>
+                            )}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                             <Button type="button" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={handleReset}>
                                 Reset Password
