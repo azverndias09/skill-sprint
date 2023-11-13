@@ -1,5 +1,5 @@
 const express = require('express');
-//const router = express.Router();
+const router = express.Router();
 const mysql = require("mysql");
 
 
@@ -23,7 +23,7 @@ db.getConnection((err, connection) => {
     if (err) throw (err)
     console.log("DB connection successful!" + connection.threadId)
 })
-
+module.exports = router ;
 // router.post('/', async (req, res) => {
 //     const firstname = req.body.name;
 //     const lastname = req.body.email;
