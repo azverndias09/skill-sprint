@@ -1,7 +1,7 @@
 const express = require('express');
 const http = require('http');
 const cors = require('cors');
-const setupChat = require('./chat');
+//const setupChat = require('./chat');
 
 const userRoute = require('./routes/user');
 const loginRoute = require('./routes/login');
@@ -16,7 +16,7 @@ const server = http.createServer(app);
 
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 
 
 
@@ -28,7 +28,7 @@ app.use("/resetPass", resetpassRoute);
 app.use("/api/payment/", paymentRoutes);
 
 app.use("/location", locationRoute);
-setupChat(server);
+//setupChat(server);
 
 server.listen(3001, () => {
     console.log("Server Listening on PORT:", 3001);

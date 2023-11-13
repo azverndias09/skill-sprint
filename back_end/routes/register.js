@@ -26,7 +26,6 @@ db.getConnection((err, connection) => {
 
 const bcrypt = require("bcrypt")
 const saltRounds=10
-router.use(express.json())
 
 router.post('/',async (req,res)=>{
     const user = req.body.name;
@@ -68,4 +67,4 @@ router.post('/',async (req,res)=>{
 });//end of router.post()
 
 
-module.exports = router ;
+modules.exports=routermodule.exports = router ;
