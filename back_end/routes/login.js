@@ -37,13 +37,13 @@ router.use(express.json())
 
 router.post('/', (req, res) => {
 
-    const user = req.body.username
+    const username = req.body.username
     const password = req.body.password
 
     db.getConnection(async (err, connection) => {
         if (err) throw (err)
-        const sqlSearch = "Select * from users where Name = ?"
-        const search_query = mysql.format(sqlSearch, [user])
+        const sqlSearch = "Select * from users where Username = ?"
+        const search_query = mysql.format(sqlSearch, [username])
 
         await connection.query(search_query, async (err, result) => {
 

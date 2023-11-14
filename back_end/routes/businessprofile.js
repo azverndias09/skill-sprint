@@ -24,13 +24,13 @@ db.getConnection((err, connection) => {
     console.log("DB connection successful!" + connection.threadId)
 })
 
-router.post('/', async (req, res) => {
+router.post('/:UId', async (req, res) => {
     const businessname = req.body.businessname;
     const businessdescription = req.body.businessdescription;
     const contactnumber = req.body.contactnumber;
     const city = req.body.city
     const state = req.body.state
-    const uid = 17;
+    const uid = req.params.UId;
 
     try {
         const sql = `INSERT INTO business (UId,BId,Businessname, Businessdescription, Phone, City, State)

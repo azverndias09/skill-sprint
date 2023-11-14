@@ -24,13 +24,13 @@ db.getConnection((err, connection) => {
     console.log("DB connection successful!" + connection.threadId)
 })
 
-router.post('/', async (req, res) => {
+router.post('/:UId', async (req, res) => {
     const firstname = req.body.firstname;
     const lastname = req.body.lastname;
     const contactnumber = req.body.contactnumber;
     const city = req.body.city   
     const state=req.body.state
-    const uid=15;
+    const uid = req.params.UId;
     console.log("hello")
 
     try {

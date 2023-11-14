@@ -11,6 +11,14 @@ const paymentRoutes = require("./routes/payment");
 const locationRoute = require("./routes/location");
 const clientprofileRoute=require("./routes/clientprofile");
 const businessprofileRoute = require("./routes/businessprofile");
+const createadRoute = require("./routes/createad");
+const clienthomeRoute = require("./routes/clienthome");
+const displaybusinessprofileRoute = require("./routes/displaybusinessprofile");
+const displayclientprofileRoute = require("./routes/displayclientprofile");
+
+
+
+
 
 
 const app = express();
@@ -30,8 +38,14 @@ app.use("/register", registerRoute);
 app.use("/resetPass", resetpassRoute);
 app.use("/clientprofile",clientprofileRoute);
 app.use("/businessprofile", businessprofileRoute);
+app.use("/clienthome", clienthomeRoute);
+app.use("/createad", createadRoute);
 app.use("/api/payment/", paymentRoutes);
 app.use("/location", locationRoute);
+app.use("/displaybusinessprofile", displaybusinessprofileRoute);
+app.use("/displayclientprofile", displayclientprofileRoute);
+app.use(express.static('routes'));
+
 
 //setupChat(server);
 
