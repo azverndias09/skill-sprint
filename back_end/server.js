@@ -9,6 +9,9 @@ const registerRoute = require('./routes/register');
 const resetpassRoute = require('./routes/resetPass');
 const paymentRoutes = require("./routes/payment");
 const locationRoute = require("./routes/location");
+const clientprofileRoute=require("./routes/clientprofile");
+const businessprofileRoute = require("./routes/businessprofile");
+
 
 const app = express();
 const server = http.createServer(app);
@@ -20,14 +23,16 @@ app.use(express.urlencoded({ extended: true }));
 
 
 
+
 app.use("/user", userRoute);
 app.use("/login", loginRoute);
 app.use("/register", registerRoute);
 app.use("/resetPass", resetpassRoute);
-
+app.use("/clientprofile",clientprofileRoute);
+app.use("/businessprofile", businessprofileRoute);
 app.use("/api/payment/", paymentRoutes);
-
 app.use("/location", locationRoute);
+
 //setupChat(server);
 
 server.listen(3001, () => {
