@@ -1,3 +1,4 @@
+// ServiceCard.jsx
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -11,7 +12,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Grid from '@mui/material/Grid';
 import Rating from '@mui/material/Rating';
 
-export default function ServiceCard({ service }) {
+const ServiceCard = ({ service, isBusinessProfile }) => {
     const [value, setValue] = React.useState(2);
 
     return (
@@ -23,7 +24,7 @@ export default function ServiceCard({ service }) {
                 <CardHeader
                     avatar={
                         <Avatar sx={{ bgcolor: '#6f0094' }} aria-label="business">
-                            {service.Businessname[0]}
+                            {isBusinessProfile ? service.Businessname: 'C'}
                         </Avatar>
                     }
                     action={
@@ -31,7 +32,7 @@ export default function ServiceCard({ service }) {
                             <MoreVertIcon />
                         </IconButton>
                     }
-                    title={service.Businessname}
+                    title={isBusinessProfile ? service.Businessname : 'Client Name'}
                 />
             </Grid>
 
@@ -72,3 +73,5 @@ export default function ServiceCard({ service }) {
         </Card>
     );
 }
+
+export default ServiceCard;

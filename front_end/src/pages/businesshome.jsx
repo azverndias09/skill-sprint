@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useRef, useEffect ,Component} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Button from '@mui/material/Button';
@@ -34,10 +34,8 @@ const customTheme = createTheme({
 
 const BusinessHome = () => {
     const navigate = useNavigate();
-    useEffect(() => {
-       
-    
-    }, []);
+    const businessProfileData = JSON.parse(localStorage.getItem('businessProfile'));
+
 
     return (
 
@@ -54,9 +52,10 @@ const BusinessHome = () => {
 
 
                 <Grid container spacing={2} flex={4} py={4} maxRows={4} sx={{ display: 'flex', justifyContent: 'start', wrap: true, }}>
-                    <Grid item xs={12} md={3}>
-                        <ServiceCard />
-                    </Grid>
+    <Grid item xs={12} md={3}>
+        <ServiceCard service={businessProfileData} isBusinessProfile={true} />
+    </Grid>
+                    
                    
                    
                 </Grid>

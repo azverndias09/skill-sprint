@@ -17,7 +17,7 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom';
+
 
 function Copyright(props) {
     return (
@@ -62,18 +62,31 @@ const customTheme = createTheme({
 
 
 export default function Businessprofile() {
+    const [businessname, setBusinessname] = useState('');
+    const [businessdescription, setBusinessdescription] = useState('');
+    const [contactnumber, setContactnumber] = useState('');
+    const [city, setCity] = useState('');
+    const [state, setState] = useState('');
     const navigate = useNavigate();
     const handleSubmit = () => {
         // Create a JSON object from the form data
         const formData = {
-            // first_name: firstname,
-            // last_name: lastname,
-            // contact_number: contactnumber,
-            // city,
-            // state,
+            businessname,
+            businessdescription,
+            contactnumber,
+            city,
+            state,
         };
+    
+        // Save the form data to localStorage
+        localStorage.setItem('businessProfile', JSON.stringify(formData));
+        const test = localStorage.getItem('businessProfile');
+        const test2 = JSON.parse(test);
+        console.log(test2);
+        // Navigate to the next page
         navigate("/businesshome");
     }
+    
     return (
         
         <React.Fragment>
