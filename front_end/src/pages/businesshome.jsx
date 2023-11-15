@@ -40,11 +40,15 @@ const BusinessHome = () => {
     let loggedInUser = localStorage.getItem('user');
     let foundUser = JSON.parse(loggedInUser);
     useEffect(() => {
-        fetch(`http://localhost:3001/businesshome/${foundUser.userId}`)
+        fetch(`http://localhost:3001/businesshome/${8}`)
           .then((response) => response.json())
-          .then((data) => setServices(data))
+          .then((data) => {
+            console.log('Data from API:', data);
+            setServices(data);
+          })
           .catch((error) => console.error('Error fetching data:', error));
-      }, []);
+    }, []);
+    
 
     return (
 
