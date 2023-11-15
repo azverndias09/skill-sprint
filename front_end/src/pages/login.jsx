@@ -86,18 +86,20 @@ const Login = () => {
 
     useEffect(() => {
         const loggedInUser = localStorage.getItem('user');
-        const data = JSON.parse(localStorage.getItem('user'));
-        console.log(data);
+    
         if (loggedInUser) {
             const foundUser = JSON.parse(loggedInUser);
             setUser(foundUser);
-            console.log(loggedInUser);
-            setUser({});
-            setUsername("");
-            setPassword("");
-            navigate("/home");
+    
+            // Check the userType and navigate accordingly
+            if (foundUser.userType === 'Client') {
+                navigate("/clientprofile");
+            } else if (foundUser.userType === 'Business') {
+                navigate("/businessprofile");
+            }
         }
     }, []);
+    
 
 
     const handleLogin = async () => {

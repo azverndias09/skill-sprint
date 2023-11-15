@@ -9,7 +9,7 @@ import Toolbar from '@mui/material/Toolbar';
 import TextField from '@mui/material/TextField';
 import { FormControlLabel } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
-
+import { useNavigate } from 'react-router-dom';
 import Paper from '@mui/material/Paper';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -63,7 +63,7 @@ const customTheme = createTheme({
 
 
 export default function Clientprofile() {
-
+    const navigate = useNavigate();
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [contactnumber, setContactnumber] = useState('');
@@ -71,7 +71,10 @@ export default function Clientprofile() {
     const [state, setState] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-
+    const reset = () => {
+        localStorage.removeItem('user');
+        navigate("/login");
+      }
     const handleSubmit = () => {
         // Create a JSON object from the form data
         const formData = {
@@ -81,29 +84,32 @@ export default function Clientprofile() {
             city,
             state,
         };
+       
 
         // Send formData to the backend
-        fetch('http://localhost:3001/clientprofile', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(() => {
-                setSuccessMessage('Client profile details updated!');
-                setErrorMessage('');
-            })
-            .catch((error) => {
-                setSuccessMessage('');
-                setErrorMessage('Error updating client profile: ' + error.message);
-            });
+        // fetch('http://localhost:3001/clientprofile', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify(formData),
+        // })
+        //     .then((response) => {
+        //         if (!response.ok) {
+        //             throw new Error('Network response was not ok');
+        //         }
+        //         return response.json();
+        //     })
+        //     .then(() => {
+        //         setSuccessMessage('Client profile details updated!');
+        //         setErrorMessage('');
+        //     })
+        //     .catch((error) => {
+        //         setSuccessMessage('');
+        //         setErrorMessage('Error updating client profile: ' + error.message);
+        //     });
+        navigate("/clienthome");
+        
     };
 
 
@@ -246,7 +252,9 @@ export default function Clientprofile() {
                                 Next
                             </Button>
 
-
+                            <Button variant="contained" sx={{ mt: 3, mb: 2 }} onClick={reset}>
+             Logout
+           </Button>
 
 
 
