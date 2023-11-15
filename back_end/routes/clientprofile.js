@@ -28,27 +28,34 @@ router.post('/:UId', async (req, res) => {
     const firstname = req.body.firstname;
     const lastname = req.body.lastname;
     const contactnumber = req.body.contactnumber;
-    const city = req.body.city   
-    const state=req.body.state
+    const city = req.body.city
+    const state = req.body.state
     const uid = req.params.UId;
-    console.log("hello")
+    const latitude = req.body.latitude;
+    const longitude = req.body.longitude;
+
+    console.log('Received UId:', uid);
+
 
     try {
-        const sql = `INSERT INTO client (UId,CId,Firstname, Lastname, Phone, City, State)
-            VALUES (?,0,?, ?, ?, ?, ?)`;
-    const values =[uid,firstname,lastname,contactnumber,city,state];
-    await db.query(sql, values);
+        const sql = `INSERT INTO skillsprint.client (UId, CId, Firstname, Lastname, Phone, City, State, Latitude, Longitude)
+        VALUES (?, 0, ?, ?, ?, ?, ?, ?, ?)`;
+        const values = [uid, firstname, lastname, contactnumber, city, state, latitude, longitude];
 
-    res.status(201).json({ message: 'Client Profile saved successfully.' });
-} catch (error) {
-    console.error('Error saving profile:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-}
-
-
-    
-  
-});//end of router.post()
+        await db.query(sql, values, (err, results) => {
+            if (err) {
+                console.error('Error saving profile:', err);
+                res.status(500).json({ error: 'Internal Server Error' });
+            } else {
+                res.status(201).json({ message: 'Client Profile saved successfully.' });
+                console.log(results)
+            }
+        });
+    } catch (error) {
+        console.error('Error saving profile:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
 
 
 module.exports = router

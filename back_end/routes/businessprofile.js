@@ -31,23 +31,31 @@ router.post('/:UId', async (req, res) => {
     const city = req.body.city
     const state = req.body.state
     const uid = req.params.UId;
+    const latitude=req.body.latitude;
+    const longitude = req.body.longitude;
+
+    console.log('Received UId:', uid); 
+
 
     try {
-        const sql = `INSERT INTO business (UId,BId,Businessname, Businessdescription, Phone, City, State)
-            VALUES (?,0,?, ?, ?, ?, ?)`;
-        const values = [uid, businessname, businessdescription, contactnumber, city, state];
-        await db.query(sql, values);
+        const sql = `INSERT INTO skillsprint.business (UId, BId, Businessname, Businessdescription, Phone, City, State, Latitude, Longitude)
+        VALUES (?, 0, ?, ?, ?, ?, ?, ?, ?)`;
+        const values = [uid, businessname, businessdescription, contactnumber, city, state, latitude, longitude];
 
-        res.status(201).json({ message: 'Business Profile saved successfully.' });
+        await db.query(sql, values, (err, results) => {
+            if (err) {
+                console.error('Error saving profile:', err);
+                res.status(500).json({ error: 'Internal Server Error' });
+            } else {
+                res.status(201).json({ message: 'Business Profile saved successfully.' });
+                console.log(results)
+            }
+        });
     } catch (error) {
         console.error('Error saving profile:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
-
-
-
-
-});//end of router.post()
+});
 
 
 module.exports = router
