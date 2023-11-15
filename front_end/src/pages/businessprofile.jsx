@@ -106,6 +106,8 @@ export default function Businessprofile() {
         }
       };
     const handleSubmit = () => {
+      const loggedInUser = localStorage.getItem('user');
+      const foundUser = JSON.parse(loggedInUser);
         console.log(location);
         // Create a JSON object from the form data
         const formData = {
@@ -114,18 +116,39 @@ export default function Businessprofile() {
             contactnumber,
             city,
             state,
-            longitude,
-            latitude 
+            uid:foundUser.userId,
+            latitude : location.latitude,
+            longitude : location.longitude,
             
         };
-    
+    console.log(formData);
         // Save the form data to localStorage
         localStorage.setItem('businessProfile', JSON.stringify(formData));
         const test = localStorage.getItem('businessProfile');
         const test2 = JSON.parse(test);
         console.log(test2);
+        fetch(`http://localhost:3001/businessprofile/${foundUser.userId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(() => {
+            console.log("Done");
+            navigate("/businesshome");
+          })
+          .catch((error) => {
+            setErrorMessage('Try again later ' + error.message);
+          });
         // Navigate to the next page
-        navigate("/businesshome");
+        
     }
     
     return (
