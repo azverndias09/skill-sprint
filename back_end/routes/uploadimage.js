@@ -31,11 +31,13 @@ db.getConnection((err, connection) => {
 
 router.post('/', upload.single('image'), (req, res) => {
 
+    const sid=req.body.sid;
+
     if (!req.file) {
         return res.status(400).send('No file uploaded.');
     }
 
-    const image = req.formData; 
+    const image = req.image; 
     const tempImagePath = image.path;
 
     // Logic to move file to destination folder (serviceimages)
@@ -49,7 +51,7 @@ router.post('/', upload.single('image'), (req, res) => {
             return res.status(500).send('Error storing image.');
         }
 
-        const sid = 32;
+        
         const query = `UPDATE skillsprint.services SET Servicephoto = ? WHERE SId = ?;`;
         const values = [imagePath, sid];
 
