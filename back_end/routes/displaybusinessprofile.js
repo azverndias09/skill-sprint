@@ -26,7 +26,7 @@ db.getConnection((err, connection) => {
 
 
 
-router.get('/displaybusinessprofile/:UId', (req, res) => {
+router.get('/:UId', (req, res) => {
 
     const uid = req.params.UId;
     console.log(uid); 

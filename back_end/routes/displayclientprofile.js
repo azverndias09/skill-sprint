@@ -26,12 +26,12 @@ db.getConnection((err, connection) => {
 
 
 
-router.get('/displayclientprofile/:UId', (req, res) => {
+router.get('/:UId', (req, res) => {
 
     const uid = req.params.UId;
     console.log(uid);
 
-    
+
 
     try {
         const getclientprofilequery = `SELECT c.Firstname,c.Lastname, u.Username, c.Phone, c.City, c.State
@@ -45,7 +45,6 @@ router.get('/displayclientprofile/:UId', (req, res) => {
                 res.status(500).json({ error: 'Internal Server Error' });
             } else {
                 res.status(200).json(results);
-                console.log(results);
             }
         });
     } catch (err) {

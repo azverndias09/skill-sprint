@@ -30,12 +30,12 @@ db.getConnection((err, connection) => {
 })
 
 router.post('/', upload.single('image'), (req, res) => {
-    // Check if file is uploaded and handle the file
+
     if (!req.file) {
         return res.status(400).send('No file uploaded.');
     }
 
-    const image = req.formData; // Access the uploaded file using req.file
+    const image = req.formData; 
     const tempImagePath = image.path;
 
     // Logic to move file to destination folder (serviceimages)
