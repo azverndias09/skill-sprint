@@ -20,7 +20,7 @@ import { CardHeader } from '@mui/material'
 import { Avatar } from '@mui/material';
 import Stack from '@mui/material/Stack';
 
-
+import RazorpayPaymentButton from "../components/PaymentButton";
 
 import Paper from '@mui/material/Paper';
 import Card from '@mui/material/Card';
@@ -179,9 +179,10 @@ const ServicePage = () => {
                                     <Button variant="outlined" startIcon={<ChatIcon />}>
                                         Chat with Business
                                     </Button>
-                                    <Button variant="outlined" endIcon={<PaymentIcon />}>
+                                    {/* <Button variant="outlined" endIcon={<PaymentIcon />}>
                                         Pay Business
-                                    </Button>
+                                    </Button> */}
+                                    <RazorpayPaymentButton amount={10000}/>
                                 </Stack>
 
                                     <Grid item xs={12} sm={12} mt={2}   >

@@ -101,6 +101,7 @@ const Login = () => {
             } else if (foundUser.userType === 'Business') {
                 navigate("/businessprofile");
             }
+            
         }
     }, []);
     
@@ -130,9 +131,20 @@ const Login = () => {
             setUser(userData);
             
         
-            const loggedInUser = localStorage.getItem('user');
-            const foundUser = JSON.parse(loggedInUser);
-            console.log(foundUser);
+            let loggedInUser = localStorage.getItem('user');
+            let foundUser = JSON.parse(loggedInUser);
+            if(!foundUser){
+
+                let userTemp = {
+                    username,
+                    password,
+                    userType: 0,
+                };
+                setUser(userTemp);
+                localStorage.setItem('user', JSON.stringify(userTemp));
+            }
+             loggedInUser = localStorage.getItem('user');
+             foundUser = JSON.parse(loggedInUser);
             if (foundUser.userType == 0) {
                 navigate("/clientprofile");
             } else if (foundUser.userType == 1) {

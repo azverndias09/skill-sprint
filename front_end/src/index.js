@@ -33,12 +33,14 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/*" element={<Login />} />
+        <Route path="/" element={<ClientHome />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/reset" element={<Reset />} />
         <Route path="/home" element={<Home />} />
         <Route path="/clienthome" element={<ClientHome />} />
         <Route path='/businesshome' element={<BusinessHome/>}/>
+        <Route path="/service/:serviceId" element={<ServicePage />} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/email" element={<Email />} />
         <Route path="/payment" element={<PaymentPage />} />
