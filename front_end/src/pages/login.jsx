@@ -82,7 +82,11 @@ const Login = () => {
     const [user, setUser] = useState();
     const [loginError, setLoginError] = useState(null);
     const classes = useStyles();
-
+    
+    const reset = () => {
+        localStorage.removeItem('user');
+        navigate("/login");
+    }
 
     useEffect(() => {
         const loggedInUser = localStorage.getItem('user');
@@ -124,10 +128,19 @@ const Login = () => {
             setIsLoggedIn(true);
             let userData = { username, password };
             setUser(userData);
-
-            localStorage.setItem('user', JSON.stringify(userData));
-            console.log(userData);
-            navigate("/home");
+            
+        
+            const loggedInUser = localStorage.getItem('user');
+            const foundUser = JSON.parse(loggedInUser);
+            console.log(foundUser);
+            if (foundUser.userType == 0) {
+                navigate("/clientprofile");
+            } else if (foundUser.userType == 1) {
+                navigate("/businessprofile");
+            }
+            else{
+                console.log("test")
+            }
         }
         else {
             console.error("no bro check code");
@@ -224,6 +237,9 @@ const Login = () => {
                             </Button>
 
                             <Grid container>
+                            <Button variant="contained" sx={{ mt: 3, mb: 2 }} onClick={reset}>
+             Logout
+           </Button>
                                 <Grid item xs>
                                     <Link to="/reset" variant="body2">
                                         Forgot password?

@@ -67,4 +67,4 @@ router.post('/',async (req,res)=>{
 });//end of router.post()
 
 
-modules.exports=routermodule.exports = router ;
+module.exports = router ;

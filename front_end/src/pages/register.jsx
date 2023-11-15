@@ -96,7 +96,7 @@ const Register = () => {
     const [showOTPInput, setShowOTPInput] = useState(false);
     const [otpVerified, setOtpVerified] = useState(false);
     const [otpVerificationAttempted, setOtpVerificationAttempted] = useState(false);
-    const [userType, setSelectedValue] = useState(''); // State to hold the selected value
+    const [isClient, setSelectedValue] = useState(0); // State to hold the selected value
     const classes = useStyles();
 
     const [user, setUser] = useState();
@@ -116,12 +116,13 @@ const Register = () => {
 
 
     const handleRegister = async () => {
+        console.log(`User CLient is${isClient}`);
         const response = await fetch('http://localhost:3001/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ name, email, password, userType }),
+            body: JSON.stringify({ name, email, password, userType: isClient }),
 
         });
 
@@ -132,13 +133,13 @@ const Register = () => {
             let userTemp = {
                 name,
                 email,
-                userType,
+                userType: isClient,
             };
             setUser(userTemp);
             localStorage.setItem('user', JSON.stringify(userTemp));
             console.log(user);
             const data = JSON.parse(localStorage.getItem('user'));
-            console.log("data");
+           
             console.log(data);
 
             navigate('/login');
@@ -361,12 +362,12 @@ const Register = () => {
                                     row
                                     aria-labelledby="demo-row-radio-buttons-group-label"
                                     name="row-radio-buttons-group"
-                                    value={userType} // Set the selected value
+                                    value={isClient} // Set the selected value
                                     onChange={handleRadioChange} // Update selected value
 
                                 >
-                                    <FormControlLabel value="Client" control={<Radio />} label="Client" />
-                                    <FormControlLabel value="Business" control={<Radio />} label="Business" />
+                                    <FormControlLabel value="0" control={<Radio />} label="Client" />
+                                    <FormControlLabel value="1" control={<Radio />} label="Business" />
 
 
                                 </RadioGroup>

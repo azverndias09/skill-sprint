@@ -34,7 +34,10 @@ const customTheme = createTheme({
 
 const BusinessHome = () => {
     const navigate = useNavigate();
-
+    useEffect(() => {
+       
+    
+    }, []);
 
     return (
 

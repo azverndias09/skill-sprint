@@ -17,7 +17,7 @@ import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
     return (
@@ -62,8 +62,18 @@ const customTheme = createTheme({
 
 
 export default function Businessprofile() {
-   
-
+    const navigate = useNavigate();
+    const handleSubmit = () => {
+        // Create a JSON object from the form data
+        const formData = {
+            // first_name: firstname,
+            // last_name: lastname,
+            // contact_number: contactnumber,
+            // city,
+            // state,
+        };
+        navigate("/businesshome");
+    }
     return (
         
         <React.Fragment>
@@ -183,7 +193,7 @@ export default function Businessprofile() {
                             </Grid>
 
                             
-                            <Button size='large' fullWidth type="button" variant="contained" sx={{  mt: 3, mb: 2}} >
+                            <Button size='large' fullWidth type="button" variant="contained" sx={{  mt: 3, mb: 2}}  onClick={handleSubmit}>
                                Next
                             </Button>
                             
