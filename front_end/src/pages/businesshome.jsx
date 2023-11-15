@@ -37,10 +37,10 @@ const BusinessHome = () => {
     const [services, setServices] = useState([]);
     const businessProfileData = JSON.parse(localStorage.getItem('businessProfile'));
     console.log(businessProfileData);
-    let loggedInUser = localStorage.getItem('user');
-    let foundUser = JSON.parse(loggedInUser);
+    const loggedInUser = localStorage.getItem('user');
+      const foundUser = JSON.parse(loggedInUser);
     useEffect(() => {
-        fetch(`http://localhost:3001/businesshome/${8}`)
+        fetch(`http://localhost:3001/businesshome/${foundUser.userId}`)
           .then((response) => response.json())
           .then((data) => {
             console.log('Data from API:', data);

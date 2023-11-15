@@ -138,9 +138,9 @@ const Login = () => {
                 loggedInUser = localStorage.getItem('user');
                 foundUser = JSON.parse(loggedInUser);
     
-                if (foundUser.userType === 0) {
+                if (foundUser.userType == 0) {
                     navigate("/clientprofile");
-                } else if (foundUser.userType === 1) {
+                } else if (foundUser.userType == 1) {
                     navigate("/businessprofile");
                 } else {
                     console.log("test");
