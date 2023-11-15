@@ -17,8 +17,7 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
     return (
@@ -63,52 +62,18 @@ const customTheme = createTheme({
 
 
 export default function Businessprofile() {
-   
-   const navigate = useNavigate();
-    const [businessname, setBusinessname] = useState('');
-    const [businessdescription, setBusinessdescription] = useState('');
-    const [contactnumber, setContactnumber] = useState('');
-    const [city, setCity] = useState('');
-    const [state, setState] = useState('');
-
-    const handleSubmit = async () => {
-        const response = await fetch('http://localhost:3001/businessprofile', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ businessname, businessdescription, contactnumber, city,state }),
-
-        });
-
-        // console.log(response);
-        if (response.ok) {
-            //if (true) {
-            console.log("businessprofile done");
-            // let userTemp = {
-            //     name,
-            //     email,
-            //     userType,
-            // };
-            // setUser(userTemp);
-            // localStorage.setItem('user', JSON.stringify(userTemp));
-            // console.log(user);
-            // const data = JSON.parse(localStorage.getItem('user'));
-            // console.log("data");
-            // console.log(data);
-
-            navigate('/businesshome');
-
-        }
-        else {
-            console.error("error blud");
-        }
-        //     console.log(response);
-    };
-
-
-
-
+    const navigate = useNavigate();
+    const handleSubmit = () => {
+        // Create a JSON object from the form data
+        const formData = {
+            // first_name: firstname,
+            // last_name: lastname,
+            // contact_number: contactnumber,
+            // city,
+            // state,
+        };
+        navigate("/businesshome");
+    }
     return (
         
         <React.Fragment>
@@ -240,9 +205,7 @@ export default function Businessprofile() {
                             </Grid>
 
                             
-                            <Button size='large' fullWidth type="button" variant="contained" 
-                            sx={{  mt: 3, mb: 2}}
-                            onClick={handleSubmit} >
+                            <Button size='large' fullWidth type="button" variant="contained" sx={{  mt: 3, mb: 2}}  onClick={handleSubmit}>
                                Next
                             </Button>
                             

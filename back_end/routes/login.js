@@ -67,7 +67,7 @@ router.post('/', (req, res) => {
                 if (await bcrypt.compare(password, hashedPassword)) {
                     console.log("---------> Login Successful");
                     res.status(200);
-                    res.send(`${user} is logged in!`);
+                    res.send(`${username} is logged in!`);
                    
                 } 
 

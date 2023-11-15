@@ -27,11 +27,10 @@ db.getConnection((err, connection) => {
 
 
 
-router.get('/', (req, res) => {
-
+router.get('/', async(req, res) => {
     
     try {
-        const query = `SELECT s.SId,b.Businessname, b.City, b.State, s.Servicename, s.Price, s.Servicephoto
+        const query = `SELECT s.SId,b.Businessname, b.City, b.State, s.Servicename, s.Price
                         FROM business b INNER JOIN services s ON b.BId = s.BId`;
 
 
