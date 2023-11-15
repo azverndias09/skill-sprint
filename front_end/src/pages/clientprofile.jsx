@@ -45,43 +45,80 @@ const customTheme = createTheme({
   },
 });
 
-export default function Clientprofile() {
-  const [firstname, setFirstname] = useState('');
+export default function ClientProfile() {
+
+  const [first_name, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
   const [contactnumber, setContactnumber] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [location, setLocation] = useState({latitude:'',longitude:''});
   const [errorMessage, setErrorMessage] = useState('');
+  const [isLocationObtained, setIsLocationObtained] = useState(false);
   const navigate = useNavigate();
+  const handleLocationRequest = () => {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setLocation({ latitude, longitude });
+  
+          // Make a request to the OpenCage API to get location details
+          fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=9681afafd27c4f2c8d03f4cfb109b9e8`)
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.results && data.results.length > 0) {
+                const result = data.results[0];
+                const { state, county } = result.components;
+  
+                // Update state and city based on API response
+                setState(state);
+                setCity(county);
+                setIsLocationObtained(true);
+              }
+            })
+            .catch((error) => {
+              console.error('Error fetching location details:', error.message);
+            });
+        },
+        (error) => {
+          console.error('Error getting location:', error.message);
+        }
+      );
+    } else {
+      console.error('Geolocation is not supported by this browser.');
+    }
+  };
+  
   const handleSubmit = () => {
     // Validation checks
-    if (!firstname || !lastname || !contactnumber || !city || !state) {
-      setSuccessMessage('');
+    if (!first_name || !lastname || !contactnumber || !city || !state) {
       setErrorMessage('Please fill in all fields.');
       return;
     }
 
     if (!/^\d{10}$/.test(contactnumber)) {
-      setSuccessMessage('');
       setErrorMessage('Please enter a valid 10-digit contact number.');
       return;
     }
 
-    // Reset error messages
-    setSuccessMessage('');
+    // Reset error message
     setErrorMessage('');
-
-    // Create a JSON object from the form data
-    const formData = {
-      first_name: firstname,
-      last_name: lastname,
-      contact_number: contactnumber,
-      city,
-      state,
-    };
     const loggedInUser = localStorage.getItem('user');
     const foundUser = JSON.parse(loggedInUser);
+    console.log(foundUser);
+    // Create a JSON object from the form data
+    const formData = {
+      firstname: first_name,
+      lastname: lastname,
+      contactnumber: contactnumber,
+      city,
+      state,
+      uid:foundUser.userId,
+      latitude : location.latitude,
+      longitude : location.longitude,
+    }
+   console.log(formData);
     // Send formData to the backend
     fetch(`http://localhost:3001/clientprofile/${foundUser.userId}`, {
       method: 'POST',
@@ -92,14 +129,12 @@ export default function Clientprofile() {
     })
       .then((response) => {
         if (!response.ok) {
-            
           throw new Error('Network response was not ok');
         }
         return response.json();
       })
       .then(() => {
-        console.log("Done")
-        setSuccessMessage('Client profile details updated!');
+        console.log("Done");
         navigate("/clienthome");
       })
       .catch((error) => {
@@ -193,7 +228,7 @@ export default function Clientprofile() {
                   id="first_name"
                   name="first_name"
                   label="First Name"
-                  value={firstname}
+                  value={first_name}
                   onChange={(e) => setFirstname(e.target.value)}
                   fullWidth
                   autoComplete="given-name"
@@ -257,23 +292,36 @@ export default function Clientprofile() {
                   error={!!errorMessage}
                 />
               </Grid>
-
-              {errorMessage && (
-                <Grid item xs={12}>
-                  <ErrorTypography>{errorMessage}</ErrorTypography>
-                </Grid>
-              )}
-
               <Button
-                size="large"
-                fullWidth
-                type="button"
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                onClick={handleSubmit}
-              >
-                Next
-              </Button>
+  size="large"
+  fullWidth
+  type="button"
+  variant="contained"
+  sx={{ mt: 3, mb: 2 }}
+  onClick={handleLocationRequest}
+  disabled={isLocationObtained}
+>
+  Request Location
+</Button>
+
+{errorMessage && (
+  <Grid item xs={12}>
+    <ErrorTypography>{errorMessage}</ErrorTypography>
+  </Grid>
+)}
+
+
+<Button
+  size="large"
+  fullWidth
+  type="button"
+  variant="contained"
+  sx={{ mt: 3, mb: 2 }}
+  onClick={handleSubmit}
+  disabled={!isLocationObtained}
+>
+  Next
+</Button>
 
               <Button
                 variant="contained"
@@ -284,7 +332,7 @@ export default function Clientprofile() {
               </Button>
             </Grid>
           </Paper>
-          {/* ... (unchanged code) ... */}
+          
         </Container>
       </ThemeProvider>
     </React.Fragment>

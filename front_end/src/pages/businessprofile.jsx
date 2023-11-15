@@ -67,8 +67,46 @@ export default function Businessprofile() {
     const [contactnumber, setContactnumber] = useState('');
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
+    const [location, setLocation] = useState(null);
+    const [isLocationObtained, setIsLocationObtained] = useState(false);
     const navigate = useNavigate();
+   
+    const handleLocationRequest = () => {
+        if ('geolocation' in navigator) {
+          navigator.geolocation.getCurrentPosition(
+            async (position) => {
+              const { latitude, longitude } = position.coords;
+    
+              // Use OpenCage Geocoding API to get city and state from latitude and longitude
+              const apiKey = '9681afafd27c4f2c8d03f4cfb109b9e8';
+              const apiUrl = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${apiKey}`;
+    
+              try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+    
+                if (data.results.length > 0) {
+                  const addressComponents = data.results[0].components;
+                  setCity(addressComponents.county || '');
+                  setState(addressComponents.state || '');
+                }
+              } catch (error) {
+                console.error('Error fetching location data:', error);
+              }
+    
+              setLocation({ latitude, longitude });
+              setIsLocationObtained(true);
+            },
+            (error) => {
+              console.error('Error getting location:', error.message);
+            }
+          );
+        } else {
+          console.error('Geolocation is not supported by this browser.');
+        }
+      };
     const handleSubmit = () => {
+        console.log(location);
         // Create a JSON object from the form data
         const formData = {
             businessname,
@@ -76,6 +114,9 @@ export default function Businessprofile() {
             contactnumber,
             city,
             state,
+            longitude,
+            latitude 
+            
         };
     
         // Save the form data to localStorage
@@ -190,47 +231,56 @@ export default function Businessprofile() {
                                     variant="standard"
                                 />
                             </Grid>
+                            
                             <Grid item xs={12} sm={6}>
-                                <TextField
-                                    required
-                                    id="city"
-                                    name="city"
-                                    label="City"
-                                    value={city}
-                                    onChange={(e) => setCity(e.target.value)}
-       
-                                    fullWidth
-                                    autoComplete="shipping address-level2"
-                                    variant="standard"
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    id="state"
-                                    name="state"
-                                    label="State/Province/Region"
-                                    value={state}
-                                    onChange={(e) => setState(e.target.value)}
+          <TextField
+            required
+            id="city"
+            name="city"
+            label="City"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            fullWidth
+            autoComplete="shipping address-level2"
+            variant="standard"
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            id="state"
+            name="state"
+            label="State/Province/Region"
+            value={state}
+            onChange={(e) => setState(e.target.value)}
+            fullWidth
+            variant="standard"
+          />
+        </Grid>
+        </Grid>
+        <Button
+          size="large"
+          fullWidth
+          type="button"
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+          onClick={handleLocationRequest}
+          disabled={isLocationObtained}
+        >
+          Request Location
+        </Button>
+        <Button
+          size="large"
+          fullWidth
+          type="button"
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+          onClick={handleSubmit}
+          disabled={!isLocationObtained}
+        >
+          Next
+        </Button>
+      </Paper>
 
-                                    fullWidth
-                                    variant="standard"
-                                />
-                            </Grid>
-
-                            
-                            <Button size='large' fullWidth type="button" variant="contained" sx={{  mt: 3, mb: 2}}  onClick={handleSubmit}>
-                               Next
-                            </Button>
-                            
-                           
-                          
-                        
-                            
-                        </Grid>
-
-                   
-                    
-                </Paper>
                 <Copyright />
             </Container>
             </ThemeProvider>
