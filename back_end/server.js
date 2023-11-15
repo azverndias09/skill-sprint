@@ -46,7 +46,7 @@ app.use("/api/payment/", paymentRoutes);
 app.use("/location", locationRoute);
 app.use("/displaybusinessprofile", displaybusinessprofileRoute);
 app.use("/displayclientprofile", displayclientprofileRoute);
-app.use("/servivepage", servicepageRoute);
+app.use("/servicepage", servicepageRoute);
 
 
 app.use(express.static('routes'));
