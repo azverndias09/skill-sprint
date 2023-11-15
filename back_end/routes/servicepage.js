@@ -27,36 +27,43 @@ db.getConnection((err, connection) => {
 
 router.get('/:SId', async (req, res) => {
     const sid = req.params.SId;
-    console.log(sid);
+    console.log("Received SId: ",sid);
 
-    let dummyresult =
-        [
-            {
-                "SId": 30,
-                "Businessname": "Surf School",
-                "City": "Margao",
-                "State": "Goa",
-                "Servicename": "Surfing Lessons",
-                "Price": 2000,
-                "Servicephoto": "skill-sprint/database/serviceimages/Freelancer-start-1024x512.png",
-                "Servicedescription":"Learn to surf!",
-                "Phone": 6665554443
-            }
-        ]
+    // let dummyresult =
+    //     [
+    //         {
+    //             "SId": 30,
+    //             "Businessname": "Surf School",
+    //             "City": "Margao",
+    //             "State": "Goa",
+    //             "Servicename": "Surfing Lessons",
+    //             "Price": 2000,
+    //             "Servicephoto": "skill-sprint/database/serviceimages/Freelancer-start-1024x512.png",
+    //             "Servicedescription":"Learn to surf!",
+    //             "Phone": 6665554443
+    //         }
+    //     ]
 
     try {
-        const getservicequery = `SELECT s.SId, s.Servicename, s.Price, b.City, b.State, b.Businessname, b.Phone, s.Servicephoto, s.Servicedescription
-                                FROM skillsprint.business AS b
-                                JOIN skillsprint.services AS s ON b.BId = s.BId
-                                WHERE s.SId = ?`;
+        const getservicequery = `SELECT s.Servicename, s.Price, b.City, b.State, b.Businessname, b.Phone, s.Servicephoto, s.Servicedescription
+                                 FROM skillsprint.business AS b JOIN skillsprint.services AS s ON b.BId = s.BId WHERE s.SId = ?`;
+        const getservicevalues = [sid];
 
-        const [results] = await db.query(getservicequery, [sid]);
+        await db.query(getservicequery, getservicevalues, (err, results) => {
+            if (err) {
+                console.error('Error fetching data:', err);
+                res.status(500).json({ error: 'Internal Server Error' });
+            }
+            else {
+                    res.status(200).json(results);
+                    console.log(results);
+  
+            }
+        });
 
-        res.status(200).json(results);
-        console.log(results);
     } catch (err) {
         console.error('Error occurred during query execution:', err);
-        res.json(dummyresult);
+        //res.json(dummyresult);
         res.status(500).json({ error: 'Internal Server Error' });
         
     }
