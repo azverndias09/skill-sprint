@@ -26,7 +26,7 @@ db.getConnection((err, connection) => {
 
 
 
-router.get('/businesshome/:UId', async (req, res) => {
+router.get('/:UId', async (req, res) => {
 
     const uid = req.params.UId
 
@@ -39,8 +39,11 @@ router.get('/businesshome/:UId', async (req, res) => {
 
         let result;
         try {
+
             result = await db.query(getbid, getbidvalues);
             console.log('Query Result:', result);
+            console.log("The result:",result);
+
         } catch (queryError) {
             console.error('Error executing getbid query:', queryError);
             throw queryError; // Rethrow the error to handle it in the outer catch block

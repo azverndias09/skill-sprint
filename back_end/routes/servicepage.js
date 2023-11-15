@@ -25,7 +25,7 @@ db.getConnection((err, connection) => {
 
 
 
-router.get('/servicepage/:SId', async (req, res) => {
+router.get('/:SId', async (req, res) => {
     const sid = req.params.SId;
     console.log(sid);
 

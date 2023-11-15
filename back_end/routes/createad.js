@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const mysql = require("mysql");
+const fileUpload = require('express-fileupload');
+
+router.use(fileUpload());
 
 
 require("dotenv").config()
@@ -29,11 +32,25 @@ router.post('/:UId', async (req, res) => {
     const servicedescription = req.body.servicedescription;
     const price = req.body.price;
     const uid=req.params.UId
-    const servicephoto=req.body.servicephoto;
 
  
 
     try {
+
+        if (req.files && req.files.servicephoto) {
+            const servicephoto = req.files.servicephoto;
+
+            // Specify the path where you want to save the uploaded file
+            const filePath = 'C:\Users\jason\Documents\VS Code Programs\skill-sprint\database\serviceimages' + servicephoto.name;
+
+            // Move the file to the specified path
+            servicephoto.mv(filePath, function (err) {
+                if (err) {
+                    console.error('Error saving uploaded file:', err);
+                    return res.status(500).json({ error: 'Internal Server Error' });
+                }
+            });
+
 
         const getbid = 'SELECT BId FROM skillsprint.business WHERE UId = ?';
         const getbidvalues = [uid];

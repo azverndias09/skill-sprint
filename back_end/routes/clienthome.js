@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mysql = require("mysql");
+const app=express();
 
 
 require("dotenv").config()
@@ -21,23 +22,26 @@ const db = mysql.createPool({
 
 db.getConnection((err, connection) => {
     if (err) throw (err)
-  //  console.log("DB connection successful!" + connection.threadId)
+   console.log("DB connection successful!" + connection.threadId)
 })
 
 
 
-router.get('/clienthome', async(req, res) => {
+router.get('/', (req, res) => {
+
     
     try {
         const query = `SELECT s.SId,b.Businessname, b.City, b.State, s.Servicename, s.Price, s.Servicephoto
                         FROM business b INNER JOIN services s ON b.BId = s.BId`;
 
-        await db.query(query, (err, results) => {
+
+         db.query(query, (err, results) => {
             if (err) {
                 console.error('Error fetching data:', err);
                 res.status(500).json({ error: 'Internal Server Error' });
             } else {
                 res.status(200).json(results);
+                console.log("Hello");
                 console.log(results);
             }
         });
@@ -48,5 +52,8 @@ router.get('/clienthome', async(req, res) => {
 
 });
 
+module.exports=router;
 
-module.exports = router
+
+
+
