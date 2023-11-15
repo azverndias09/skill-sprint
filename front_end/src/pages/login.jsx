@@ -249,9 +249,9 @@ const Login = () => {
                             </Button>
 
                             <Grid container>
-                            <Button variant="contained" sx={{ mt: 3, mb: 2 }} onClick={reset}>
+                            {/* <Button variant="contained" sx={{ mt: 3, mb: 2 }} onClick={reset}>
              Logout
-           </Button>
+           </Button> */}
                                 <Grid item xs>
                                     <Link to="/reset" variant="body2">
                                         Forgot password?

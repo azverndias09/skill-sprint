@@ -27,29 +27,29 @@ db.getConnection((err, connection) => {
 
 
 
-router.get('/', async(req, res) => {
-    
+router.get('/', async (req, res) => {
     try {
-        const query = `SELECT s.SId,b.Businessname, b.City, b.State, s.Servicename, s.Price
+        const query = `SELECT s.SId, b.Businessname, b.City, b.State, s.Servicename, s.Price
                         FROM business b INNER JOIN services s ON b.BId = s.BId`;
 
-
-         db.query(query, (err, results) => {
+        db.query(query, (err, results) => {
             if (err) {
                 console.error('Error fetching data:', err);
                 res.status(500).json({ error: 'Internal Server Error' });
             } else {
-                res.status(200).json(results);
                 console.log("Hello");
                 console.log(results);
+                res.status(200).json(results); // Send the response here
             }
         });
     } catch (err) {
         console.error('Error occurred during query execution:', err);
         res.status(500).json({ error: 'Internal Server Error' });
     }
-
 });
+
+
+
 
 module.exports=router;
 

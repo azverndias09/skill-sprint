@@ -22,7 +22,7 @@ import ServicePage from './pages/servicepage'
 import CreateAd from './pages/createad'
 
 
-import Location from './pages/location';
+import LocationComponent from './pages/location';
 import ClientHome from './pages/clienthome';
 import BusinessHome from './pages/businesshome'
 
@@ -46,7 +46,7 @@ export default function App() {
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/businessprofile" element={<Businessprofile />} />
         <Route path="/clientprofile" element={<Clientprofile />} />
-        <Route path="/location" element={<Location />} />
+        <Route path="/location" element={<LocationComponent />} />
         <Route path="/displayclientprofile" element={<Displayclientprofile />} />
         <Route path="/displaybusinessprofile" element={<Displaybusinessprofile />} />
         <Route path="/servicepage" element={<ServicePage />} />

@@ -70,7 +70,7 @@ router.post('/', (req, res) => {
                     res.send(`${username} is logged in!`);
                     const UserId = result.insertId; // Get the newly inserted UId
 
-                    connection.release();
+                  //  connection.release();
                     res.status(201).json({ UId: UserId });
                    
                 } 
