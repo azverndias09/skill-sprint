@@ -116,40 +116,40 @@ const Register = () => {
 
 
     const handleRegister = async () => {
-        console.log(`User CLient is${isClient}`);
+        console.log(`User Client is ${isClient}`);
         const response = await fetch('http://localhost:3001/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ name, email, password, userType: isClient }),
-
+    
         });
-
-        // console.log(response);
+    
         if (response.ok) {
-            //if (true) {
-            console.log("registration done brother");
+            console.log("Registration done brother");
+            const responseData = await response.json();
+            const userId = responseData.UId;
+    
             let userTemp = {
                 name,
                 email,
                 userType: isClient,
+                userId: userId,
             };
+    
             setUser(userTemp);
             localStorage.setItem('user', JSON.stringify(userTemp));
-            console.log(user);
+            console.log(userTemp);
             const data = JSON.parse(localStorage.getItem('user'));
-           
             console.log(data);
-
+    
             navigate('/login');
-
+        } else {
+            console.error("Registration failed. Check the code.");
         }
-        else {
-            console.error("no bro check code");
-        }
-        //     console.log(response);
     };
+    
 
     // const form = useRef();
 

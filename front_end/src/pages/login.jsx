@@ -108,58 +108,53 @@ const Login = () => {
 
 
     const handleLogin = async () => {
-
-        // if (username === 'user' && password === 'password') {
-        //     setIsLoggedIn(true);
-        // }
-
-        const response = await fetch('http://localhost:3001/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ username, password }),
-
-        });
-
-        // console.log(response);
-        if (response.ok) {
-
-            console.log("login done brother");
-            setIsLoggedIn(true);
-            let userData = { username, password };
-            setUser(userData);
-            
-        
-            let loggedInUser = localStorage.getItem('user');
-            let foundUser = JSON.parse(loggedInUser);
-            if(!foundUser){
-
-                let userTemp = {
-                    username,
-                    password,
-                    userType: 0,
-                };
-                setUser(userTemp);
-                localStorage.setItem('user', JSON.stringify(userTemp));
+        try {
+            const response = await fetch('http://localhost:3001/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            });
+    
+            if (response.ok) {
+                setIsLoggedIn(true);
+                let userData = { username, password };
+                setUser(userData);
+    
+                let loggedInUser = localStorage.getItem('user');
+                let foundUser = JSON.parse(loggedInUser);
+    
+                if (!foundUser) {
+                    let userTemp = {
+                        username,
+                        password,
+                        userType: 0,
+                    };
+                    setUser(userTemp);
+                    localStorage.setItem('user', JSON.stringify(userTemp));
+                }
+    
+                loggedInUser = localStorage.getItem('user');
+                foundUser = JSON.parse(loggedInUser);
+    
+                if (foundUser.userType === 0) {
+                    navigate("/clientprofile");
+                } else if (foundUser.userType === 1) {
+                    navigate("/businessprofile");
+                } else {
+                    console.log("test");
+                }
+            } else {
+                const errorData = await response.json();
+                setLoginError("Login failed. Please check your credentials.");
             }
-             loggedInUser = localStorage.getItem('user');
-             foundUser = JSON.parse(loggedInUser);
-            if (foundUser.userType == 0) {
-                navigate("/clientprofile");
-            } else if (foundUser.userType == 1) {
-                navigate("/businessprofile");
-            }
-            else{
-                console.log("test")
-            }
+        } catch (error) {
+            console.error("An error occurred during login:", error);
+            setLoginError("Login failed. Please check your credentials.");
         }
-        else {
-            console.error("no bro check code");
-        }
-        // console.log(response);
     };
-
+    
 
 
 
@@ -262,6 +257,8 @@ const Login = () => {
                                         {"Don't have an account? Sign Up"}
                                     </Link>
                                 </Grid>
+                                {/* {loginError && <Alert severity="error" sx={{ mb: 2 }}>{loginError}</Alert>} */}
+
                             </Grid>
                             <Copyright sx={{ mt: 5 }} />
 

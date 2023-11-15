@@ -87,6 +87,7 @@ db.getConnection((err, connection) => {
 
 
 router.post('/', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const servicename = req.body.servicename;
         const servicedescription = req.body.servicedescription;
@@ -105,12 +106,28 @@ router.post('/', async (req, res) => {
             console.error('Error executing getbid query:', queryError);
             throw queryError; // Rethrow the error to handle it in the outer catch block
         }
+        const getbid = 'SELECT BId FROM skillsprint.business WHERE UId = ?';
+        const getbidvalues = [uid];
 
+        let result;
+        try {
+            result = await db.query(getbid, getbidvalues);
+            console.log('Query Result:', result);
+        } catch (queryError) {
+            console.error('Error executing getbid query:', queryError);
+            throw queryError; // Rethrow the error to handle it in the outer catch block
+        }
+
+        // const bid = result && result.length > 0 ? result[0].BId : null;
+        const bid=7;
         // const bid = result && result.length > 0 ? result[0].BId : null;
         const bid=7;
 
         console.log('Business ID:', bid);
+        console.log('Business ID:', bid);
 
+        const sql = `INSERT INTO skillsprint.services (BId, SId, Servicename, Servicedescription, Price)
+            VALUES (?, 0, ?, ?, ?)`;
         const sql = `INSERT INTO skillsprint.services (BId, SId, Servicename, Servicedescription, Price)
             VALUES (?, 0, ?, ?, ?)`;
 
@@ -122,12 +139,22 @@ router.post('/', async (req, res) => {
             } else {
                 res.status(201).json({ message: 'Service saved successfully.' });
             }
+        const values = [bid, servicename, servicedescription, price];
+        db.query(sql, values, (err, result) => {
+            if (err) {
+                console.error('Error inserting service details:', err);
+                res.status(500).json({ error: 'Internal Server Error' });
+            } else {
+                res.status(201).json({ message: 'Service saved successfully.' });
+            }
         });
     } catch (error) {
+        console.error('Error saving service details:', error);
         console.error('Error saving service details:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
 
 
 

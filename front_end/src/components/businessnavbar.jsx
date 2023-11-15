@@ -92,6 +92,7 @@ const BusinessNavbar = () => {
 
     const reset = () => {
         localStorage.removeItem('user');
+        localStorage.removeItem('businessProfile');
         navigate("/login");
     }
 

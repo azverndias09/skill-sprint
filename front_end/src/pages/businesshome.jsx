@@ -34,8 +34,17 @@ const customTheme = createTheme({
 
 const BusinessHome = () => {
     const navigate = useNavigate();
+    const [services, setServices] = useState([]);
     const businessProfileData = JSON.parse(localStorage.getItem('businessProfile'));
-
+    console.log(businessProfileData);
+    let loggedInUser = localStorage.getItem('user');
+    let foundUser = JSON.parse(loggedInUser);
+    useEffect(() => {
+        fetch(`http://localhost:3001/businesshome/${foundUser.userId}`)
+          .then((response) => response.json())
+          .then((data) => setServices(data))
+          .catch((error) => console.error('Error fetching data:', error));
+      }, []);
 
     return (
 
@@ -51,10 +60,15 @@ const BusinessHome = () => {
                 </Grid> 
 
 
-                <Grid container spacing={2} flex={4} py={4} maxRows={4} sx={{ display: 'flex', justifyContent: 'start', wrap: true, }}>
-    <Grid item xs={12} md={3}>
-        <ServiceCard service={businessProfileData} isBusinessProfile={true} />
-    </Grid>
+                <Grid container spacing={2} flex={4} py={4} sx={{ display: 'flex', justifyContent: 'start', wrap: true }}>
+          {services.map((service) => (
+            <Grid item key={service.SId} xs={12} md={3}>
+              <Link to={`/service/${service.SId}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                <ServiceCard service={service} />
+              </Link>
+            </Grid>
+          ))}
+      
                     
                    
                    

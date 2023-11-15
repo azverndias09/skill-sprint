@@ -66,11 +66,11 @@ router.post('/', (req, res) => {
         
                 if (await bcrypt.compare(password, hashedPassword)) {
                     console.log("---------> Login Successful");
-                    res.status(200);
-                    res.send(`${username} is logged in!`);
+                    //res.status(200);
+                    //res.send(`${username} is logged in!`);
                     const UserId = result.insertId; // Get the newly inserted UId
 
-                  //  connection.release();
+                    //onnection.release();
                     res.status(201).json({ UId: UserId });
                    
                 } 
