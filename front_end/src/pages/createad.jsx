@@ -89,33 +89,53 @@ const CreateAd = () => {
   const handlePostClick = async () => {
     let loggedInUser = localStorage.getItem('user');
     let foundUser = JSON.parse(loggedInUser);
-
+  
     const requestData = {
       servicename,
       servicedescription,
       price: Number(price),
       uid: foundUser.userId,
     };
-
+  
     console.log(requestData);
-
+  
     try {
-      const response = await fetch(`http://localhost:3001/createad`, {
+      // Step 1: Send textual data
+      const textResponse = await fetch(`http://localhost:3001/createad/${foundUser.userId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(requestData),
       });
-
-      if (response.ok) {
-        // Handle success
-        console.log('Service created successfully.');
-        navigate("/businesshome");
-      } else {
-        // Handle error
-        console.error('Error creating service:', response.statusText);
+  
+      if (!textResponse.ok) {
+        console.error('Error creating service:', textResponse.statusText);
+        return;
       }
+  
+      console.log('Textual data sent successfully.');
+  
+      // Step 2: Send image data
+      if (uploadedImage) {
+        const imageForm = new FormData();
+        imageForm.append('image', uploadedImage);
+  
+        const imageResponse = await fetch(`http://localhost:3001/uploadimage/${foundUser.userId}`, {
+          method: 'POST',
+          body: imageForm,
+        });
+  
+        if (!imageResponse.ok) {
+          console.error('Error uploading image:', imageResponse.statusText);
+        } else {
+          console.log('Image uploaded successfully.');
+        }
+      }
+  
+      // Navigate after both textual data and image are sent
+      navigate("/businesshome");
+  
     } catch (error) {
       console.error('Error creating service:', error.message);
     }
