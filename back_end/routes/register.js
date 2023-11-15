@@ -55,7 +55,7 @@ router.post('/',async (req,res)=>{
             }
             else {
                 await connection.query(insert_query, (err, result) => {
-                    connection.release()
+                   // connection.release()
                     if (err) throw (err)
                     console.log("--------> Created new User")
                     const UserId = result.insertId; // Get the newly inserted UId
@@ -63,7 +63,7 @@ router.post('/',async (req,res)=>{
                     connection.release();
                     res.status(201).json({ UId: UserId });
 
-                    res.sendStatus(201)
+                
                 })
             }
         }) //end of connection.query()
