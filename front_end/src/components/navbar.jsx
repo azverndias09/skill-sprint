@@ -90,8 +90,7 @@ const Icons = styled(Box)(({ theme }) => ({
 
 
 
-
-const Navbar = () => {
+const Navbar = ({ userFirstNameInitial, searchTerm, onSearchChange }) => {
 
     const navigate = useNavigate();
 
@@ -128,16 +127,18 @@ const Navbar = () => {
 
                 <Pets sx={{ display: { xs: "block", sm: "none" } }} />
                 <Search>
-                    <SearchIconWrapper>
-                        <SearchIcon />
-                    </SearchIconWrapper>
-                    <StyledInputBase
-                        placeholder="Search…"
-                        inputProps={{ 'aria-label': 'search' }}
-                    />
-                </Search>
+  <SearchIconWrapper>
+    <SearchIcon />
+  </SearchIconWrapper>
+  <StyledInputBase
+    placeholder="Search services..."
+    inputProps={{ 'aria-label': 'search' }}
+    value={searchTerm}
+    onChange={onSearchChange}
+  />
+</Search>
                 <Icons>
-                    <Badge badgeContent={4} color="error" sx={{mr:'8px',mt:'6px'}}>
+                    <Badge badgeContent={69} color="error" sx={{mr:'8px',mt:'6px'}}>
                         <Notifications />
                     </Badge>
 
@@ -150,7 +151,7 @@ const Navbar = () => {
                             aria-haspopup="true"
                             aria-expanded={open ? 'true' : undefined}
                         >
-                            <Avatar sx={{ width: 32, height: 32 }}>J</Avatar>
+                            <Avatar sx={{ width: 32, height: 32 }}>{userFirstNameInitial}</Avatar>
                         </IconButton>
                     </Tooltip>
                    

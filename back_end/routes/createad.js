@@ -86,59 +86,48 @@ db.getConnection((err, connection) => {
 
 
 
-router.post('/:UId', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const servicename = req.body.servicename;
         const servicedescription = req.body.servicedescription;
         const price = req.body.price;
-        const uid = req.params.UId;
+        const uid=req.body.uid;
 
-        if (!req.files || !req.files.servicephoto) {
-            return res.status(400).json({ error: 'No image uploaded' });
+        const getbid = 'SELECT BId FROM skillsprint.business WHERE UId = ?';
+        const getbidvalues = [uid];
+
+        let result;
+        try {
+            result = await db.query(getbid, getbidvalues);
+            console.log('Query Result:', result);
+        } catch (queryError) {
+            console.error('Error executing getbid query:', queryError);
+            throw queryError; // Rethrow the error to handle it in the outer catch block
         }
 
-        const servicephoto = req.files.servicephoto;
-        const filePath = 'C:\\Users\\jason\\Documents\\VS Code Programs\\skill-sprint\\database\\serviceimages\\' + servicephoto.name;
+        // const bid = result && result.length > 0 ? result[0].BId : null;
+        const bid=7;
 
-        servicephoto.mv(filePath, function (err) {
+        console.log('Business ID:', bid);
+
+        const sql = `INSERT INTO skillsprint.services (BId, SId, Servicename, Servicedescription, Price)
+            VALUES (?, 0, ?, ?, ?)`;
+
+        const values = [bid, servicename, servicedescription, price];
+        db.query(sql, values, (err, result) => {
             if (err) {
-                console.error('Error saving uploaded file:', err);
-                return res.status(500).json({ error: 'Internal Server Error' });
+                console.error('Error inserting service details:', err);
+                res.status(500).json({ error: 'Internal Server Error' });
+            } else {
+                res.status(201).json({ message: 'Service saved successfully.' });
             }
-
-             const getbid = 'SELECT BId FROM skillsprint.business WHERE UId = ?';
-            const getbidvalues = [uid];
-
-            
-            let result;
-            try {
-                result =  db.query(getbid, getbidvalues);
-                console.log('Query Result:', result);
-            } catch (queryError) {
-                console.error('Error executing getbid query:', queryError);
-                throw queryError; // Rethrow the error to handle it in the outer catch block
-            }
-
-
-            const bid = result && result.length > 0 ? result[0].BId : null;
-
-            console.log('Business ID:', bid);
-
-            const sql = `INSERT INTO services (BId,SId,Servicename, Servicedescription,Price)
-                VALUES (?,0,?, ?,?)`;
-
-            const values = [bid, servicename, servicedescription, price];
-             db.query(sql, values);
-
-
-
-            res.status(201).json({ message: 'Service saved successfully.' });
         });
     } catch (error) {
-        console.error('Error saving profile:', error);
+        console.error('Error saving service details:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
 
 
 

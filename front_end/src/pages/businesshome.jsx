@@ -37,8 +37,10 @@ const BusinessHome = () => {
     const [services, setServices] = useState([]);
     const businessProfileData = JSON.parse(localStorage.getItem('businessProfile'));
     console.log(businessProfileData);
+    let loggedInUser = localStorage.getItem('user');
+    let foundUser = JSON.parse(loggedInUser);
     useEffect(() => {
-        fetch(`http://localhost:3001/businesshome/23`)
+        fetch(`http://localhost:3001/businesshome/${foundUser.userId}`)
           .then((response) => response.json())
           .then((data) => setServices(data))
           .catch((error) => console.error('Error fetching data:', error));
