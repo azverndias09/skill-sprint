@@ -68,7 +68,7 @@ router.post('/:UId', async (req, res) => {
                         }
                         else {
                             const insertedId = results.insertId; // Get the SId of the newly inserted record
-                            res.status(200).json({ sid: insertedId }); // Send the SId to the client
+                            res.status(200).json({ sid: insertedId }); 
                             console.log('Inserted SId:', insertedId);
                         }
                     });
