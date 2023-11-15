@@ -32,7 +32,7 @@ const ServiceCard = ({ service, isBusinessProfile }) => {
                             <MoreVertIcon />
                         </IconButton>
                     }
-                    title={isBusinessProfile ? service.Businessname : 'Client Name'}
+                    title={isBusinessProfile ? service.Businessname : service.Businessname}
                 />
             </Grid>
 

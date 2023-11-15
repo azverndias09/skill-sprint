@@ -18,27 +18,27 @@ const customTheme = createTheme({
   spacing: 8,
 });
 
+// ... Import statements
+
 const ClientHome = () => {
   const navigate = useNavigate();
   const [services, setServices] = useState([]);
-  const [open, setOpen] = React.useState(true);
+  const [sort, setSort] = useState('');
 
   useEffect(() => {
-    // Fetch data from the API (localhost:3001/clienthome)
-    // Make sure to replace this URL with the correct endpoint
-    fetch('http://localhost:3001/clienthome')
+    fetch(`http://localhost:3001/clienthome?sort=${sort}`)
       .then((response) => response.json())
       .then((data) => setServices(data))
       .catch((error) => console.error('Error fetching data:', error));
-  }, []);
+  }, [sort]);
 
   const reset = () => {
     localStorage.removeItem('user');
     navigate('/login');
   };
 
-  const toggleDrawer = () => {
-    setOpen(!open);
+  const handleSortChange = (selectedSort) => {
+    setSort(selectedSort);
   };
 
   return (
@@ -49,13 +49,17 @@ const ClientHome = () => {
 
       <Box sx={{ margin: '64px' }}>
         <Grid container sx={{ justifyContent: 'end' }}>
-          <SortButton />
+          {/* Include the SortButton component with the handleSortChange callback */}
+          <SortButton onChange={handleSortChange} />
         </Grid>
 
-        <Grid container className="servicecards" spacing={2} flex={4} py={4} maxRows={4} sx={{ display: 'flex', justifyContent: 'start', wrap: true }}>
+        <Grid container className="servicecards" spacing={2} flex={4} py={4} sx={{ display: 'flex', justifyContent: 'start', wrap: true }}>
           {services.map((service) => (
             <Grid item key={service.SId} xs={12} md={3}>
-              <ServiceCard service={service} />
+              {/* Wrap ServiceCard with Link */}
+              <Link to={`/service/${service.SId}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                <ServiceCard service={service} />
+              </Link>
             </Grid>
           ))}
         </Grid>
