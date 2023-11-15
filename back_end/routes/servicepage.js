@@ -21,31 +21,29 @@ const db = mysql.createPool({
 
 db.getConnection((err, connection) => {
     if (err) throw (err)
-  //  console.log("DB connection successful!" + connection.threadId)
+    //  console.log("DB connection successful!" + connection.threadId)
 })
 
 
 
-router.get('/clienthome', async(req, res) => {
-    
-    try {
-        const query = `SELECT s.SId,b.Businessname, b.City, b.State, s.Servicename, s.Price, s.Servicephoto
-                        FROM business b INNER JOIN services s ON b.BId = s.BId`;
+router.get('/servicepage/:SId', async (req, res) => {
+    const sid = req.params.SId;
+    console.log(sid);
 
-        await db.query(query, (err, results) => {
-            if (err) {
-                console.error('Error fetching data:', err);
-                res.status(500).json({ error: 'Internal Server Error' });
-            } else {
-                res.status(200).json(results);
-                console.log(results);
-            }
-        });
+    try {
+        const getservicequery = `SELECT s.SId, s.Servicename, s.Price, b.City, b.State, b.Businessname, b.Phone, s.Servicephoto, s.Servicedescription
+                                FROM skillsprint.business AS b
+                                JOIN skillsprint.services AS s ON b.BId = s.BId
+                                WHERE s.SId = ?`;
+
+        const [results] = await db.query(getservicequery, [sid]);
+
+        res.status(200).json(results);
+        console.log(results);
     } catch (err) {
         console.error('Error occurred during query execution:', err);
         res.status(500).json({ error: 'Internal Server Error' });
     }
-
 });
 
 

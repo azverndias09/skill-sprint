@@ -15,6 +15,8 @@ const createadRoute = require("./routes/createad");
 const clienthomeRoute = require("./routes/clienthome");
 const displaybusinessprofileRoute = require("./routes/displaybusinessprofile");
 const displayclientprofileRoute = require("./routes/displayclientprofile");
+const servicepageRoute = require("./routes/servicepage");
+
 
 
 
@@ -44,6 +46,9 @@ app.use("/api/payment/", paymentRoutes);
 app.use("/location", locationRoute);
 app.use("/displaybusinessprofile", displaybusinessprofileRoute);
 app.use("/displayclientprofile", displayclientprofileRoute);
+app.use("/servivepage", servicepageRoute);
+
+
 app.use(express.static('routes'));
 
 

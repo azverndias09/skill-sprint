@@ -31,6 +31,7 @@ router.get('/displayclientprofile/:UId', (req, res) => {
     const uid = req.params.UId;
     console.log(uid);
 
+    
 
     try {
         const getclientprofilequery = `SELECT c.Firstname,c.Lastname, u.Username, c.Phone, c.City, c.State
