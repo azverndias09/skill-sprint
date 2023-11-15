@@ -58,10 +58,10 @@ router.post('/',async (req,res)=>{
                     connection.release()
                     if (err) throw (err)
                     console.log("--------> Created new User")
-                    const newlyCreatedUserId = result.insertId; // Get the newly inserted UId
+                    const UserId = result.insertId; // Get the newly inserted UId
 
                     connection.release();
-                    res.status(201).json({ UId: newlyCreatedUserId });
+                    res.status(201).json({ UId: UserId });
 
                     res.sendStatus(201)
                 })

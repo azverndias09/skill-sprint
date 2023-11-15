@@ -29,6 +29,21 @@ router.get('/:SId', async (req, res) => {
     const sid = req.params.SId;
     console.log(sid);
 
+    let dummyresult =
+        [
+            {
+                "SId": 30,
+                "Businessname": "Surf School",
+                "City": "Margao",
+                "State": "Goa",
+                "Servicename": "Surfing Lessons",
+                "Price": 2000,
+                "Servicephoto": "skill-sprint/database/serviceimages/Freelancer-start-1024x512.png",
+                "Servicedescription":"Learn to surf!",
+                "Phone": 6665554443
+            }
+        ]
+
     try {
         const getservicequery = `SELECT s.SId, s.Servicename, s.Price, b.City, b.State, b.Businessname, b.Phone, s.Servicephoto, s.Servicedescription
                                 FROM skillsprint.business AS b
@@ -41,7 +56,9 @@ router.get('/:SId', async (req, res) => {
         console.log(results);
     } catch (err) {
         console.error('Error occurred during query execution:', err);
+        res.json(dummyresult);
         res.status(500).json({ error: 'Internal Server Error' });
+        
     }
 });
 
