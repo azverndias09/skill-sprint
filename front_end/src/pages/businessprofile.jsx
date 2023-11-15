@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -14,9 +15,9 @@ import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 
 
 function Copyright(props) {
@@ -63,6 +64,50 @@ const customTheme = createTheme({
 
 export default function Businessprofile() {
    
+   const navigate = useNavigate();
+    const [businessname, setBusinessname] = useState('');
+    const [businessdescription, setBusinessdescription] = useState('');
+    const [contactnumber, setContactnumber] = useState('');
+    const [city, setCity] = useState('');
+    const [state, setState] = useState('');
+
+    const handleSubmit = async () => {
+        const response = await fetch('http://localhost:3001/businessprofile', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ businessname, businessdescription, contactnumber, city,state }),
+
+        });
+
+        // console.log(response);
+        if (response.ok) {
+            //if (true) {
+            console.log("businessprofile done");
+            // let userTemp = {
+            //     name,
+            //     email,
+            //     userType,
+            // };
+            // setUser(userTemp);
+            // localStorage.setItem('user', JSON.stringify(userTemp));
+            // console.log(user);
+            // const data = JSON.parse(localStorage.getItem('user'));
+            // console.log("data");
+            // console.log(data);
+
+            navigate('/businesshome');
+
+        }
+        else {
+            console.error("error blud");
+        }
+        //     console.log(response);
+    };
+
+
+
 
     return (
         
@@ -129,10 +174,11 @@ export default function Businessprofile() {
 
                                 <TextField
                                     required
-                                    id="business name"
-                                    name="business name"
+                                    id="businessname"
+                                    name="businessname"
                                     label="Business Name"
                                     fullWidth
+                                    onChange={(e) => setBusinessname(e.target.value)}
                                     autoComplete="given-name"
                                     variant="standard"
                                 />
@@ -141,10 +187,12 @@ export default function Businessprofile() {
                             <Grid item xs={12}>
                                 <TextField
                                     required
-                                    id="business description"
-                                    name="business description"
+                                    id="businessdescription"
+                                    name="businessdescription"
                                     label="Business Description"
                                     fullWidth
+                                    onChange={(e) => setBusinessdescription(e.target.value)}
+           
                                     autoComplete="shipping address-line1"
                                     variant="standard"
                                 />
@@ -157,6 +205,9 @@ export default function Businessprofile() {
                                     label="Contact Number"
                                     fullWidth
                                     autoComplete="phone"
+                                    value={contactnumber}
+                                    onChange={(e) => setContactnumber(e.target.value)}
+
                                     type='number'
                                     variant="standard"
                                 />
@@ -167,6 +218,9 @@ export default function Businessprofile() {
                                     id="city"
                                     name="city"
                                     label="City"
+                                    value={city}
+                                    onChange={(e) => setCity(e.target.value)}
+       
                                     fullWidth
                                     autoComplete="shipping address-level2"
                                     variant="standard"
@@ -177,13 +231,18 @@ export default function Businessprofile() {
                                     id="state"
                                     name="state"
                                     label="State/Province/Region"
+                                    value={state}
+                                    onChange={(e) => setState(e.target.value)}
+
                                     fullWidth
                                     variant="standard"
                                 />
                             </Grid>
 
                             
-                            <Button size='large' fullWidth type="button" variant="contained" sx={{  mt: 3, mb: 2}} >
+                            <Button size='large' fullWidth type="button" variant="contained" 
+                            sx={{  mt: 3, mb: 2}}
+                            onClick={handleSubmit} >
                                Next
                             </Button>
                             
