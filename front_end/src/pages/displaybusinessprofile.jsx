@@ -22,7 +22,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import BusinessNavbar from '../components/businessnavbar';
 import StickyFooter from '../components/footer';
 
-
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -63,94 +62,43 @@ const customTheme = createTheme({
 });
 
 
-
-
 export default function Displaybusinessprofile() {
-
-    const [firstname, setFirstname] = useState('');
-    const [lastname, setLastname] = useState('');
-    const [contactnumber, setContactnumber] = useState('');
-    const [city, setCity] = useState('');
-    const [state, setState] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-
-    const handleSubmit = () => {
-        // Create a JSON object from the form data
-        const formData = {
-            first_name: firstname,
-            last_name: lastname,
-            contact_number: contactnumber,
-            city,
-            state,
-        };
-
-        // Send formData to the backend
-        fetch('http://localhost:3001/clientprofile', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(() => {
-                setSuccessMessage('Client profile details updated!');
-                setErrorMessage('');
-            })
-            .catch((error) => {
-                setSuccessMessage('');
-                setErrorMessage('Error updating client profile: ' + error.message);
-            });
-    };
-
+    const businessProfileData = JSON.parse(localStorage.getItem('businessProfile'));
 
     return (
-
         <React.Fragment>
             <ThemeProvider theme={customTheme}>
-
                 <Box bgcolor={"background.default"} color={"text.primary"}>
                     <BusinessNavbar />
-
                 </Box>
-
                 <br />
-                <Container component="main" maxWidth="sm"  sx={{ mb: 4}}>
-
-                    <Grid item sx={{textAlign:'center'}}>
+                <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
+                  
+                <Grid item sx={{textAlign:'center'}}>
                     <Typography component="h1" variant="h4" fontWeight="semibold" p={4}>
                         SkillSprint Business Profile
                     </Typography>
                     </Grid>
-
-
-                    <Box item elevation={4} 
-
+                    <Box
+                        item
+                        elevation={4}
                         sx={{
                             m: { xs: 4, md: 2 },
                             px: { xs: 4, md: 4 },
                             py: { xs: 4, md: 6 },
                             display: 'flex',
                             flexDirection: 'column',
-                            marginLeft:'2',
+                            marginLeft: '2',
                             backgroundColor: '#f0f0f0',
                             borderRadius: '16px',
                             justifyContent: 'center',
-                            border: '1px solid' ,
-                            borderColor:'#636363',
-                            //marginLeft:'auto'
-
-
-                        }}>
-
-                        
-                            <Grid container pb={6}  sx={{justifyContent:'center'}}>
+                            border: '1px solid',
+                            borderColor: '#636363',
+                        }}
+                    >
+                       <Grid container pb={6}  sx={{justifyContent:'center'}}>
                             <Avatar src="/broken-image.jpg" 
                                 sx={{
                                     width: '100px',
@@ -158,62 +106,59 @@ export default function Displaybusinessprofile() {
                                     
                                 }} />
                             </Grid>
-
-
-                        
-                      
-
-
-                            <Grid container spacing={1} pl={4} pr={3}>
-                                <Grid item xs={12} sm={12} sx={{textAlign:'center'}}  >
-
-                                    <Typography variant="h5" color="initial" > Royal Event Planners</Typography>
-                                </Grid>
-
-                                <Grid item xs={12} sm={12} sx={{ textAlign: 'center' }} >
-
-                                    <Typography variant="h6" color="textSecondary"> @john007</Typography>
-                                </Grid>
-
-                                <Grid item xs={12} sm={12} sx={{ textAlign: 'start' }}>
-                                    <Typography variant="h7" color="initial" >
-                                        At Royal Event Planners, we are committed to making your event an unforgettable experience!
-                                    </Typography>
-                                </Grid>
+                        <Grid container spacing={1} pl={4} pr={3}>
+                            <Grid item xs={12} sm={12} sx={{ textAlign: 'center' }}>
+                                <Typography variant="h5" color="initial">
+                                    {businessProfileData.businessname}
+                                </Typography>
                             </Grid>
-                        <br/>
-                        <Divider variant="middle" color='black' />
-                        <br/>
-
-                            <Grid container spacing={1} pl={4} pr={3}>
-                            
-                                <Grid item xs={12} sm={6} sx={{ textAlign:'start' }}>
-                                    <Typography variant="h6" color="initial" p={1}>Contact Number</Typography>
-                                </Grid>
-                                <Grid item xs={12} sm={6} sx={{ textAlign: 'end' }}>
-                                    <Typography variant="h6" color="textSecondary" p={1}>123467590</Typography>
-                                </Grid>
-
-                                <Grid item xs={12} sm={6} sx={{}}>
-                                    <Typography variant="h6" color="initial" p={1}>City</Typography>
-                                </Grid>
-                                <Grid item xs={12} sm={6} sx={{ textAlign: 'end' }}>
-                                    <Typography variant="h6" color="textSecondary" p={1}>Margao</Typography>
-                                </Grid>
-
-                                <Grid item xs={12} sm={6} sx={{ justifyContent: 'flex-start' }}>
-                                    <Typography variant="h6" color="initial" p={1}>State</Typography>
-                                </Grid>
-                                <Grid item xs={12} sm={6} sx={{ textAlign: 'end' }}>
-                                    <Typography variant="h6" color="textSecondary" p={1}>Goa</Typography>
-                                </Grid>
-
-                          
-
+                            <Grid item xs={12} sm={12} sx={{ textAlign: 'center' }}>
+                                <Typography variant="h6" color="textSecondary">
+                                    @{businessProfileData.businessname} {/* You may replace this with the actual username */}
+                                </Typography>
                             </Grid>
-
+                            <Grid item xs={12} sm={12} sx={{ textAlign: 'start' }}>
+                                <Typography variant="h7" color="initial">
+                                    {businessProfileData.businessdescription}
+                                </Typography>
+                            </Grid>
+                        </Grid>
+                        {/* ... (other components) */}
+                        <Divider variant="middle" color="black" />
+                        <br />
+                        <Grid container spacing={1} pl={4} pr={3}>
+                            <Grid item xs={12} sm={6} sx={{ textAlign: 'start' }}>
+                                <Typography variant="h6" color="initial" p={1}>
+                                    Contact Number
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={6} sx={{ textAlign: 'end' }}>
+                                <Typography variant="h6" color="textSecondary" p={1}>
+                                    {businessProfileData.contactnumber}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={6} sx={{}}>
+                                <Typography variant="h6" color="initial" p={1}>
+                                    City
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={6} sx={{ textAlign: 'end' }}>
+                                <Typography variant="h6" color="textSecondary" p={1}>
+                                    {businessProfileData.city}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={6} sx={{ justifyContent: 'flex-start' }}>
+                                <Typography variant="h6" color="initial" p={1}>
+                                    State
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={6} sx={{ textAlign: 'end' }}>
+                                <Typography variant="h6" color="textSecondary" p={1}>
+                                    {businessProfileData.state}
+                                </Typography>
+                            </Grid>
+                        </Grid>
                     </Box>
-                    
                 </Container>
                 <Box sx={{ marginTop: '-600px' }}>
                     <StickyFooter />

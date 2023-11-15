@@ -60,7 +60,7 @@ router.post('/',async (req,res)=>{
                     console.log("--------> Created new User")
                     const newlyCreatedUserId = result.insertId; // Get the newly inserted UId
 
-                    connection.release();
+                    //connection.release();
                     res.status(201).json({ UId: newlyCreatedUserId });
 
                     res.sendStatus(201)
