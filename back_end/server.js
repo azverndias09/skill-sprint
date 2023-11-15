@@ -17,6 +17,9 @@ const businesshomeRoute = require("./routes/businesshome");
 const displaybusinessprofileRoute = require("./routes/displaybusinessprofile");
 const displayclientprofileRoute = require("./routes/displayclientprofile");
 const servicepageRoute = require("./routes/servicepage");
+const uploadimageRoute = require("./routes/uploadimage");
+
+
 
 
 const app = express();
@@ -41,6 +44,8 @@ app.use("/location", locationRoute);
 app.use("/displaybusinessprofile", displaybusinessprofileRoute);
 app.use("/displayclientprofile", displayclientprofileRoute);
 app.use("/servicepage", servicepageRoute);
+app.use("/uploadimage", uploadimageRoute);
+
 
 
 
