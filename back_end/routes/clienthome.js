@@ -27,9 +27,9 @@ db.getConnection((err, connection) => {
 
 
 
-router.get('/', async (req, res) => {
+router.get('/:UId', async (req, res) => {
 
-    const uid=req.body.uid;
+    const uid=req.params.UId;
 
     try {
 
