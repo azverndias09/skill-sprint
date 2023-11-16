@@ -69,11 +69,11 @@ export default function ClientProfile() {
             .then((data) => {
               if (data.results && data.results.length > 0) {
                 const result = data.results[0];
-                const { state, county } = result.components;
+                const { state, city: city } = result.components;
   
                 // Update state and city based on API response
                 setState(state);
-                setCity(county);
+                setCity(city);
                 setIsLocationObtained(true);
               }
             })

@@ -84,10 +84,10 @@ export default function Businessprofile() {
               try {
                 const response = await fetch(apiUrl);
                 const data = await response.json();
-    
+                console.log(data);
                 if (data.results.length > 0) {
                   const addressComponents = data.results[0].components;
-                  setCity(addressComponents.county || '');
+                  setCity(addressComponents.city || '');
                   setState(addressComponents.state || '');
                 }
               } catch (error) {
