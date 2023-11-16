@@ -18,6 +18,8 @@ const displaybusinessprofileRoute = require("./routes/displaybusinessprofile");
 const displayclientprofileRoute = require("./routes/displayclientprofile");
 const servicepageRoute = require("./routes/servicepage");
 const uploadimageRoute = require("./routes/uploadimage");
+const giveratingRoute = require("./routes/giverating");
+
 
 
 
@@ -45,6 +47,8 @@ app.use("/displaybusinessprofile", displaybusinessprofileRoute);
 app.use("/displayclientprofile", displayclientprofileRoute);
 app.use("/servicepage", servicepageRoute);
 app.use("/uploadimage", uploadimageRoute);
+app.use("/giverating", giveratingRoute);
+
 
 
 
