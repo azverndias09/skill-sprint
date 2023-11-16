@@ -22,6 +22,7 @@ const SortButton = ({ onChange }) => {
           </MenuItem>
           <MenuItem value="priceLowToHigh">Price: Low to High</MenuItem>
           <MenuItem value="priceHighToLow">Price: High to Low</MenuItem>
+          <MenuItem value="distance">Distance</MenuItem>
         </Select>
       </FormControl>
     );

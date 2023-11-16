@@ -12,6 +12,10 @@ const ClientHome = () => {
   const [sort, setSort] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [originalServices, setOriginalServices] = useState([]);
+  const [userLocation, setUserLocation] = useState({
+    latitude: parseFloat(localStorage.getItem('latitude')),
+    longitude: parseFloat(localStorage.getItem('longitude')),
+  });
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
@@ -39,6 +43,13 @@ const ClientHome = () => {
         updatedServices.sort((a, b) => a.Price - b.Price);
       } else if (sort === 'priceHighToLow') {
         updatedServices.sort((a, b) => b.Price - a.Price);
+      } else if (sort === 'distance') {
+        // Sort by distance using the Haversine formula
+        updatedServices.sort((a, b) => {
+          const distanceA = calculateDistance(a.Latitude, a.Longitude);
+          const distanceB = calculateDistance(b.Latitude, b.Longitude);
+          return distanceA - distanceB;
+        });
       }
 
       // Filter services based on search term
@@ -63,8 +74,23 @@ const ClientHome = () => {
   const foundUser = JSON.parse(loggedInUser);
   const userFirstNameInitial = foundUser.name.charAt(0);
   // Sort the services array based on the selected option
-  let sortedServices = services.slice(); // Create a copy to avoid mutating the original array
+   // Create a copy to avoid mutating the original array
  
+  const calculateDistance = (lat, lon) => {
+    const R = 6371; // Radius of the Earth in kilometers
+    const dLat = (lat - userLocation.latitude) * (Math.PI / 180);
+    const dLon = (lon - userLocation.longitude) * (Math.PI / 180);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(userLocation.latitude * (Math.PI / 180)) *
+        Math.cos(lat * (Math.PI / 180)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = R * c; // Distance in kilometers
+    return distance;
+  };  
+  let sortedServices = services.slice(); 
   if (sort === 'priceLowToHigh') {
     sortedServices.sort((a, b) => a.price - b.price);
   } else if (sort === 'priceHighToLow') {
@@ -111,7 +137,7 @@ const ClientHome = () => {
 
       <Box sx={{ marginTop: '-600px' }}>
         <StickyFooter />
-      </Box>
+        </Box>
     </Box>
   );
 };
