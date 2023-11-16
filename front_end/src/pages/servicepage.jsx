@@ -34,6 +34,8 @@ import PaymentIcon from '@mui/icons-material/Payment';
 
 import Navbar from '../components/navbar';
 import StickyFooter from '../components/footer';
+import BasicModal from "../components/giverating";
+import LocationComponent from './location';
 
 const customTheme = createTheme({
     typography: {
@@ -182,7 +184,11 @@ const ServicePage = () => {
                                     {/* <Button variant="outlined" endIcon={<PaymentIcon />}>
                                         Pay Business
                                     </Button> */}
+
                                     <RazorpayPaymentButton amount={10000}/>
+
+                                    <BasicModal/>
+
                                 </Stack>
 
                                     <Grid item xs={12} sm={12} mt={2}   >
@@ -200,6 +206,10 @@ const ServicePage = () => {
                             </CardContent>
                         </Card>
                    
+                    </Grid>
+
+                    <Grid item mt={2} pb={16}>
+                        <LocationComponent/>
                     </Grid>
                 </Grid>
 
