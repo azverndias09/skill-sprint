@@ -70,8 +70,6 @@ router.post('/:UId', async (req, res) => {
                     });
 
 
-
-
                 } else {
                     console.log('No BId found');
                     res.status(404).send('No BId found');

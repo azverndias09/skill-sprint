@@ -28,20 +28,36 @@ db.getConnection((err, connection) => {
 
 
 router.get('/', async (req, res) => {
+
+    const cid=req.body.cid;
     try {
-        const query = `SELECT s.SId, b.Businessname, b.City, b.State, s.Servicename, s.Price, b.Latitude, b.Longitude
+        const getservicesquery = `SELECT s.SId, b.Businessname, b.City, b.State, s.Servicename, s.Price, b.Latitude, b.Longitude
                         FROM business b INNER JOIN services s ON b.BId = s.BId`;
 
-        db.query(query, (err, results) => {
+        const getclientlocationquery='SELECT Latitude, Longitude from skillsprint.Client where CId=?';
+        const getclientlocationvalues=[cid];
+
+        db.query(getservicesquery, (err, serviceDetails) => {
             if (err) {
                 console.error('Error fetching data:', err);
                 res.status(500).json({ error: 'Internal Server Error' });
             } else {
-                console.log("Hello");
-                console.log(results);
-                res.status(200).json(results); // Send the response here
+
+                db.query(getclientlocationquery, getclientlocationvalues, (err, clientLocation) => {
+                    if (err) {
+                        console.error('Error fetching data:', err);
+                        res.status(500).json({ error: 'Internal Server Error' });
+                    } else {
+                        console.log("Hello");
+                        console.log(clientLocation);
+                        res.status(200).json({serviceDetails,clientLocation});
+                    }
+                });
+
             }
         });
+
+
     } catch (err) {
         console.error('Error occurred during query execution:', err);
         res.status(500).json({ error: 'Internal Server Error' });
