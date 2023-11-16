@@ -6,16 +6,14 @@ import ServiceCard from '../components/servicecard';
 import Navbar from '../components/navbar';
 import SortButton from '../components/sortbutton';
 import StickyFooter from '../components/footer';
+
 const ClientHome = () => {
   const navigate = useNavigate();
   const [services, setServices] = useState([]);
   const [sort, setSort] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [originalServices, setOriginalServices] = useState([]);
-  const [userLocation, setUserLocation] = useState({
-    latitude: parseFloat(localStorage.getItem('latitude')),
-    longitude: parseFloat(localStorage.getItem('longitude')),
-  });
+
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
@@ -23,15 +21,24 @@ const ClientHome = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/clienthome`);
+        const loggedInUser = localStorage.getItem('user');
+        const foundUser = JSON.parse(loggedInUser);
+        console.log(foundUser);
+        const response = await fetch(`http://localhost:3001/clienthome/${foundUser.userId}`, {
+          method: 'GET', // or 'GET' depending on your API requirements
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        
+        });
         const data = await response.json();
-        setServices(data);
-        setOriginalServices(data);
+        setServices(data.distances);
+        setOriginalServices(data.distances);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-
+  
     fetchData();
   }, []); // Run only once on mount
 
@@ -44,12 +51,8 @@ const ClientHome = () => {
       } else if (sort === 'priceHighToLow') {
         updatedServices.sort((a, b) => b.Price - a.Price);
       } else if (sort === 'distance') {
-        // Sort by distance using the Haversine formula
-        updatedServices.sort((a, b) => {
-          const distanceA = calculateDistance(a.Latitude, a.Longitude);
-          const distanceB = calculateDistance(b.Latitude, b.Longitude);
-          return distanceA - distanceB;
-        });
+        // Sort by distance using the 'distance' property
+        updatedServices.sort((a, b) => a.distance - b.distance);
       }
 
       // Filter services based on search term
@@ -63,45 +66,21 @@ const ClientHome = () => {
       setServices(updatedServices);
     }
   }, [originalServices, sort, searchTerm]);
-  
+
   useEffect(() => {
     if (searchTerm.trim() === '') {
       setServices(originalServices);
     }
   }, [searchTerm, originalServices]);
-  
+
   const loggedInUser = localStorage.getItem('user');
   const foundUser = JSON.parse(loggedInUser);
   const userFirstNameInitial = foundUser.name.charAt(0);
-  // Sort the services array based on the selected option
-   // Create a copy to avoid mutating the original array
- 
-  const calculateDistance = (lat, lon) => {
-    const R = 6371; // Radius of the Earth in kilometers
-    const dLat = (lat - userLocation.latitude) * (Math.PI / 180);
-    const dLon = (lon - userLocation.longitude) * (Math.PI / 180);
-    const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(userLocation.latitude * (Math.PI / 180)) *
-        Math.cos(lat * (Math.PI / 180)) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const distance = R * c; // Distance in kilometers
-    return distance;
-  };  
-  let sortedServices = services.slice(); 
-  if (sort === 'priceLowToHigh') {
-    sortedServices.sort((a, b) => a.price - b.price);
-  } else if (sort === 'priceHighToLow') {
-    sortedServices.sort((a, b) => b.price - a.price);
-  }
 
   const handleSortChange = (selectedSort) => {
     setSort(selectedSort);
   };
 
- 
   return (
     <Box>
       <Navbar
@@ -122,7 +101,7 @@ const ClientHome = () => {
           py={4}
           sx={{ display: 'flex', justifyContent: 'start', wrap: true }}
         >
-          {sortedServices.map((service) => (
+          {services.map((service) => (
             <Grid item key={service.SId} xs={12} md={3}>
               <Link
                 to={`/service/${service.SId}`}
@@ -137,14 +116,9 @@ const ClientHome = () => {
 
       <Box sx={{ marginTop: '-600px' }}>
         <StickyFooter />
-        </Box>
+      </Box>
     </Box>
   );
-};
-
-// Helper function to check if two arrays are equal
-const arraysEqual = (a, b) => {
-  return JSON.stringify(a) === JSON.stringify(b);
 };
 
 export default ClientHome;
