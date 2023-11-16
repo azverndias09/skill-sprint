@@ -50,7 +50,7 @@ const LocationComponent = () => {
                     <p>Longitude: {location.longitude}</p>
                 </div>
             ) : (
-                <p>Click "Get Location" to enable location access.</p>
+                <p></p>
             )}
         </div>
     );
