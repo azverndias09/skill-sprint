@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Button from '@mui/material/Button';
+import CreditCardIcon from '@mui/icons-material/CreditCard';
 
 const RazorpayPaymentButton = ({ amount }) => {
   const [scriptLoaded, setScriptLoaded] = useState(false);
@@ -60,9 +62,9 @@ const RazorpayPaymentButton = ({ amount }) => {
   return (
     <div>
       {scriptLoaded ? (
-        <button onClick={initPayment} className="buy_btn">
+        <Button variant="outlined" startIcon={<CreditCardIcon />} onClick={initPayment}>
           Pay Now
-        </button>
+        </Button>
       ) : (
         <p>Loading Razorpay script...</p>
       )}

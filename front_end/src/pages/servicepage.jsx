@@ -16,6 +16,8 @@ import LocationComponent from './location';
 import Navbar from '../components/navbar';
 import StickyFooter from '../components/footer';
 import ChatIcon from '@mui/icons-material/Chat';
+import CardMedia from '@mui/material/CardMedia';
+
 const customTheme = createTheme({
   typography: {
     fontFamily: 'Poppins, sans-serif',
@@ -50,19 +52,27 @@ const ServicePage = () => {
     localStorage.removeItem('user');
     navigate("/login");
   };
-
+  const openWhatsAppChat = () => {
+    const phoneNumberWithCountryCode = `91${serviceData.Phone}`;
+    const whatsappLink = `https://wa.me/${phoneNumberWithCountryCode}?text=${encodeURIComponent("I'm interested in your service: " + serviceData.Servicename)}`;
+    window.open(whatsappLink, '_blank');
+  };
   return (
     <ThemeProvider theme={customTheme}>
       <div>
         <Navbar />
-        <Grid container spacing={4} sx={{ margin: '64px', display: 'flex' }}>
-          <Grid item className='picturedescription'>
-            <Card sx={{ maxWidth: 800 }}>
+        <Grid container spacing={4} sx={{ margin: '64px', display:'flex'}}>
+          <Grid item className='picturedescription'
+          sx={{width:1000}}>
+            <Card sx={{ maxWidth: 1000 }}>
+            <CardMedia
+                sx={{ height: 500 }}
+                image="https://fjwp.s3.amazonaws.com/blog/wp-content/uploads/2020/02/22123618/landing-first-client-1024x512.png"
+                title="green iguana"
+            />
               <CardActionArea>
                 <CardContent>
-                  <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: '500' }}>
-                    Description
-                  </Typography>
+                  
               
                     <Typography variant="body1" color="initial">
                                   <CardContent>
@@ -80,7 +90,7 @@ const ServicePage = () => {
               </CardActionArea>
             </Card>
           </Grid>
-          <Grid item className='servicenameandseller' ml={4} sx={{ flexGrow: 1, order: 1 }}>
+          <Grid item className='servicenameandseller' ml={4} sx={{ order: 1 }}>
             <Card>
               <CardActionArea>
                 <CardContent>
@@ -124,7 +134,7 @@ const ServicePage = () => {
                   </Grid>
                   <Grid mt={2}>
                     <Stack direction="row" spacing={4}>
-                      <Button variant="outlined" startIcon={<ChatIcon />}>
+                      <Button variant="outlined" startIcon={<ChatIcon />}  onClick={openWhatsAppChat}>
                         Chat with Business
                       </Button>
                       <RazorpayPaymentButton amount={serviceData.Price} />
