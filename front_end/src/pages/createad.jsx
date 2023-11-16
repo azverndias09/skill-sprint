@@ -85,7 +85,6 @@ const CreateAd = () => {
     console.log("Service Description:", servicedescription);
     console.log("Price:", price);
   }, [servicename, servicedescription, price]);
-
   const handlePostClick = async () => {
     let loggedInUser = localStorage.getItem('user');
     let foundUser = JSON.parse(loggedInUser);
@@ -114,14 +113,18 @@ const CreateAd = () => {
         return;
       }
   
-      console.log('Textual data sent successfully.');
+      const { sid } = await textResponse.json();
+      console.log('Service created successfully. SId:', sid);
   
       // Step 2: Send image data
       if (uploadedImage) {
         const imageForm = new FormData();
         imageForm.append('image', uploadedImage);
   
-        const imageResponse = await fetch(`http://localhost:3001/uploadimage/${foundUser.userId}`, {
+        // Append SId to the form data
+        imageForm.append('sid', sid);
+  
+        const imageResponse = await fetch(`http://localhost:3001/uploadimage`, {
           method: 'POST',
           body: imageForm,
         });

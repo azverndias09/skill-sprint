@@ -30,8 +30,7 @@ db.getConnection((err, connection) => {
 })
 
 router.post('/', upload.single('image'), (req, res) => {
-
-    const sid=req.body.sid;
+    const sid = req.body.sid;
 
     if (!req.file) {
         return res.status(400).send('No file uploaded.');
