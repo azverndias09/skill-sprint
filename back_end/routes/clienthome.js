@@ -48,9 +48,21 @@ router.get('/', async (req, res) => {
                         console.error('Error fetching data:', err);
                         res.status(500).json({ error: 'Internal Server Error' });
                     } else {
-                        console.log("Hello");
+                        console.log(serviceDetails);
                         console.log(clientLocation);
-                        res.status(200).json({serviceDetails,clientLocation});
+
+                        const distances = [];
+                        clientLocation.forEach(client => {
+                            serviceDetails.forEach(service => {
+                                const distance = calculateDistance(client.Latitude, client.Longitude, service.Latitude, service.Longitude);
+                                distances.push({ ...service, distance });
+                            });
+                        });
+
+                        //res.status(200).json(distances);
+
+
+                        res.status(200).json({distances});
                     }
                 });
 
@@ -64,7 +76,17 @@ router.get('/', async (req, res) => {
     }
 });
 
-
+function calculateDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Earth's radius in kilometers
+    const dLat = (lat2 - lat1) * (Math.PI / 180);
+    const dLon = (lon2 - lon1) * (Math.PI / 180);
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = R * c; // Distance in kilometers
+    return distance;
+}
 
 
 module.exports=router;
