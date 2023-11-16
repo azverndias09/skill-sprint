@@ -29,45 +29,69 @@ db.getConnection((err, connection) => {
 
 router.get('/', async (req, res) => {
 
-    const cid=req.body.cid;
+    const uid=req.body.uid;
+
     try {
-        const getservicesquery = `SELECT s.SId, b.Businessname, b.City, b.State, s.Servicename, s.Price, b.Latitude, b.Longitude
-                        FROM business b INNER JOIN services s ON b.BId = s.BId`;
 
-        const getclientlocationquery='SELECT Latitude, Longitude from skillsprint.Client where CId=?';
-        const getclientlocationvalues=[cid];
+        const getcidQuery = 'SELECT CId FROM skillsprint.client WHERE UId = ?';
+        const getcidValues = [uid];
 
-        db.query(getservicesquery, (err, serviceDetails) => {
+        await db.query(getcidQuery, getcidValues, (err, results) => {
             if (err) {
                 console.error('Error fetching data:', err);
                 res.status(500).json({ error: 'Internal Server Error' });
-            } else {
+            }
+            else {
+                if (results.length > 0) {
+                    const cid = results[0].CId;
+                    console.log("cidresult:", cid);
 
-                db.query(getclientlocationquery, getclientlocationvalues, (err, clientLocation) => {
-                    if (err) {
-                        console.error('Error fetching data:', err);
-                        res.status(500).json({ error: 'Internal Server Error' });
-                    } else {
-                        console.log(serviceDetails);
-                        console.log(clientLocation);
 
-                        const distances = [];
-                        clientLocation.forEach(client => {
-                            serviceDetails.forEach(service => {
-                                const distance = calculateDistance(client.Latitude, client.Longitude, service.Latitude, service.Longitude);
-                                distances.push({ ...service, distance });
-                            });
+                        const getservicesquery = `SELECT s.SId, b.Businessname, b.City, b.State, s.Servicename, s.Price, b.Latitude, b.Longitude
+                                        FROM business b INNER JOIN services s ON b.BId = s.BId`;
+
+                        const getclientlocationquery='SELECT Latitude, Longitude from skillsprint.Client where CId=?';
+                        const getclientlocationvalues=[cid];
+
+                        db.query(getservicesquery, (err, serviceDetails) => {
+                            if (err) {
+                                console.error('Error fetching data:', err);
+                                res.status(500).json({ error: 'Internal Server Error' });
+                            } else {
+
+                                db.query(getclientlocationquery, getclientlocationvalues, (err, clientLocation) => {
+                                    if (err) {
+                                        console.error('Error fetching data:', err);
+                                        res.status(500).json({ error: 'Internal Server Error' });
+                                    } else {
+                                        console.log(serviceDetails);
+                                        console.log(clientLocation);
+
+                                        const distances = [];
+                                        clientLocation.forEach(client => {
+                                            serviceDetails.forEach(service => {
+                                                const distance = calculateDistance(client.Latitude, client.Longitude, service.Latitude, service.Longitude);
+                                                distances.push({ ...service, distance });
+                                            });
+                                        });
+
+                                        //res.status(200).json(distances);
+
+
+                                        res.status(200).json({distances});
+                                    }
+                                });
+
+                            }
                         });
 
-                        //res.status(200).json(distances);
-
-
-                        res.status(200).json({distances});
-                    }
-                });
-
+                } else {
+                    console.log('No BId found');
+                    res.status(404).send('No BId found');
+                }
             }
         });
+
 
 
     } catch (err) {
