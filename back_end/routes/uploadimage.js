@@ -35,9 +35,8 @@ router.post('/', upload.single('image'), (req, res) => {
     if (!req.file) {
         return res.status(400).send('No file uploaded.');
     }
-    
-    const image = req.file;  // Corrected from req.image to req.file
-    
+
+    const image = req.file; 
     const tempImagePath = image.path;
 
     // Logic to move file to destination folder (serviceimages)

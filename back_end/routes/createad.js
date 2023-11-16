@@ -24,12 +24,8 @@ const db = mysql.createPool({
 
 db.getConnection((err, connection) => {
     if (err) throw (err)
-    console.log("DB connection successful!" + connection.threadId)
+    //console.log("DB connection successful!" + connection.threadId)
 })
-
-
-
-
 
 
 router.post('/:UId', async (req, res) => {
@@ -68,7 +64,7 @@ router.post('/:UId', async (req, res) => {
                         }
                         else {
                             const insertedId = results.insertId; // Get the SId of the newly inserted record
-                            res.status(200).json({ sid: insertedId }); // Send the SId to the client
+                            res.status(200).json({ sid: insertedId }); 
                             console.log('Inserted SId:', insertedId);
                         }
                     });

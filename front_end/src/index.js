@@ -26,6 +26,9 @@ import LocationComponent from './pages/location';
 import ClientHome from './pages/clienthome';
 import BusinessHome from './pages/businesshome'
 
+import ImageUpload from './pages/imageupload'
+
+
 
 
 export default function App() {
@@ -51,6 +54,10 @@ export default function App() {
         <Route path="/displaybusinessprofile" element={<Displaybusinessprofile />} />
         <Route path="/servicepage" element={<ServicePage />} />
         <Route path="/createad" element={<CreateAd />} />
+        <Route path="/createad" element={<CreateAd />} />
+        <Route path="/imageupload" element={<ImageUpload />} />
+
+
 
 
         

@@ -48,7 +48,7 @@ router.get('/:UId', async (req, res) => {
                     console.log("bidresult:", bid);
                    // res.status(200).send("works");
 
-                    const query = `SELECT s.SId, b.Businessname, b.City, b.State, s.Servicename, s.Price, s.Servicephoto
+                    const query = `SELECT s.SId,b.BId, b.Businessname, b.City, b.State, s.Servicename, s.Price, s.Servicephoto
                                     FROM skillsprint.business AS b
                                     INNER JOIN skillsprint.services AS s ON b.BId = s.BId
                                     WHERE s.BId = ?`;

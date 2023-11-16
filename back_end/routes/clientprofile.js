@@ -47,8 +47,9 @@ router.post('/:UId', async (req, res) => {
                 console.error('Error saving profile:', err);
                 res.status(500).json({ error: 'Internal Server Error' });
             } else {
-                res.status(201).json({ message: 'Client Profile saved successfully.' });
-                console.log(results)
+                const insertedId = results.insertId; 
+                res.status(200).json({ cid: insertedId });
+                console.log('Inserted CId:', insertedId);
             }
         });
     } catch (error) {

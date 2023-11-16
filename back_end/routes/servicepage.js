@@ -27,6 +27,7 @@ db.getConnection((err, connection) => {
 
 router.get('/:SId', async (req, res) => {
     const sid = req.params.SId;
+    const bid=req.body.bid;
     console.log("Received SId: ",sid);
 
     // let dummyresult =
@@ -45,21 +46,45 @@ router.get('/:SId', async (req, res) => {
     //     ]
 
     try {
-        const getservicequery = `SELECT s.Servicename, s.Price, b.City, b.State, b.Businessname, b.Phone, s.Servicephoto, s.Servicedescription
+        const getservicequery = `SELECT b.BId,s.Servicename, s.Price, b.City, b.State, b.Businessname, b.Phone, s.Servicephoto, s.Servicedescription
                                  FROM skillsprint.business AS b JOIN skillsprint.services AS s ON b.BId = s.BId WHERE s.SId = ?`;
         const getservicevalues = [sid];
 
-        await db.query(getservicequery, getservicevalues, (err, results) => {
+        const getratingquery='SELECT AVG(Rating) as Rating, COUNT(*) as Numberofratings FROM Ratings WHERE RatedbusinessBId = ?';
+        const getratingvalues=[bid];
+
+        let resultsArray=[];
+        let combinedResults=[];
+
+        await db.query(getservicequery, getservicevalues, (err, results1) => {
             if (err) {
                 console.error('Error fetching data:', err);
                 res.status(500).json({ error: 'Internal Server Error' });
             }
             else {
-                    res.status(200).json(results);
-                    console.log(results);
-  
+                    resultsArray.push({serviceData:results1})
+                    console.log(results1);
+
+                    db.query(getratingquery, getratingvalues, (err, results2) => {
+                        if (err) {
+                            console.error('Error fetching data:', err);
+                            res.status(500).json({ error: 'Internal Server Error' });
+                        }
+                        else {
+                            resultsArray.push({ ratingsData: results2 })
+                            console.log(results2);
+                            combinedResults = resultsArray.reduce((acc, curr) => ({ ...acc, ...curr }), {});
+                            res.status(200).json(combinedResults);
+                            console.log(combinedResults);
+
+
+                        }
+                    });
+
             }
         });
+
+
 
     } catch (err) {
         console.error('Error occurred during query execution:', err);
